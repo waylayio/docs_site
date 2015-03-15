@@ -2,85 +2,95 @@
 <html lang="en">
 
 <head>
-
+	<link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Waylay documentation</title>
+    <title>Waylay.io Documentation</title>
 
-    <!-- Bootstrap Core CSS -->
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="css/freelancer.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" class="index">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">Waylay</span>
-                </a>
+                <a class="navbar-brand" href="#page-top">docs.waylay.io</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#documentation">Documentation</a>
+                    <li class="page-scroll">
+                        <a href="#documentation">Documentation</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#videos">Videos</a>
+                    <li class="page-scroll">
+                        <a href="#video">Videos</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#code">{Code}</a>
+                    <li class="page-scroll">
+                        <a href="#code">{Code}</a>
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
+        <!-- /.container-fluid -->
     </nav>
 
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Dev space</h1>
-                        <a href="#documentation" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="img/profile.png" alt="">
+                    <div class="intro-text">
+                        <span class="name">dev Space</span>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </header>
-
+	
     <!-- Documentation Section -->
     <section id="documentation" class="container content-section text-center">
+		<div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Waylay documentation</h2>
+				 <hr class="star-primary">
                 <p>The documentation is linked below. Feel free to contact us if things are unclear or if you have feedback.</p>
                 <p><a href="mailto:support@waylay.io">support@waylay.io</a>
                 </p>
@@ -98,50 +108,71 @@
             </div>
         </div>
     </section>
+ <!-- Videos Section -->
+ <section id="video" class="success content-section text-center">
+         <div class="container">
+             <div class="col-lg-8 col-lg-offset-2">
+                 <h2>Videos</h2>
+				 <hr class="star-light">
+                 <p>Bellow you can watch videos from our youtube channel</p>
+                 <ul class="list-inline banner-social-buttons">
+                     <li>
+                 <a target="_blank" href="https://www.youtube.com/watch?v=oHGSCq1m9DE&list=PLy54mo7VaB1hMsaTA6gVYn2XJSov3dnSK" class="btn btn-default btn-lg"><i class="fa fa-video-camera"></i><span class="network-name">Introduction</span></a>
+			 			</li>
+                     <li>
+                 <a target="_blank" href="https://www.youtube.com/watch?v=ld7pmEvNFsw&list=PLy54mo7VaB1gC_rDjeSDMEE2RbNHNIti1" class="btn btn-default btn-lg"><i class="fa fa-video-camera"></i><span class="network-name">Use cases</span></a>
+			 		</li>
+				 </ul>
+             </div>
+         </div>
+ </section>
+ 
+ <!-- Contact Section -->
+ <section id="code" class="container content-section text-center">
+     <div class="row">
+         <div class="col-lg-8 col-lg-offset-2">
+             <h2>Templates and code</h2>
+			 <hr class="star-primary">
+             <p>Feel free to email us to provide some feedback on our code and templates or give us suggestions for new templates</p>
+             <p><a href="mailto:support@waylay.io">support@waylay.io</a>
+             </p>
+             <ul class="list-inline banner-social-buttons">
+                 <li>
+                     <a href="https://twitter.com/waylay_io" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                 </li>
+                 <li>
+                     <a href="https://github.com/waylayio" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                 </li>
+                 <li>
+                     <a href="https://www.youtube.com/channel/UCUTl2DVKgX1I-ubWqIJ_kew" class="btn btn-default btn-lg"><i class="fa fa-youtube fa-fw"></i> <span class="network-name">Youtube</span></a>
+                 </li>
+             </ul>
+         </div>
+     </div>
+ </section>
 
-    <!-- Download Section -->
-    <section id="videos" class="content-section text-center">
-        <div class="download-section">
+    <!-- Footer -->
+    <footer class="text-center">
+
+        <div class="footer-below">
             <div class="container">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Videos</h2>
-                    <p>Bellow you can watch videos from our youtube channel</p>
-                    <a target="_blank" href="https://www.youtube.com/watch?v=oHGSCq1m9DE&list=PLy54mo7VaB1hMsaTA6gVYn2XJSov3dnSK" class="btn btn-default btn-lg">Introduction</a>
-                    <a target="_blank" href="https://www.youtube.com/watch?v=ld7pmEvNFsw&list=PLy54mo7VaB1gC_rDjeSDMEE2RbNHNIti1" class="btn btn-default btn-lg">Use cases</a>
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; waylay.io 2015
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="code" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Templates and code</h2>
-                <p>Feel free to email us to provide some feedback on our code and templates or give us suggestions for new templates</p>
-                <p><a href="mailto:support@waylay.io">support@waylay.io</a>
-                </p>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="https://twitter.com/waylay_io" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/waylayio" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/channel/UCUTl2DVKgX1I-ubWqIJ_kew" class="btn btn-default btn-lg"><i class="fa fa-youtube fa-fw"></i> <span class="network-name">Youtube</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container text-center">
-            <p>Copyright &copy; waylay.io 2015</p>
-        </div>
     </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visble-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+ 
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -150,10 +181,16 @@
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/grayscale.js"></script>
+    <script src="js/freelancer.js"></script>
 
 </body>
 
