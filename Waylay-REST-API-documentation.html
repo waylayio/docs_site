@@ -14,14 +14,58 @@
 	<link href="css/jquery-ui.css" rel="stylesheet">
     <link href="css/jquery.tocify.css" rel="stylesheet">
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+	    <link href="css/freelancer.css" rel="stylesheet">
+	
 	<link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
 	</head>
 
 	<body id="page-top" class="index">
 		
+		
+    <!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://docs.waylay.io/">docs.waylay.io</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Waylay-REST-API-documentation.html">REST API</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Plugin-API.html">Sensors & Actuators</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Submitting-and-fetching-data.html">Broker & Storage</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+		
+		
+		
+		
+		
+		
 		<div class="container-fluid">
-        <div class="row-fluid">
-		<div class="col-sm-3">
+		<div class="row-fluid" style="margin-top: 60px;">
+		<div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
 		<div id="toc" class="tocify">
 		</div>
 		</div>
@@ -247,7 +291,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt;  -X DELETE  https://sandbox.waylay.io/api/bucket/items/1</code></pre>
 <h2 id="create-bucket-item">Create bucket item</h2>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test4&quot;, &quot;template&quot;: &quot;internet.json&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;start&quot;: false, &quot;type&quot;: &quot;scheduled&quot;, &quot;cron&quot;: &quot;0/30 * * * * ?&quot;, &quot;nodes&quot;: [{&quot;name&quot;: &quot;Ping_1&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_1&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_2&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_2&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;sandbox.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_3&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_3&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.google.com&quot;} ] } } } ] }&#39; https://sandbox.waylay.io/api/bucket/items</code></pre>
-
+<a href="#" class="scrollup"><a href="http://docs.waylay.io/">Scroll</a></a>
         </div>
 		        </div>
 				        </div>
@@ -257,6 +301,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.tocify.min.js"></script>
     <script src="js/prettify.js"></script>
+	<script src="js/freelancer.js"></script>
     <script>
         $(function() {
 

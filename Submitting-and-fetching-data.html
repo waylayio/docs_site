@@ -14,19 +14,62 @@
 	<link href="css/jquery-ui.css" rel="stylesheet">
     <link href="css/jquery.tocify.css" rel="stylesheet">
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+	    <link href="css/freelancer.css" rel="stylesheet">
+	
 	<link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
 	</head>
-	
+
 	<body id="page-top" class="index">
 		
+		
+    <!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://docs.waylay.io/">docs.waylay.io</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Waylay-REST-API-documentation.html">REST API</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Plugin-API.html">Sensors & Actuators</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="Submitting-and-fetching-data.html">Broker & Storage</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+		
+		
+		
+		
+		
+		
 		<div class="container-fluid">
-        <div class="row-fluid">
-		<div class="col-sm-3">
+		<div class="row-fluid" style="margin-top: 60px;">
+		<div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
 		<div id="toc" class="tocify">
 		</div>
 		</div>
             <div class="col-sm-9">
-				
 <h1 id="waylay-broker-and-storage">Waylay broker and storage</h1>
 <p>base url: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
 <p>We also have a small <a href="https://data.waylay.io/test">test application</a> that lets you play with the different options.</p>
@@ -114,7 +157,7 @@
 <p>topic <code>/global.waylay.io/testresource/engine_temp_c</code> with a message body</p>
 <pre class="sourceCode json"><code class="sourceCode json"><span class="er">80.2</span></code></pre>
 <p>There is no way to provide feedback so use the http api to see if your messages are stored!</p>
-
+<a href="#" class="scrollup"><a href="http://docs.waylay.io/">Scroll</a></a>
 
         </div>
 		        </div>
@@ -125,6 +168,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.tocify.min.js"></script>
     <script src="js/prettify.js"></script>
+	<script src="js/freelancer.js"></script>
     <script>
         $(function() {
 
