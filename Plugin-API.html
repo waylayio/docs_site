@@ -71,15 +71,15 @@
 		</div>
             <div class="col-sm-9">
 <h1 id="plugin-api-documentation">Plugin API documentation</h1>
-
+<p></p>
 <p>waylay has developed a cloud-based agent architecture that observes its environment via <strong>software-defined sensors</strong> and acts on its environment through <strong>software-defined actuators</strong>. A (very) high level blog about it you can find in this <a href="http://www.waylay.io/when-iot-meets-artificial-intelligence">blog</a></p>
-<p>In short, if you implement a weather sensor, it should return a state such as “Rain” or “Sunny”, but it can as well provide information (rawData) such as temperature, humidity etc. Every sensor must either return state or rawData (it can also return both). Obviously, in order to execute a sensor, you will need some input, like <em>city</em>. How to declare what you need in the plug, and how the framework will provide this input to the sensor will be explained later in the document.</p>
+<p>In short, if you implement a weather sensor, it should return a state such as “Rain” or “Sunny”, but it can as well provide information (rawData) such as temperature, humidity etc. Every sensor must either return <strong>state</strong> or <strong>rawData</strong> (it can also return both). Obviously, in order to execute a sensor, you will need some input, like <em>city</em>. How to declare what you need in the plug, and how the framework will provide this input to the sensor will be explained later in the document.</p>
 <p>For the actuator implementation, there is no need to return any data, you just need to fire a script and that’s it, this can be an SMS, mail, tweet, REST call or any other thing.</p>
 <p>Note: there is also possibility to write <strong>java based plugs, but this feature is only supported in OEM package</strong>. Java based plugs can be of your interest in case you want to write complex mathematical calculations which can’t be handled by the Functional node (described further in the document). For more information how to write such plugs, please e-mail to info@waylay.io</p>
 <h1 id="webscripts">Webscripts</h1>
-<p>Webscripts allow you to write plugins in JavaScript language. If you find time, you can always browse these examples: <a href="https://github.com/waylayio/WaylayPlugins/tree/master/webscripts">github examples</a>. In the waylay webapp, you can start writing your own sensors and actuators. This is a sensor editor window that you get in the app:</p>
+<p>Webscripts allow you to write plugins in JavaScript language. In the waylay webapp, you can start writing your own sensors and actuators. This is a sensor editor window that you get in the app:</p>
 <div class="figure">
-<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/sensorview.png" alt="Sensor view" class="img-responsive"/>
+<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/sensorview.png" class="img-responsive"  alt="Sensor view" />
 <p class="caption">Sensor view</p>
 </div>
 <p>If you start by clicking “Create Sensor”, you can see the following script created for you:</p>
@@ -104,6 +104,9 @@
 <li>underscore as __, -note a double underscore</li>
 <li>unirest as unirest,</li>
 <li>twilio as twilio,</li>
+<li>mysql as mysql,</li>
+<li>mqtt as mqtt,</li>
+<li>twitter as twitter,</li>
 <li>console as console,</li>
 <li>markup-js as Mark,</li>
 <li>waylay util package as waylayUtil</li>
@@ -135,7 +138,7 @@ value = {
 }; 
 <span class="fu">send</span>(<span class="kw">null</span>,value);</code></pre>
 <p>Note that you <strong>always must return the value from the script</strong>! In this example, this sensor will roll the dice, return one of the six states, and also return a random value. Random value can later been access via the RAW Data context (see below). This sensor is also handy if you want to get familiar with boolean gates or if you want to test formula computation using a Function node.</p>
-<p>Below you see an example of a result of a sensor invocation returned by the waylay webapp: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/sensorResult.png" /></p>
+<p>Below you see an example of a result of a sensor invocation returned by the waylay webapp: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/sensorResult.png" class="img-responsive"  /></p>
 <p>If you want to send an error with errorMessage, just call <code>send(errorMessage)</code>.</p>
 <h2 id="task-context">Task context</h2>
 <p>Every webscript (both actuator and sensor) can access the following task context:</p>
@@ -360,7 +363,7 @@ if(options.requiredProperties.formula) {
 <h1 id="function-node">Function node</h1>
 <p>The Function node operates on the raw data that is stored in the task context.</p>
 <h2 id="function-computation">Function computation</h2>
-<p>If you have correctly created the metadata file of your sensor plugin, then the function editor will autocomplete the raw data that it can use for calculation. In case you have not defined the raw data as part of the sensor metadata, you will need to type everything manually. The screenshot below shows the autocompletion: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaEditor.png" /></p>
+<p>If you have correctly created the metadata file of your sensor plugin, then the function editor will autocomplete the raw data that it can use for calculation. In case you have not defined the raw data as part of the sensor metadata, you will need to type everything manually. The screenshot below shows the autocompletion: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaEditor.png" class="img-responsive"  /></p>
 <p>The function processing has a number of built-in capabilities that are described below:</p>
 <h2 id="built-in-functions">Built-in functions</h2>
 <p>You can fetch the raw data from any node this way: <code>&lt;node.value1&gt;</code>. That allows you to do something like this: <code>abs( &lt;node.value1&gt; - &lt;node.value2&gt;)</code></p>
@@ -386,7 +389,7 @@ if(options.requiredProperties.formula) {
 <li>tan: tangent</li>
 <li>tanh: hyperbolic tangent</li>
 </ul>
-<p>When raw data values are used in a function, arrows between their corresponding nodes and the function processing node will be auto-created by the waylay application: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaNodes.png" /></p>
+<p>When raw data values are used in a function, arrows between their corresponding nodes and the function processing node will be auto-created by the waylay application: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaNodes.png" class="img-responsive"  /></p>
 <p>Note that you should never try to connect sensors to the Function node, this is not going to work, just start typing the function in the Function node, that is all.</p>
 <h2 id="using-previous-values">Using previous values</h2>
 <p>You can also fetch the data from previous measurements using <code>[-n]</code> syntax:</p>
@@ -437,7 +440,9 @@ if(options.requiredProperties.formula) {
 <p>In the Function node, you MUST omit options.rawData and use this: <code>&lt;GLOBAL.param&gt;</code></p>
 <p>Before deploying a new task, you can always check in the debug window that computation is actually happening. In the example below we used a dice sensor and couple of Function nodes. Note that you can as well put one Function node on top of others:</p>
 <div class="figure">
-<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaDebug.png" class="img-responsive"/>
+<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/formulaDebug.png" class="img-responsive"  />
+
+</div>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/">Scroll</a></a>
 
 </div>
