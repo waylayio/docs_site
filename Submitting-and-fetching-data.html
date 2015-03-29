@@ -70,10 +70,10 @@
 		</div>
 		</div>
             <div class="col-sm-9">
-<h1 id="waylay-broker-and-storage">Waylay broker and storage</h1>
-<p>base url: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
+<h1 id="waylay-broker-and-storage">Waylay Broker and Storage</h1>
+<p>Waylay Broker url is: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
 <p>We also have a small <a href="https://data.waylay.io/test">test application</a> that lets you play with the different options.</p>
-<h2 id="general">General</h2>
+<h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
 <p>The waylay data endpoint lets you store and distribute messages. This can be performed over different protocols: <a href="#http">http</a>, <a href="#websockets">websockets</a> or <a href="#mqtt">mqtt</a>.</p>
 <p>By default the data is publicly available. It can be read by anybody. This is mainly to ease testing.</p>
 <p>To keep your data private you use your waylay api key and secret + you provide the domain where you normally access the waylay system. This will also enable the forwarding of your data to your tasks or buckets.</p>
@@ -83,22 +83,19 @@
 <li><code>resource</code> this is the identifier of the thing the submitted data is coming from (phone, car, person, server, …)</li>
 <li><code>payload</code> the content of the message, this can be any key-value pair and as most of the time provided as a json object. eg: <code>{&quot;temp&quot;:21, &quot;humidity&quot;: 0.35}</code></li>
 </ul>
+<p>For instance, the resource can be the <code>phone</code> and the parameters something like <code>temperature, humidity, acceleration</code> etc.</p>
 <h2 id="http-rest-api"><a name="http"></a> HTTP REST API</h2>
 <p>The REST API is mainly intended for devices that have an HTTP stack available and don’t need to send huge amounts of data. It also allows you to fetch the current and last 100 items from the store.</p>
 <h3 id="anonymous">Anonymous</h3>
-<p>Posting data to storage</p>
+<h4 id="posting-data-to-storage">Posting data to storage</h4>
 <pre><code>curl -i \
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;}&#39; \
     http://localhost:9000/resources/testresource</code></pre>
-<p>Getting latest value from storage</p>
-<pre><code>curl -i http://localhost:9000/resources/testresource/current</code></pre>
-<p>Getting history from storage</p>
-<pre><code>curl -i http://localhost:9000/resources/testresource/series</code></pre>
 <h3 id="authenticated">Authenticated</h3>
-<p>Get your API key in the <a href="https://sandbox.waylay.io/#/profile">app</a></p>
-<p>Posting data to storage</p>
+<p>First you will need to fetch your API key from the profile page.</p>
+<h4 id="posting-data-to-storage-1">Posting data to storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     -H &quot;Content-Type: application/json&quot; \
@@ -112,14 +109,6 @@
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
     http://localhost:9000/resources/testresource</code></pre>
-<p>Getting latest value from storage</p>
-<pre><code>curl -i \
-    --user apiKey:apiSecret \
-    http://localhost:9000/resources/testresource/current?domain=sandbox.waylay.io</code></pre>
-<p>Getting history from storage</p>
-<pre><code>curl -i \
-    --user apiKey:apiSecret \
-    http://localhost:9000/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
 <h2 id="websockets"><a name="websockets"></a> Websockets</h2>
 <p>The websocket API is mainly meant for sending huge amounts of data, like connecting other brokers to the waylay data endpoint.</p>
 <p>The <a href="https://data.waylay.io/test">test application</a> lets you play with websocket support.</p>
@@ -157,6 +146,22 @@
 <p>topic <code>/global.waylay.io/testresource/engine_temp_c</code> with a message body</p>
 <pre class="sourceCode json"><code class="sourceCode json"><span class="er">80.2</span></code></pre>
 <p>There is no way to provide feedback so use the http api to see if your messages are stored!</p>
+<h2 id="retrieving-data">Retrieving data</h2>
+<p>You can always retrieve up to the last 100 data points for every resource over the REST calls. Coming back to the example where resource is the phone, waylay platform would store 100 data points, where each data point would hold information about underlying parameters (temperature, humidity etc.)</p>
+<h3 id="anonymous-1">Anonymous</h3>
+<h4 id="getting-latest-value-from-storage">Getting latest value from storage</h4>
+<pre><code>curl -i http://localhost:9000/resources/testresource/current</code></pre>
+<h4 id="getting-history-from-storage">Getting history from storage</h4>
+<pre><code>curl -i http://localhost:9000/resources/testresource/series</code></pre>
+<h3 id="authenticated-1">Authenticated</h3>
+<h4 id="getting-latest-value-from-storage-1">Getting latest value from storage</h4>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    http://localhost:9000/resources/testresource/current?domain=sandbox.waylay.io</code></pre>
+<h4 id="getting-history-from-storage-1">Getting history from storage</h4>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    http://localhost:9000/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/">Scroll</a></a>
 
 </div>
