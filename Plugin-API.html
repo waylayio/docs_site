@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-	
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +11,19 @@
     <title>Waylay.io Documentation</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
     <link href="css/jquery.tocify.css" rel="stylesheet">
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
-	    <link href="css/freelancer.css" rel="stylesheet">
-	
-	<link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
-	</head>
+        <link href="css/freelancer.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
+    </head>
 
-	<body id="page-top" class="index">
-		
-		
+    <body id="page-top" class="index">
+        
+        
     <!-- Navigation -->
-	<nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -39,10 +39,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div id="navigation">
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="page-scroll selected">
+                    <a href="#">Please select</a>
+                    </li>
                     <li class="page-scroll">
                         <a href="Waylay-REST-API-documentation.html">REST API</a>
                     </li>
-                    <li class="page-scroll selected">
+                    <li class="page-scroll">
                         <a href="Plugin-API.html">Sensors & Actuators</a>
                     </li>
                     <li class="page-scroll">
@@ -54,20 +57,19 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-		
-		
-		
-		
-		
-		
-		<div class="container-fluid">
-		<div class="row-fluid" style="margin-top: 60px;">
-		<div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
-		<div id="toc" class="tocify"></div>
         
-		</div>
-            <div class="col-sm-9">
-<h1 id="plugin-api-documentation">Plugin API documentation</h1>
+        
+        
+        
+        
+        
+        <div class="container-fluid">
+        <div class="row-fluid" style="margin-top: 60px;">
+        <div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
+        <div id="toc" class="tocify"></div>
+        
+        </div>
+            <div class="col-sm-9"><h1 id="plugin-api-documentation">Plugin API documentation</h1>
 <p>waylay has developed a cloud-based agent architecture that observes its environment via <strong>software-defined sensors</strong> and acts on its environment through <strong>software-defined actuators</strong>. A (very) high level blog about it you can find in this <a href="http://www.waylay.io/when-iot-meets-artificial-intelligence">blog</a></p>
 <p>In short, if you implement a weather sensor, it should return a state such as “Rain” or “Sunny”, but it can as well provide information (rawData) such as temperature, humidity etc. Every sensor must either return <strong>state</strong> or <strong>rawData</strong> (it can also return both). Obviously, in order to execute a sensor, you will need some input, like <em>city</em>. How to declare what you need in the plug, and how the framework will provide this input to the sensor will be explained later in the document.</p>
 <p>For the actuator implementation, there is no need to return any data, you just need to fire a script and that’s it, this can be an SMS, mail, tweet, REST call or any other thing.</p>
@@ -443,7 +445,7 @@ if(options.requiredProperties.formula) {
 
 </div>
         </div>
-		        </div>
+                </div>
      <footer class="text-center">
 
         <div class="footer-below">
@@ -456,13 +458,14 @@ if(options.requiredProperties.formula) {
             </div>
         </div>
     </footer>
-	<script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.tocify.min.js"></script>
     <script src="js/prettify.js"></script>
     <script src="js/tinynav.min.js"></script>
-	<script src="js/freelancer.js"></script>
+    <script src="js/freelancer.js"></script>
 </body>
 
 </html>
+
