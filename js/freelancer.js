@@ -26,15 +26,6 @@ $(function() {
     });
 });
 
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-    target: '.navbar-fixed-top'
-})
-
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function() {
-    $('.navbar-toggle:visible').click();
-});
 
 //BACK TO TOP
 
@@ -52,5 +43,27 @@ $('.navbar-collapse ul li a').click(function() {
             $("html, body").animate({ scrollTop: 0 }, 600);
             return false;
         });
+        
+        // Highlight the top nav as scrolling occurs
+        $('body').scrollspy({
+            target: '.navbar-fixed-top'
+        })
+
+        // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-collapse ul li a').click(function() {
+            $('.navbar-toggle:visible').click();
+        });
+        var toc = $("#toc").tocify({
+              selectors: "h2,h3,h4,h5",
+              extendPage: false
+            }).data("toc-tocify");
+
+            prettyPrint();
+            $(".optionName").popover({ trigger: "hover" });
+            
+            $("#navigation .nav").tinyNav({
+                active: 'selected', // String: Set the "active" class
+                label: ''
+            });
  
     });

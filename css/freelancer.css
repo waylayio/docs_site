@@ -488,3 +488,42 @@ footer .footer-below {
     text-indent:-9999px;
     background: url('../img/icon_top.png') no-repeat;
 }
+
+select.tinynav { 
+    display: block;
+    /*background: #ed1c24 url('../img/tocArrow.jpg') no-repeat top left;*/
+    background: transparent;
+    background: #ed1c24 url('../img/tocArrow.jpg') no-repeat top left;
+    width: 270px;
+    line-height: 32px;
+    padding: 0;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    height: 34px;
+    border: none;
+    font-weight: bold;
+    display: block;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+    margin-top: 13px;
+    -webkit-appearance: none;
+    padding-left: 46px;
+}
+select.tinynav:hover { 
+    background: url('../img/tocArrow.jpg') no-repeat top left #ca0c13;
+    background-position: 0 -36px;
+}
+select.tinynav option { 
+    padding-left: 10px;
+    line-height: 34px;
+    height: 34px;
+    font-weight: bold;
+}
+select.tinynav option:hover { 
+    background: transparent;
+    background: #2C2F3D;
+}
+
+#navigation .nav { display: none; }
