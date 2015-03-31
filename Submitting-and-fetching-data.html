@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-	
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +11,19 @@
     <title>Waylay.io Documentation</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
     <link href="css/jquery.tocify.css" rel="stylesheet">
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
-	    <link href="css/freelancer.css" rel="stylesheet">
-	
-	<link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
-	</head>
+    <link href="css/freelancer.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
+    <link rel="stylesheet" href="css/simplemenu.css">
+    </head>
 
-	<body id="page-top" class="index">
-		
-		
+    <body id="page-top" class="index">
+        
+        
     <!-- Navigation -->
-	<nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -37,37 +37,43 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="navigation">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="page-scroll">
-                        <a href="Waylay-REST-API-documentation.html">REST API</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="Plugin-API.html">Sensors & Actuators</a>
-                    </li>
-                    <li class="page-scroll selected">
-                        <a href="Submitting-and-fetching-data.html">Broker & Storage</a>
-                    </li>
-                </ul>
-            </div>
+        <!-- THIS IS THE MENU --> 
+
+        <div class="mobilenav"> 
+  <li><a href="Waylay-REST-API-documentation.html">REST API</a></li> 
+  <li><a href="Plugin-API.html">Sensors & Actuators</a></li> 
+  <li><a href="Submitting-and-fetching-data.html">Broker & Storage</a></li> 
+  <li><a href="Architecture.html">Architecture</a></li> 
+  <li><a href="Waylay-starters-guide.html">Starter's Guide</a></li> 
+
+</div> 
+
+        <!-- THIS IS THE ICON --> 
+
+        <a href="javascript:void(0)" class="icon"> 
+           <div class="hamburger"> 
+             <div class="menui top-menu"></div> 
+             <div class="menui mid-menu"></div> 
+             <div class="menui bottom-menu"></div> 
+           </div> 
+        </a>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-		
-		
-		
-		
-		
-		
-		<div class="container-fluid">
-		<div class="row-fluid" style="margin-top: 60px;">
-		<div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
-		<div id="toc" class="tocify">
-		</div>
-		</div>
-            <div class="col-sm-9">
-<h1 id="waylay-broker-and-storage">Waylay Broker and Storage</h1>
+        
+        
+        
+        
+        
+        
+        <div class="container-fluid">
+        <div class="row-fluid" style="margin-top: 60px;">
+        <div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
+        <div id="toc" class="tocify"></div>
+        
+        </div>
+            <div class="col-sm-9"><h1 id="waylay-broker-and-storage">Waylay Broker and Storage</h1>
 <p>Waylay Broker url is: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
 <p>We also have a small <a href="https://data.waylay.io/test">test application</a> that lets you play with the different options.</p>
 <h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
@@ -163,8 +169,8 @@
 
 </div>
         </div>
-		        </div>
-    <footer class="text-center">
+                </div>
+     <footer class="text-center">
 
         <div class="footer-below">
             <div class="container">
@@ -176,13 +182,15 @@
             </div>
         </div>
     </footer>
-	<script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.tocify.min.js"></script>
     <script src="js/prettify.js"></script>
     <script src="js/tinynav.min.js"></script>
-	<script src="js/freelancer.js"></script>
+    <script src="js/freelancer.js"></script>
+    <script src="js/simplemenu.js"> </script> 
 </body>
 
 </html>
+
