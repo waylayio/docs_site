@@ -30,7 +30,29 @@ $(function() {
 //BACK TO TOP
 
     $(document).ready(function(){ 
- 
+
+        $('.myIframe').css('height', $(window).height()+'px');
+        $("#push").click(function(e){
+              e.preventDefault();
+              var resource = $('#resource').val();
+              var data = JSON.parse($('#data').val());
+              WAYLAY.pushData(data, resource); 
+
+              /*setInterval(function() {
+                WAYLAY.getData(resource, function(data){console.log(data);}); 
+
+              }, 10000); */
+          });
+          $("#pushDomain").click(function(e){
+              e.preventDefault();
+              var resource = $('#resource').val();
+              var data = JSON.parse($('#data').val());
+              var domain = $('#domain').val();
+              var key = $('#key').val();
+              var password = $('#secret').val();
+              WAYLAY.pushDomainData(domain, key, password, data, resource); 
+          });
+        
         $(window).scroll(function(){
             if ($(this).scrollTop() > 100) {
                 $('.scrollup').fadeIn();
@@ -53,17 +75,16 @@ $(function() {
         $('.navbar-collapse ul li a').click(function() {
             $('.navbar-toggle:visible').click();
         });
-        var toc = $("#toc").tocify({
+        /*var toc = $("#toc").tocify({
               selectors: "h2,h3,h4,h5",
               extendPage: false
-            }).data("toc-tocify");
+            }).data("toc-tocify");*/
 
-            prettyPrint();
-            $(".optionName").popover({ trigger: "hover" });
-            
-            $("#navigation .nav").tinyNav({
-                active: 'selected', // String: Set the "active" class
-                label: ''
-            });
+        $(".optionName").popover({ trigger: "hover" });
+        
+        /*$("#navigation .nav").tinyNav({
+            active: 'selected', // String: Set the "active" class
+            label: ''
+        });*/
  
     });
