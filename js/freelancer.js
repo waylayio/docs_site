@@ -32,17 +32,6 @@ $(function() {
     $(document).ready(function(){ 
 
         $('.myIframe').css('height', $(window).height()+'px');
-        $("#push").click(function(e){
-              e.preventDefault();
-              var resource = $('#resource').val();
-              var data = JSON.parse($('#data').val());
-              WAYLAY.pushData(data, resource); 
-
-              /*setInterval(function() {
-                WAYLAY.getData(resource, function(data){console.log(data);}); 
-
-              }, 10000); */
-          });
           $("#pushDomain").click(function(e){
               e.preventDefault();
               var resource = $('#resource').val();
@@ -50,7 +39,10 @@ $(function() {
               var domain = $('#domain').val();
               var key = $('#key').val();
               var password = $('#secret').val();
-              WAYLAY.pushDomainData(domain, key, password, data, resource); 
+              if(key && password && domain)
+                WAYLAY.pushDomainData(domain, key, password, data, resource); 
+              else
+               WAYLAY.pushData(data, resource); 
           });
         
         $(window).scroll(function(){
