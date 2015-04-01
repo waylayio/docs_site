@@ -67,16 +67,16 @@ $(function() {
         $('.navbar-collapse ul li a').click(function() {
             $('.navbar-toggle:visible').click();
         });
-        /*var toc = $("#toc").tocify({
+        var toc = $("#toc").tocify({
               selectors: "h2,h3,h4,h5",
               extendPage: false
-            }).data("toc-tocify");*/
+            }).data("toc-tocify");
 
         $(".optionName").popover({ trigger: "hover" });
         
-        /*$("#navigation .nav").tinyNav({
+        $("#navigation .nav").tinyNav({
             active: 'selected', // String: Set the "active" class
             label: ''
-        });*/
+        });
  
     });
