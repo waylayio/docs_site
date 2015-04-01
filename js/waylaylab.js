@@ -57,17 +57,16 @@ if (!window.WAYLAY) {
          $.ajax({
            type: "POST",
              crossDomain: true,
-             username: user,
-             password: pass,
              url: "https://data.waylay.io/resources/" + resource + "?domain=" + domain,
              headers: { 
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Basic " + btoa(user + ":" + pass)
             },
              data: JSON.stringify({parameter: value}),
              dataType: "json",
              success: function(data) {
-                alert(data.message);
+                console.log(data.message);
               }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
@@ -79,17 +78,16 @@ if (!window.WAYLAY) {
          $.ajax({
            type: "POST",
              crossDomain: true,
-             username: user,
-             password: pass,
              url: "https://data.waylay.io/resources/" + resource + "?domain=" + domain,
              headers: { 
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Basic " + btoa(user + ":" + pass)
             },
              data: JSON.stringify(data),
              dataType: "json",
              success: function(data) {
-                alert(data.message);
+                console.log(data.message);
              }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
