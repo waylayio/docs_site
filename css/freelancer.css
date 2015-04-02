@@ -47,6 +47,60 @@ hr.star-primary {
     text-align: center;
 }
 
+hr.star-lab {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
+hr.star-git {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
+hr.star-code {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
+hr.star-case {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
+hr.star-docs {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
+hr.star-video {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
 hr.star-light:after,
 hr.star-blue:after,
 hr.star-primary:after {
@@ -56,7 +110,78 @@ hr.star-primary:after {
     top: -.8em;
     padding: 0 .25em;
     font-family: FontAwesome;
-    font-size: 2em;
+    font-size: 3em;
+}
+
+hr.star-lab:after {
+    content: "\f0c3";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
+hr.star-git:after {
+    content: "\f09b";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
+hr.star-docs:after {
+    content: "\f19d";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
+hr.star-code:after {
+    content: "\f121";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
+hr.star-case:after {
+    content: "\f0eb";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+hr.star-video:after {
+    content: "\f03d";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
+hr.star-code:after {
+    background-color: #fff;
+}
+
+hr.star-case:after {
+    background-color: #fff;
+}
+
+hr.star-docs:after {
+    background-color: #fff;
 }
 
 hr.star-light {
@@ -72,9 +197,24 @@ hr.star-light:after {
     background-color: #18bc9c;
 }
 
+hr.star-video:after {
+    color: #fff;
+    background-color: #18bc9c;
+}
+
+hr.star-git:after {
+    color: #fff;
+    background-color: #3498DB;
+}
+
 hr.star-blue:after {
     color: #fff;
     background-color: #3498DB;
+}
+
+hr.star-lab:after {
+    color: #fff;
+    background-color: #546E7A;
 }
 
 hr.star-primary {
@@ -211,6 +351,10 @@ section.github {
     background: #3498DB;
 }
 
+section.lab{
+    color: #fff;
+    background: #546E7A;
+}
 
 @media(max-width:767px) {
     section {
@@ -527,3 +671,23 @@ select.tinynav option:hover {
 }
 
 #navigation .nav { display: none; }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
