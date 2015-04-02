@@ -213,8 +213,7 @@ hr.star-blue:after {
 }
 
 hr.star-lab:after {
-    color: #fff;
-    background-color: #546E7A;
+    background-color: #fff;
 }
 
 hr.star-primary {
