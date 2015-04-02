@@ -28,8 +28,16 @@ $(function() {
 
 var simulationData =[];
 var timerId = 0;
+var chartData = {};
+var myLineChart;
+
+var randomColorGeneator = function () { 
+    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8); 
+};
+
 $(document).ready(function(){ 
-    //$('.myIframe').css('height', $(window).height()+'px');
+    $('#myChart').css('width', $(window).width()/3+'px');
+    var ctx = $("#myChart").get(0).getContext("2d");
     $("#simulation").hide();
     $("#pushDomain").click(function(e){
           e.preventDefault();
@@ -59,10 +67,14 @@ $(document).ready(function(){
                 timerId = setInterval(function(){ 
                     $("#stopSimulation").prop('disabled', false);
                     $("#startSimulation").prop('disabled', true);
+                    $("#measurementPanel").fadeOut();
+                    $("#settingsPanel").fadeOut();
                     count++;
                     if(simulationData.length === 0 || count > countToStop){
                         $("#stopSimulation").prop('disabled', true);
                         $("#startSimulation").prop('disabled', false);
+                        $("#measurementPanel").fadeIn();
+                        $("#settingsPanel").fadeIn();
                         clearInterval(timerId);
                     }             
                     else{
@@ -78,17 +90,27 @@ $(document).ready(function(){
                 timerId = setInterval(function(){ 
                     $("#stopSimulation").prop('disabled', false);
                     $("#startSimulation").prop('disabled', true);
+                    $("#measurementPanel").fadeOut();
+                    $("#settingsPanel").fadeOut();
                     count++;
                     if(simulationData.length === 0 || count > countToStop){
                         $("#stopSimulation").prop('disabled', true);
                         $("#startSimulation").prop('disabled', false);
+                        $("#measurementPanel").fadeIn();
+                        $("#settingsPanel").fadeIn();
                         clearInterval(timerId);
                     } 
                     else {
                         if(count > simulationData.length - 1)
                             count = 0;
-                        WAYLAY.pushData(simulationData[count], resource); 
-                        }
+                        WAYLAY.pushData(simulationData[count], resource);
+                        var point = simulationData[count];
+                        
+                        myLineChart.addData(_.values(point), count);
+                        if(count > 20)
+                            myLineChart.removeData();
+
+                    }
                     }, frequency*1000);
             }
           }  
@@ -96,8 +118,10 @@ $(document).ready(function(){
     $("#stopSimulation").click(function(e){
           e.preventDefault();
           clearInterval(timerId);
-          $("#stopSimulation").prop('disabled', true);
+         $("#stopSimulation").prop('disabled', true);
          $("#startSimulation").prop('disabled', false);
+         $("#measurementPanel").fadeIn();
+         $("#settingsPanel").fadeIn();
     });
     $("#filename").change(function(e) {
         var ext = $("input#filename").val().split(".").pop().toLowerCase();
@@ -113,6 +137,19 @@ $(document).ready(function(){
 
                 var rows = e.target.result.split("\n");
                 var params = rows[0].split(",");
+                chartData = {labels : [1, 2, 3, 4, 5, 6, 7], datasets:[]};
+                var k =0;
+                params.forEach(function(param){
+                    chartData["datasets"][k++] = {
+                        label: param, 
+                        data:[],
+                        fillColor: "rgba(230,220,220,0.1)",
+                        strokeColor: randomColorGeneator(), 
+                        highlightFill: randomColorGeneator(),
+                        highlightStroke: randomColorGeneator()
+                    };
+                });
+                myLineChart = new Chart(ctx).Line(chartData);
                 var count = 0;
                 rows.forEach(function(row) {
                     var columns = row.split(",");
