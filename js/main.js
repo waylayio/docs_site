@@ -171,21 +171,16 @@ $(document).ready(function(){
     $('.navbar-collapse ul li a').click(function() {
         $('.navbar-toggle:visible').click();
     });
-    if($("#toc").length > 0){
-        var toc = $("#toc").tocify({
+    var toc = $("#toc").tocify({
           selectors: "h2,h3,h4,h5",
           extendPage: false
         }).data("toc-tocify");
 
-    }
-
     $(".optionName").popover({ trigger: "hover" });
 
-    if( $("#navigation .nav").length > 0){
-        $("#navigation .nav").tinyNav({
+    $("#navigation .nav").tinyNav({
             active: 'selected', // String: Set the "active" class
             label: ''
         });
-    }
 
 });
