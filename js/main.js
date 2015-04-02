@@ -143,7 +143,7 @@ $(document).ready(function(){
         if (e.target.files != undefined) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                var html = '<table style="width:100%;">';
+                var html = '<div id="datatable"> <table style="width:100%;">';
 
                 var rows = e.target.result.split("\n");
                 var params = rows[0].split(",");
@@ -182,14 +182,14 @@ $(document).ready(function(){
                     count++;
                     html += "</tr>";
                 });
-                html += "</table>";
-                $('#datatable').append(html);
+                html += "</table></div>";
+                $('#datatable').replaceWith(html);
 
-                var settingsHTML = '<label style="width: 90px;text-align: right;" for="frequency">Freq.[s]:</label><input style="width: 300px" type="number" id="frequency" name="frequency" value="1"/>';
-                $('#settings').append(settingsHTML);
+                var settingsHTML = '<div id="settings"><label style="width: 90px;text-align: right;" for="frequency">Freq.[s]:</label><input style="width: 300px" type="number" id="frequency" name="frequency" value="1"/></div>';
+                $('#settings').replaceWith(settingsHTML);
 
-                var countHTML = '<label style="width: 90px;text-align: right;" for="countToStop">#records:</label><input style="width: 300px" type="number" id="countToStop" name="countToStop" value="' + (rows.length - 1)+'"/>';
-                $('#count').append(countHTML);
+                var countHTML = '<div id="count"><label style="width: 90px;text-align: right;" for="countToStop">#records:</label><input style="width: 300px" type="number" id="countToStop" name="countToStop" value="' + (rows.length - 1)+'"/></div>';
+                $('#count').replaceWith(countHTML);
 
                 $("#simulation").show();
             };
