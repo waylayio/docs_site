@@ -62,6 +62,11 @@ $(document).ready(function(){
           var frequency = $('#frequency').val();
           var countToStop = parseInt($('#countToStop').val());
           var count = 0;
+          if(myLineChart && myLineChart.datasets && myLineChart.datasets.length > 0){
+            while(myLineChart.datasets[0].points.length > 0)
+                myLineChart.removeData();
+          }
+          //chartData["labels"] = [1, 2, 3, 4, 5, 6, 7];
           if(key && password && domain){
             if(frequency && simulationData.length > 0){
                 timerId = setInterval(function(){ 
@@ -83,7 +88,7 @@ $(document).ready(function(){
                         WAYLAY.pushDomainData(domain, key, password, simulationData[count], resource); 
                         var point = simulationData[count];
                         
-                        myLineChart.addData(_.values(point), count);
+                        myLineChart.addData(_.values(point), new Date().getSeconds());
                         if(count > 20)
                             myLineChart.removeData();
                     }
@@ -111,7 +116,7 @@ $(document).ready(function(){
                         WAYLAY.pushData(simulationData[count], resource);
                         var point = simulationData[count];
                         
-                        myLineChart.addData(_.values(point), count);
+                        myLineChart.addData(_.values(point), new Date().getSeconds());
                         if(count > 20)
                             myLineChart.removeData();
 
@@ -142,7 +147,7 @@ $(document).ready(function(){
 
                 var rows = e.target.result.split("\n");
                 var params = rows[0].split(",");
-                chartData = {labels : [1, 2, 3, 4, 5, 6, 7], datasets:[]};
+                chartData = {labels : [], datasets:[]};
                 var k =0;
                 params.forEach(function(param){
                     chartData["datasets"][k++] = {
