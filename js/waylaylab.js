@@ -12,11 +12,10 @@ if (!window.WAYLAY) {
              data: JSON.stringify({parameter: value}),
              dataType: "json",
              success: function(data) {
-                alert(data.message);
+                console(data.message);
               }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
-              alert("error");
          }
          });  
       },
@@ -32,10 +31,10 @@ if (!window.WAYLAY) {
              data: JSON.stringify(data),
              dataType: "json",
              success: function(data) {
+              console.log(data.message);
               }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
-              alert("error");
          }
          });  
       },
@@ -49,7 +48,6 @@ if (!window.WAYLAY) {
               }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
-              alert("error");
          }
          });  
       },
@@ -70,7 +68,6 @@ if (!window.WAYLAY) {
               }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
-              alert("error");
          }
          });  
       },
@@ -91,7 +88,6 @@ if (!window.WAYLAY) {
              }, 
              error: function(jqXHR, textStatus, errorThrown) {
               console.log(jqXHR);
-              alert("error");
          }
          });  
       }
