@@ -81,6 +81,11 @@ $(document).ready(function(){
                         if(count > simulationData.length - 1)
                             count = 0;
                         WAYLAY.pushDomainData(domain, key, password, simulationData[count], resource); 
+                        var point = simulationData[count];
+                        
+                        myLineChart.addData(_.values(point), count);
+                        if(count > 20)
+                            myLineChart.removeData();
                     }
                         
                 }, frequency * 1000);
