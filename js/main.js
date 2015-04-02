@@ -65,11 +65,13 @@ $(document).ready(function(){
                         $("#startSimulation").prop('disabled', false);
                         clearInterval(timerId);
                     }             
-                    else
-                        WAYLAY.pushDomainData(domain, key, password, simulationData.shift(), resource); 
+                    else{
+                        if(count > simulationData.length - 1)
+                            count = 0;
+                        WAYLAY.pushDomainData(domain, key, password, simulationData[count], resource); 
+                    }
+                        
                 }, frequency * 1000);
-            }else{
-                WAYLAY.pushDomainData(domain, key, password, data, resource); 
             }
           } else {
             if(frequency && simulationData.length > 0){
@@ -82,11 +84,12 @@ $(document).ready(function(){
                         $("#startSimulation").prop('disabled', false);
                         clearInterval(timerId);
                     } 
-                    else
-                        WAYLAY.pushData(simulationData.shift(), resource); 
+                    else {
+                        if(count > simulationData.length - 1)
+                            count = 0;
+                        WAYLAY.pushData(simulationData[count], resource); 
+                        }
                     }, frequency*1000);
-            }else{
-                WAYLAY.pushData(data, resource); 
             }
           }  
     });
