@@ -177,7 +177,7 @@ hr.star-code:after {
 }
 
 hr.star-case:after {
-    background-color: #fff;
+    background-color: #ECEFF1;
 }
 
 hr.star-docs:after {
@@ -353,6 +353,10 @@ section.github {
 section.lab{
     color: #fff;
     background: #546E7A;
+}
+
+section.case{
+    background: #ECEFF1;
 }
 
 @media(max-width:767px) {
