@@ -32,6 +32,22 @@ var chartData = {};
 var myLineChart;
 var ctx;
 
+var enableSimulation = function(){
+    $("#stopSimulation").prop('disabled', false);
+    $("#startSimulation").prop('disabled', true);
+    $("#measurementPanel").fadeOut(2000);
+    $("#settingsPanel").fadeOut(2000);
+    $("#simulationSettings").fadeOut(2000);
+};
+
+var disableSimulation = function(){
+    $("#stopSimulation").prop('disabled', true);
+    $("#startSimulation").prop('disabled', false);
+    $("#measurementPanel").fadeIn(2000);
+    $("#settingsPanel").fadeIn(2000);
+    $("#simulationSettings").fadeIn(2000);
+};
+
 var randomColorGeneator = function () { 
     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8); 
 };
@@ -70,16 +86,10 @@ $(document).ready(function(){
           if(key && password && domain){
             if(frequency && simulationData.length > 0){
                 timerId = setInterval(function(){ 
-                    $("#stopSimulation").prop('disabled', false);
-                    $("#startSimulation").prop('disabled', true);
-                    $("#measurementPanel").fadeOut();
-                    $("#settingsPanel").fadeOut();
+                    enableSimulation();
                     count++;
                     if(simulationData.length === 0 || count > countToStop){
-                        $("#stopSimulation").prop('disabled', true);
-                        $("#startSimulation").prop('disabled', false);
-                        $("#measurementPanel").fadeIn();
-                        $("#settingsPanel").fadeIn();
+                        disableSimulation();
                         clearInterval(timerId);
                     }             
                     else{
@@ -87,8 +97,8 @@ $(document).ready(function(){
                             count = 0;
                         WAYLAY.pushDomainData(domain, key, password, simulationData[count], resource); 
                         var point = simulationData[count];
-                        
-                        myLineChart.addData(_.values(point), new Date().getSeconds());
+                        var date = new Date();
+                        myLineChart.addData(_.values(point),date.getHours() + ":" + date.getMinutes() +":" +date.getSeconds());
                         if(count > 20)
                             myLineChart.removeData();
                     }
@@ -98,16 +108,10 @@ $(document).ready(function(){
           } else {
             if(frequency && simulationData.length > 0){
                 timerId = setInterval(function(){ 
-                    $("#stopSimulation").prop('disabled', false);
-                    $("#startSimulation").prop('disabled', true);
-                    $("#measurementPanel").fadeOut();
-                    $("#settingsPanel").fadeOut();
+                    enableSimulation();
                     count++;
                     if(simulationData.length === 0 || count > countToStop){
-                        $("#stopSimulation").prop('disabled', true);
-                        $("#startSimulation").prop('disabled', false);
-                        $("#measurementPanel").fadeIn();
-                        $("#settingsPanel").fadeIn();
+                        disableSimulation();
                         clearInterval(timerId);
                     } 
                     else {
@@ -115,8 +119,8 @@ $(document).ready(function(){
                             count = 0;
                         WAYLAY.pushData(simulationData[count], resource);
                         var point = simulationData[count];
-                        
-                        myLineChart.addData(_.values(point), new Date().getSeconds());
+                        var date = new Date();
+                        myLineChart.addData(_.values(point), date.getHours() + ":" + date.getMinutes() + ":" +date.getSeconds());
                         if(count > 20)
                             myLineChart.removeData();
 
@@ -126,15 +130,31 @@ $(document).ready(function(){
           }  
     });
     $("#stopSimulation").click(function(e){
-          e.preventDefault();
-          clearInterval(timerId);
-         $("#stopSimulation").prop('disabled', true);
-         $("#startSimulation").prop('disabled', false);
-         $("#measurementPanel").fadeIn();
-         $("#settingsPanel").fadeIn();
+        e.preventDefault();
+        clearInterval(timerId);
+        disableSimulation();
     });
-    $("#filename").change(function(e) {
-        var ext = $("input#filename").val().split(".").pop().toLowerCase();
+    $("#filename_json").change(function(e) {
+        var ext = $("input#filename_json").val().split(".").pop().toLowerCase();
+        if($.inArray(ext, ["json"]) == -1) {
+            alert('Upload JSON');
+            return false;
+        }
+
+        if (e.target.files != undefined) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var settings = JSON.parse(e.target.result);
+                $('#domain').val(settings.domain);
+                $('#key').val(settings.key);
+                $('#secret').val(settings.secret);
+            };
+            reader.readAsText(e.target.files.item(0));
+        }
+        return false;
+    });
+    $("#filename_csv").change(function(e) {
+        var ext = $("input#filename_csv").val().split(".").pop().toLowerCase();
         if($.inArray(ext, ["csv"]) == -1) {
             alert('Upload CSV');
             return false;

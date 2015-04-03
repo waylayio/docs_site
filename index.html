@@ -270,6 +270,10 @@
                     <label style="width: 90px;text-align: right;" for="resource">Resource:</label>
                     <input style="width: 300px" type="text" id="resource" name="resource" value="testresource"/>
                 </div>
+                <div>
+                    <label style="width: 90px;text-align: right;" for="filename_json">Load json:</label>
+                    <input style="display:inline" type="file" name="filename_json" id="filename_json">
+                </div>
                 <hr>
             </div>
             <div id="measurementPanel">
@@ -285,26 +289,21 @@
                 <hr>
             </div>
             <h4>Simulation</h4>
-            <div>
-                <div id="datatable"></div>
-            </div>
-            <div>
-                <div id="settings"></div>
-            </div>
-            <div>
-                <div id="count"></div>
-            </div>
+            <div id="simulationSettings">
+                <div>
+                    <div id="datatable"></div>
+                </div>
+                <div>
+                    <div id="settings"></div>
+                </div>
+                <div>
+                    <div id="count"></div>
+                </div>
 
-<!--             <div>
-                <label style="width: 90px;text-align: right;" for="filename">Load csv:</label>
-                <span class="btn btn-default btn-file">Browse&hellip;
-                <input style="display:inline" type="file" name="filename" id="filename">
-                </span>
-            </div> -->
-
-            <div>
-                <label style="width: 90px;text-align: right;" for="filename">Load csv:</label>
-                <input style="display:inline" type="file" name="filename" id="filename">
+                <div>
+                    <label style="width: 90px;text-align: right;" for="filename_csv">Load csv:</label>
+                    <input style="display:inline" type="file" name="filename_csv" id="filename_csv">
+                </div>
             </div>
 
             <div id="simulation">
