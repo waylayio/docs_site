@@ -163,6 +163,7 @@ $(document).ready(function(){
         if (e.target.files != undefined) {
             var reader = new FileReader();
             reader.onload = function(e) {
+                simulationData = [];
                 var html = '<div id="datatable"> <table style="width:100%;">';
 
                 var rows = e.target.result.split("\n");
