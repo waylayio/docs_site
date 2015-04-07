@@ -83,15 +83,15 @@
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/ping</code></pre>
 <p>Note: you can test the same from the UI (see picture above), but since in the rest of the document we will be using curl command, the best is that you at this point in time do the same from the command line.</p>
 <hr />
-<h1 id="task-related-calls">TASK related calls</h1>
-<h2 id="get-information-about-one-task">Get information about one task</h2>
+<h2 id="task-related-calls">TASK related calls</h2>
+<h3 id="get-information-about-one-task">Get information about one task</h3>
 <p>Response will include template definition and task’s type and settings.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/{taskID}</code></pre>
-<h2 id="query-tasks">Query tasks</h2>
+<h3 id="query-tasks">Query tasks</h3>
 <p>You can also query more tasks and once using the following command:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks</code></pre>
 <p>This call gives first 10 tasks (default behaviour), and if you need to filter your tasks, you can use a query language as defined below.</p>
-<h3 id="query-interface">Query interface</h3>
+<h4 id="query-interface">Query interface</h4>
 <p>Query parameters are:</p>
 <ul>
 <li>name</li>
@@ -101,15 +101,15 @@
 <li>hits (default 10, max. 100)</li>
 </ul>
 <p><em>All query parameters are combined with logical AND operator</em>. That means that if you combine more than one parameter together you will only receive tasks that match all conditions.</p>
-<h4 id="query-by-name">Query by name</h4>
+<h5 id="query-by-name">Query by name</h5>
 <p>You query task by a name using * characters to get a list of tasks that matches the input string. For instance in this call you can retrieve all tasks that start with <em>taskName</em>.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?name=&quot;taskName*&quot; </code></pre>
 <p>If you query task by resource, input must match the resource name exactly. You can still receive more tasks in case they all have the same resource name.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?resource=&quot;resource1&quot; </code></pre>
-<h4 id="query-by-task-index">Query by task index</h4>
+<h5 id="query-by-task-index">Query by task index</h5>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1</code></pre>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1&amp;stopIndex=5</code></pre>
-<h4 id="using-the-hits">Using the hits</h4>
+<h5 id="using-the-hits">Using the hits</h5>
 <p>Default number of hits is 10, and you can change this using <em>hits</em> parameter. For instance, this call will retrieve maximum 50 tasks, starting search from the task index 1.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1&amp;hits=50</code></pre>
 <h4 id="get-the-total-count">Get the total count</h4>
@@ -141,8 +141,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT
 Access-Control-Allow-Headers: Content-Type, Authorization
 Access-Control-Expose-Headers: X-Count
 Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
-<h2 id="create-task">Create task</h2>
-<h3 id="create-task-using-template-name">Create task using template name</h3>
+<h3 id="create-task">Create task</h3>
+<h4 id="create-task-using-template-name">Create task using template name</h4>
 <p>In order to start a task from the template, you need to provide the following inputs:</p>
 <ul>
 <li>name: task name</li>
@@ -150,7 +150,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <li>resource: resource name</li>
 <li>start: whether task is started after creation</li>
 </ul>
-<h4 id="cron-task">Cron task</h4>
+<h5 id="cron-task">Cron task</h5>
 <p>Cron specific input settings:</p>
 <ul>
 <li>type : scheduled</li>
@@ -164,7 +164,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;type&quot;: &quot;scheduled&quot;,
   &quot;cron&quot;: &quot;0/30 * * * * ?&quot;
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h4 id="periodic-task">Periodic task</h4>
+<h5 id="periodic-task">Periodic task</h5>
 <p>Periodic specific input settings:</p>
 <ul>
 <li>type : periodic</li>
@@ -182,7 +182,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;frequency&quot;: 1000
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
 <p>Note: in case that you set the task to run sequentially (parallel flag=false), order of sensor’s execution will be based on the cost of the sensor (from lower to higher).</p>
-<h4 id="onetime-task">Onetime task</h4>
+<h5 id="onetime-task">Onetime task</h5>
 <p>Onetime specific input settings:</p>
 <ul>
 <li>type : onetime</li>
@@ -193,52 +193,52 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;resource&quot;: &quot;hello&quot;,
   &quot;type&quot;: &quot;onetime&quot;
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h3 id="create-task-with-sensor-properties-in-the-request">Create task with sensor properties in the request</h3>
+<h4 id="create-task-with-sensor-properties-in-the-request">Create task with sensor properties in the request</h4>
 <p>You can also override sensor settings of the template before starting the task. In this example, we have changed the addresses of the Ping sensors:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test4&quot;, &quot;template&quot;: &quot;internet.json&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;start&quot;: false, &quot;type&quot;: &quot;scheduled&quot;, &quot;cron&quot;: &quot;0/30 * * * * ?&quot;, &quot;nodes&quot;: [{&quot;name&quot;: &quot;Ping_1&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_1&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_2&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_2&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;sandbox.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_3&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_3&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.google.com&quot;} ] } } } ] }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h3 id="create-task-using-template-in-the-request">Create task using template in the request</h3>
+<h4 id="create-task-using-template-in-the-request">Create task using template in the request</h4>
 <p>You can also start the task where template is defined in the request.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test1&quot;, &quot;type&quot;: &quot;onetime&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;network&quot;: {&quot;posterior&quot;: [{&quot;nodes&quot;: [&quot;CONNECTION&quot;, &quot;Google&quot;, &quot;My Machine&quot;, &quot;MIT&quot;], &quot;function&quot;: [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1] } ], &quot;nodes&quot;: [{&quot;name&quot;: &quot;CONNECTION&quot;, &quot;states&quot;: [&quot;OK&quot;, &quot;NOK&quot;], &quot;properties&quot;: {&quot;position&quot;: [344, 367 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;explanation&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;Google&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [146, 207 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;MIT&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [365, 55 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;My Machine&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [545, 170 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;} ], &quot;name&quot;: &quot;test&quot;} }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h2 id="delete-task">Delete task</h2>
+<h3 id="delete-task">Delete task</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/tasks/1</code></pre>
-<h2 id="start-and-stop-tasks">Start and stop tasks</h2>
+<h3 id="start-and-stop-tasks">Start and stop tasks</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST https://sandbox.waylay.io/api/tasks/1/command/stop</code></pre>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST https://sandbox.waylay.io/api/tasks/1/command/start</code></pre>
-<h1 id="node-related-calls">Node related calls</h1>
-<h2 id="get-current-statesposteriors-and-raw-data-for-the-node">Get current states(posteriors) and raw data for the node</h2>
+<h2 id="node-related-calls">Node related calls</h2>
+<h3 id="get-current-statesposteriors-and-raw-data-for-the-node">Get current states(posteriors) and raw data for the node</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
-<h2 id="get-supported-states-for-the-node">Get supported states for the node</h2>
+<h3 id="get-supported-states-for-the-node">Get supported states for the node</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1/states</code></pre>
-<h2 id="set-the-state-for-the-node">Set the state for the node</h2>
+<h3 id="set-the-state-for-the-node">Set the state for the node</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST  -d &#39;state=Alive&#39; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
-<h2 id="execute-sensor-attached-to-the-node">Execute sensor attached to the node</h2>
+<h3 id="execute-sensor-attached-to-the-node">Execute sensor attached to the node</h3>
 <p>At any time you can execute a sensor attached to the node. Please be aware that the state change will be inferred in that task right after the sensor execution. For instance, in this call below, we will execute Ping sensor on the task 759:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST  -d &#39;operation=start&#39; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
-<h1 id="templates">Templates</h1>
-<h2 id="list-all-templates">List all templates</h2>
+<h2 id="templates">Templates</h2>
+<h3 id="list-all-templates">List all templates</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/templates</code></pre>
-<h2 id="get-one-template">Get one template</h2>
+<h3 id="get-one-template">Get one template</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/templates/internet.json</code></pre>
-<h2 id="delete-template">Delete template</h2>
+<h3 id="delete-template">Delete template</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/templates/internet.json</code></pre>
-<h2 id="submit-a-new-template">Submit a new template</h2>
+<h3 id="submit-a-new-template">Submit a new template</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{ posterior: [ { nodes: [ &quot;CONNECTION&quot;, &quot;Ping_1&quot;, &quot;Ping_2&quot;, &quot;Ping_3&quot; ], function: [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ] } ], nodes: [ { states: [ &quot;OK&quot;, &quot;NOK&quot; ], name: &quot;CONNECTION&quot;, properties: { position: [ 497, 235 ], comment: &quot;created by waylay&quot;, cost: 1 }, type: &quot;discrete&quot;, mode: &quot;nature&quot; }, { states: [ &quot;Not Alive&quot;, &quot;Alive&quot; ], name: &quot;Ping_1&quot;, properties: { position: [ 214, 317 ], comment: &quot;created by waylay&quot;, cost: 1, sensor: { name: &quot;Ping&quot;, version: &quot;1.0.1&quot;, label: &quot;Ping_1&quot;, requiredProperties: [ { address: &quot;www.google.com&quot; } ] } }, type: &quot;discrete&quot;, mode: &quot;nature&quot;, priors: [ 0.5, 0.5 ] }, { states: [ &quot;Not Alive&quot;, &quot;Alive&quot; ], name: &quot;Ping_2&quot;, properties: { position: [ 144, 163 ], comment: &quot;created by waylay&quot;, cost: 1, sensor: { name: &quot;Ping&quot;, version: &quot;1.0.1&quot;, label: &quot;Ping_2&quot;, requiredProperties: [ { address: &quot;www.waylay.io&quot; } ] } }, type: &quot;discrete&quot;, mode: &quot;nature&quot;, priors: [ 0.5, 0.5 ] }, { states: [ &quot;Not Alive&quot;, &quot;Alive&quot; ], name: &quot;Ping_3&quot;, properties: { position: [ 359, 62 ], comment: &quot;created by waylay&quot;, cost: 1, sensor: { name: &quot;Ping&quot;, version: &quot;1.0.1&quot;, label: &quot;Ping_3&quot;, requiredProperties: [ { address: &quot;www.yahoo.com&quot; } ] } }, type: &quot;discrete&quot;, mode: &quot;nature&quot;, priors: [ 0.5, 0.5 ] } ], name: &quot;internet2.json&quot; }&#39; https://sandbox.waylay.io/api/templates</code></pre>
-<h1 id="plugs">Plugs</h1>
-<h2 id="sensors">Sensors</h2>
-<h3 id="get-list-of-all-sensors">Get list of all sensors</h3>
+<h2 id="plugs">Plugs</h2>
+<h3 id="sensors">Sensors</h3>
+<h4 id="get-list-of-all-sensors">Get list of all sensors</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/sensors</code></pre>
-<h3 id="execute-sensor">Execute sensor</h3>
+<h4 id="execute-sensor">Execute sensor</h4>
 <p>You can test any sensor using REST. Of course, you will need to provide sensor specific parameters in the call, like in this example where we provide city name to the weather sensor:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{properties: {&quot;city&quot; : &quot;Gent&quot;}}&#39; https://sandbox.waylay.io/api/sensors/weatherSensor/versions/1.0.1</code></pre>
-<h2 id="actuators">Actuators</h2>
-<h2 id="get-list-of-all-actuators">Get list of all actuators</h2>
+<h3 id="actuators">Actuators</h3>
+<h4 id="get-list-of-all-actuators">Get list of all actuators</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/actions</code></pre>
-<h3 id="execute-actuator">Execute actuator</h3>
+<h4 id="execute-actuator">Execute actuator</h4>
 <p>You can test any actuator using REST. Of course, you will need to provide actuator specific parameters in the call, like in this example where we provide e-mail address and message to mail actuator:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{properties: {&quot;address&quot; : &quot;veselin@waylay.io&quot;, &quot;subject&quot;:&quot;test&quot;, &quot;message&quot;: &quot;hello world&quot;}}&#39; https://sandbox.waylay.io/api/actions/Mail/versions/1.0.1</code></pre>
-<h1 id="how-to-work-with-real-time-data">How to work with real-time data</h1>
+<h2 id="how-to-work-with-real-time-data">How to work with real-time data</h2>
 <p>The waylay application allows you to push raw data and states to the running tasks.</p>
-<h2 id="push-real-time-raw-data">Push real-time raw data</h2>
+<h3 id="push-real-time-raw-data">Push real-time raw data</h3>
 <p>If you need to process real time data in your sensors (like location, temperature etc.), you have two options:</p>
 <ul>
 <li>use configuration property (see the interface spec) and fetch the data at runtime in the execute call</li>
@@ -265,7 +265,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <p>You can also push several parameters at once, and you can as well skip most of the parameter’s attributes. For instance, with this call, we are pushing geolocation to the waylay platform, by specifying only longitude and latitude values. By default, waylay puts the <em>validPeriodSecs</em> of the parameter to 60 seconds, and <em>collectedTime</em> to the time the data was received:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{ resource: &quot;datasource&quot;,  data: [{ parameterName: &quot;latitude&quot;, value: 51}, { parameterName: &quot;longitude&quot;, value: 3.73}] }&#39; https://sandbox.waylay.io/api/data</code></pre>
 <p>For more information please check <em>Plugin SDK document</em>.</p>
-<h2 id="pushing-states-to-the-task">Pushing states to the task</h2>
+<h3 id="pushing-states-to-the-task">Pushing states to the task</h3>
 <p>For example, if you have a door with two states OPEN/CLOSED, you can push a state change from an external system to the task. There are 2 ways to do this:</p>
 <ol style="list-style-type: decimal">
 <li>You can inject the state directly to the particular node in the task (as described before in the node section):</li>
@@ -278,15 +278,15 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
         resource: &quot;room_1&quot;,
         nodes: [ {node:&quot;Door&quot;, state: &quot;OPEN&quot;}]
       }&#39; https://sandbox.waylay.io/api/data</code></pre>
-<h1 id="bucket">Bucket</h1>
+<h2 id="bucket">Bucket</h2>
 <p>With bucket feature you can associate a task with a resource and keep it as an item in the bucket till you want to invoke it (by resource name). You can have multiple bucket items for the same resource, and all items that match that particular resource will be invoked.</p>
-<h2 id="start-bucket-items-for-resource">Start bucket item(s) for resource</h2>
+<h3 id="start-bucket-items-for-resource">Start bucket item(s) for resource</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST -d &#39;{}&#39; -H &quot;Content-Type:application/json&quot; https://sanbox.waylay.io/api/bucket/resources/{resource}</code></pre>
-<h2 id="get-bucket-item">Get bucket item</h2>
+<h3 id="get-bucket-item">Get bucket item</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/bucket/items/1</code></pre>
-<h2 id="delete-bucket-item">Delete bucket item</h2>
+<h3 id="delete-bucket-item">Delete bucket item</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt;  -X DELETE  https://sandbox.waylay.io/api/bucket/items/1</code></pre>
-<h2 id="create-bucket-item">Create bucket item</h2>
+<h3 id="create-bucket-item">Create bucket item</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test4&quot;, &quot;template&quot;: &quot;internet.json&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;start&quot;: false, &quot;type&quot;: &quot;scheduled&quot;, &quot;cron&quot;: &quot;0/30 * * * * ?&quot;, &quot;nodes&quot;: [{&quot;name&quot;: &quot;Ping_1&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_1&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_2&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_2&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;sandbox.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_3&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_3&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.google.com&quot;} ] } } } ] }&#39; https://sandbox.waylay.io/api/bucket/items</code></pre>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
 
