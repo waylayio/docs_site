@@ -269,13 +269,37 @@ value = {
 <span class="kw">if</span>(nodeName &amp;&amp; <span class="ot">options</span>.<span class="fu">rawData</span>[nodeName]){
   temperature = <span class="ot">options</span>.<span class="fu">rawData</span>[nodeName].<span class="fu">temperature</span>;
 }</code></pre>
-<p>Note: we will learn later how do the same with one liner, using waylay utility package.</p>
+<p>Next to raw data that comes directly out of the sensor call, there are two more additional sources of information that you can retrieve. See below:</p>
+<h4 id="node-related-raw-data">Node related raw data</h4>
+<p>You can also access the current state and the last execution time of the sensor:</p>
+<ul>
+<li><code>options.rawData[&lt;nodeName&gt;].state</code> and</li>
+<li><code>options.rawData[&lt;nodeName&gt;].collectedTime</code> (in mills)</li>
+</ul>
+<p>This is useful in case you want for instance to do a sequence computation on the states of the nodes, for more info, see later section on this.</p>
+<h4 id="actuator-related-raw-data">Actuator related raw data</h4>
+<p>Similar to raw data context, an actuator also can push some (limited) results back to the context. This is <em>not ideal</em>, but in case you need this, let me directly show you the code of one possible actuator implementation, that is only sending JSON object:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">send</span>(<span class="kw">null</span>, {<span class="dt">message</span>: <span class="st">&quot;hello world&quot;</span>});</code></pre>
+<p>Notice that I was sending back value with a message. Normally, actuators are “fire and forget” by calling only <em>send()</em> , but this one is sending back a value - attaching the result in the context to the node to which this actuator belongs!</p>
+<p>Later, you might want to do restore with this backup file:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> nodeName = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">node</span>;
+<span class="kw">if</span>(!<span class="ot">options</span>.<span class="fu">actuatorData</span> || !<span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName]){
+    <span class="ot">console</span>.<span class="fu">info</span>(<span class="st">&quot;nothing to do&quot;</span>);
+    <span class="fu">send</span>();
+}
+<span class="kw">else</span>{
+    <span class="kw">var</span> value = <span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName].<span class="fu">message</span>; 
+    <span class="co">/*you get back &quot;hello world&quot; </span>
+<span class="co">    .... your code goes here */</span>
+    <span class="fu">send</span>();
+}</code></pre>
+<p>Note: we will learn later how do the same with one liner, using <strong>waylay utility package</strong>.</p>
 <h3 id="task-data">Task Data</h3>
 <p>In the task context, you can retrieve the following task-related data:</p>
 <ul>
 <li>resource name (task resource name)</li>
 <li>task ID (task ID)</li>
-<li>node name (node name of the sensor to which this call is attached)</li>
+<li>node name (node name of the sensor to which this call is attached at the moment of execution)</li>
 </ul>
 <p>In your plug code, you access these settings this way:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">options</span>.<span class="ot">task</span>.<span class="fu">RESOURCE</span>
@@ -297,36 +321,34 @@ value = {
     }
 );</code></pre>
 <p>Note that this way you can call any REST waylay call. The script above will either start or stop a task (command input), while the task ID can either come from the input param, or if not provided, it will act on the current task. This way, for instance, you can stop the task when a particular condition is met.</p>
-<h3 id="actuator-data">Actuator Data</h3>
-<p>Similar to raw data context, an actuator also can push some (limited) results back to the context. This is <em>not ideal</em>, but in case you need this, let me directly show you the code of one possible actuator implementation, that is only sending JSON object:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">send</span>(<span class="kw">null</span>, {<span class="dt">message</span>: <span class="st">&quot;hello world&quot;</span>});</code></pre>
-<p>Notice that I was sending back value with a message. Normally, actuators are “fire and forget” by calling only <em>send()</em> , but this one is sending back a value - attaching the result in the context to the node to which this actuator belongs!</p>
-<p>Later, you might want to do restore with this backup file:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> nodeName = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">node</span>;
-<span class="kw">if</span>(!<span class="ot">options</span>.<span class="fu">actuatorData</span> || !<span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName]){
-    <span class="ot">console</span>.<span class="fu">info</span>(<span class="st">&quot;nothing to do&quot;</span>);
-    <span class="fu">send</span>();
-}
-<span class="kw">else</span>{
-    <span class="kw">var</span> value = <span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName].<span class="fu">message</span>; 
-    <span class="co">/*you get back &quot;hello world&quot; </span>
-<span class="co">    .... your code goes here */</span>
-    <span class="fu">send</span>();
-}</code></pre>
-<h3 id="node-data">Node data</h3>
-<p>You can also access the current state and the last execution time of the sensor:</p>
+<h3 id="node-data">Node Data</h3>
+<p>In the node context, you can retrieve the following node-related data:</p>
 <ul>
-<li><code>options.rawData[&lt;nodeName&gt;].state</code> and</li>
-<li><code>options.rawData[&lt;nodeName&gt;].collectedTime</code> (in mills)</li>
+<li>resource name (node resource name, in case it is defined it will be different from the resource name on the task level)</li>
+<li>node name (node name of the sensor to which this call is attached at the moment of execution)</li>
 </ul>
-<p>This is useful in case you want for instance to do a sequence computation on the states of the nodes, for more info, see later section on this.</p>
+<p>In your plug code, you access these settings this way:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">options</span>.<span class="ot">node</span>.<span class="fu">NAME</span>
+<span class="ot">options</span>.<span class="ot">node</span>.<span class="fu">RESOURCE</span></code></pre>
 <h3 id="utility-functions">Utility functions</h3>
 <p>The name of the package is <strong>waylayUtil</strong>. This package provides 4 types of utility functions:</p>
-<h4 id="functions-to-retrieve-raw-data">functions to retrieve raw data</h4>
-<p><code>var rawData =  waylayUtil.getRawData(options, &quot;nodeName&quot;);</code> to retrieve rawData as JSON for a node “nodeName” <code>var param =  waylayUtil.getRawData(options, &quot;nodeName&quot;, &quot;parameterName&quot;);</code> to retrieve parameter “parameterName” from rawData for node “nodeName”.</p>
-<h4 id="functions-to-retrieve-cached-raw-data">functions to retrieve cached raw data</h4>
+<h4 id="function-to-retrieve-raw-data">function to retrieve raw data</h4>
+<p>to retrieve rawData as JSON for a node “nodeName”</p>
+<p><code>var rawData =  waylayUtil.getRawData(options, &quot;nodeName&quot;);</code></p>
+<p>to retrieve parameter “parameterName” from rawData for node “nodeName”.</p>
+<p><code>var param =  waylayUtil.getRawData(options, &quot;nodeName&quot;, &quot;parameterName&quot;);</code></p>
+<p>Note: since the latest raw data result of every sensor is provided to all nodes in the network, you may as well want to do retrieve the previous result of the the sensor execution by doing this:</p>
+<p><code>var rawData =  waylayUtil.getRawData(options, options.node.NAME);</code></p>
+<p>This is exactly how <code>waylayUtil.getCacheData()</code> call has been implemented. See below;</p>
+<h4 id="function-to-retrieve-cached-raw-data">function to retrieve cached raw data</h4>
 <p><code>var rawData =  waylayUtil.getCacheData(options, &quot;latitude&quot;);</code> to retrieve parameter “latitude” from rawData of the node that invoke the script. This way you can for instance cache things that you need to retrieve only once (like location API).</p>
 <p>For instance: you want to fetch geo location for a given address via the API service. Once the call is successful, in the result you can provide as the raw data “latitude” and “longitude”. Next time, these values will be automatically in the rawData of that node, so by simply calling <code>waylayUtil.getCacheData</code> on both parameters will give you this information, avoiding a need to call REST call again.</p>
+<h4 id="function-to-retrieve-stream-data">function to retrieve stream data</h4>
+<p><code>var rawData =  waylayUtil.getStreamData(options, &quot;latitude&quot;);</code> to retrieve parameter “latitude” from the stream data for the node that has resource matching the stream resource (which sends parameter “latitude”).</p>
+<h4 id="function-to-validate-e-mail">function to validate e-mail</h4>
+<p><code>var boolean =  waylayUtil.validateEmail(&quot;test@gmail.com&quot;);</code> returns true if the input entry is a valid email address.</p>
+<h4 id="function-to-retrieve-input-property">function to retrieve input property</h4>
+<p><code>var rawData =  waylayUtil.getProperty(options, &quot;city&quot;);</code> to retrieve input parameter. This is a simple shortcut for the call: <code>options.requiredProperties.city</code>.</p>
 <h4 id="function-to-evaluate-inputs">function to evaluate inputs</h4>
 <p>It is done in a similar way as for the Function node:</p>
 <p><code>var rawValue =  waylayUtil.evaluateData(options, input);</code> where input is in format:</p>
