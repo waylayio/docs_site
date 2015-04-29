@@ -74,6 +74,15 @@ hr.star-code {
     text-align: center;
 }
 
+hr.star-forum {
+    margin: 35px auto 30px;
+    padding: 0;
+    max-width: 250px;
+    border: 0;
+    border-top: solid 5px;
+    text-align: center;
+}
+
 hr.star-case {
     margin: 35px auto 30px;
     padding: 0;
@@ -153,6 +162,16 @@ hr.star-code:after {
     font-size: 3em;
 }
 
+hr.star-forum:after {
+    content: "\f0e6";
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    padding: 0 .25em;
+    font-family: FontAwesome;
+    font-size: 3em;
+}
+
 hr.star-case:after {
     content: "\f0eb";
     display: inline-block;
@@ -173,6 +192,10 @@ hr.star-video:after {
 }
 
 hr.star-code:after {
+    background-color: #fff;
+}
+
+hr.star-forum:after {
     background-color: #fff;
 }
 
