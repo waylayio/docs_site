@@ -384,11 +384,27 @@ if(options.requiredProperties.formula) {
 <p>and for instance, you define a formula like this in the editor:</p>
 <p><code>&lt;hello.randomValue&gt; - &lt;world.randomValue&gt;</code></p>
 <p>Note: just make sure that once you are OK with a sensor, to <strong>comment this line <code>\\options.rawData = {</code></strong> , otherwise you will always overwrite the task context of the rawData in your sensor!</p>
+<h3 id="jsonpath-expression">JSONPath expression</h3>
+<p>waylay util packages uses <a href="https://www.npmjs.com/package/node-red-contrib-jsonpath">JSONPath expression</a> to select rawdata.</p>
 <p>Other examples (such as accessing the array of data points, or array of objects):</p>
 <p><code>&lt;node1.temperature&gt; + &lt;node3.items[0].temperature&gt;</code></p>
-<p>this can be written this way as well: <code>&lt;node1.temperature&gt; + &lt;node3.items[first].temperature&gt;</code></p>
-<p>this way you can access the last point in the array: <code>&lt;node1.temperature&gt; + &lt;node3.items[last].temperature&gt;</code></p>
-<p>If the array is array of objects, you can continue till the value you are interested in: <code>&lt;node1.temperature&gt; + &lt;node3.items2[last].item.temperature&gt;</code></p>
+<p>this way you can access the last point in the array:</p>
+<p><code>&lt;node1.temperature&gt; + &lt;node3.items[(@.length-1)].temperature&gt;</code></p>
+<p>If the array is array of objects, you can continue till the value you are interested in:</p>
+<p><code>&lt;node1.temperature&gt; + &lt;node3.items2[(@.length-1)].item.temperature&gt;</code></p>
+<p>You can also use selectors:</p>
+<p><code>&lt;node3.items3[?(@.name == 'piet')].temperature&gt; + &lt;node3.items3[?(@.name == 'veselin')].temperature&gt;</code></p>
+<p>You can also make a sentences this way (which is interesting thing to do if you want to send the actuator message with the content data from other sensors):</p>
+<p><code>waylayUtil.evaluateData(options, &quot;Temperature is &lt;node3.items3[?(@.name == 'piet')].temperature&gt;)</code></p>
+<p>You can also retrieve an array:</p>
+<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.items.*&gt;&quot;)</code></p>
+<p>There are also some small extensions to the library, mostly operations on arrays: To get a count of elements:</p>
+<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.items[count]&gt;&quot;)</code></p>
+<p>But you can also use some stats, in case that you select the array:</p>
+<p><code>&lt;node3.data[max]&gt; - &lt;node3.data[min]&gt;</code></p>
+<p>Or to produce a string from an array:</p>
+<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify]&gt;&quot;</code></p>
+<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify, and]&gt;&quot;</code></p>
 <h3 id="distance-function">distance function</h3>
 <p>You can use this function for nodes that have geo location in the raw data in format:</p>
 <ul>
