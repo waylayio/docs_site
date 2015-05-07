@@ -396,6 +396,8 @@ if(options.requiredProperties.formula) {
 <p><code>&lt;node3.items3[?(@.name == 'piet')].temperature&gt; + &lt;node3.items3[?(@.name == 'veselin')].temperature&gt;</code></p>
 <p>You can also make a sentences this way (which is interesting thing to do if you want to send the actuator message with the content data from other sensors):</p>
 <p><code>waylayUtil.evaluateData(options, &quot;Temperature is &lt;node3.items3[?(@.name == 'piet')].temperature&gt;)</code></p>
+<p>If you want to filter on a parameter that is greater or lower than a particular value, you must use &amp;lt and &amp;gt notation, for instance get all temperatures with values greater than 23 degrees:</p>
+<p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.items3[?(@.temperature &amp;gt 23)].temperature&gt;)</code></p>
 <p>You can also retrieve an array:</p>
 <p><code>waylayutils.evaluateData(options, &quot;&lt;node3.items.*&gt;&quot;)</code></p>
 <p>There are also some small extensions to the library, mostly operations on arrays: To get a count of elements:</p>
