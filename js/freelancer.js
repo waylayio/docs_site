@@ -60,7 +60,7 @@ $(document).ready(function(){
     var terminal = new Terminal();
     terminal.setHeight("300px");
     terminal.setWidth('600px');
-    terminal.input('Welcome, please enter your mail address to start download:', function (input) {
+    terminal.input('Welcome, please enter your e-mail address to start download:', function (input) {
         if(validateEmail(input)){
             terminal.print('Welcome ' + input);
             terminal.sleep(1000, function () {
