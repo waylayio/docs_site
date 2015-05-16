@@ -26,6 +26,10 @@ $(function() {
     });
 });
 
+var validateEmail = function (email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+};
 
 $(document).ready(function(){  
     $(window).scroll(function(){
@@ -53,6 +57,43 @@ $(document).ready(function(){
 
     $(".optionName").popover({ trigger: "hover" });
 
+    var terminal = new Terminal();
+    terminal.setHeight("300px");
+    terminal.setWidth('600px');
+    terminal.input('Welcome, please enter your mail address to start download:', function (input) {
+        if(validateEmail(input)){
+            terminal.print('Welcome ' + input);
+            terminal.sleep(1000, function () {
+                $.ajax({
+                   type: "POST",
+                     crossDomain: true,
+                     url: "https://data.waylay.io/resources/mail",
+                     headers: { 
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                     data: JSON.stringify({email: input}),
+                     dataType: "json",
+                     success: function(data) {
+                        console.log(data.message);
+                      }, 
+                     error: function(jqXHR, textStatus, errorThrown) {
+                      console.log(jqXHR);
+                 }
+                 });  
+                terminal.print('Please type these two commands:');
+                terminal.print('$ docker run -p 8080:8080/tcp -i --name waylay waylay/demo');
+                terminal.print('$ open http://$(boot2docker ip):8080/');
+            });
+        } else {
+            terminal.print("E-mail doesn't seem right, please try again..");
+            terminal.sleep(1000, function () {
+                location.reload();
+            });
+        }
+    });
+    $('#terminal').append(terminal.html);
+
     var toc = $("#toc").tocify({
           selectors: "h2,h3,h4,h5",
           extendPage: false
@@ -61,6 +102,6 @@ $(document).ready(function(){
     $("#navigation .nav").tinyNav({
             active: 'selected', // String: Set the "active" class
             label: ''
-        });
+    });
 
 });
