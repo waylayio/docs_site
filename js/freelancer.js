@@ -81,9 +81,27 @@ $(document).ready(function(){
                       console.log(jqXHR);
                  }
                  });  
-                terminal.print('Please type these two commands:');
-                terminal.print('$ docker run -p 8080:8080/tcp -i --name waylay waylay/demo');
-                terminal.print('$ open http://$(boot2docker ip):8080/');
+                terminal.input('Please select your OS (1-linux, 2-MAC, 3-windows):', function (input) {
+                    terminal.clear();
+                    terminal.print('To start the demo run these commands in a terminal/console:');
+                    if(input == "1"){
+                        terminal.print('$ sudo docker run -p 8080:8080/tcp -i --name waylay waylay/demo');
+                        terminal.print('$ open http://localhost:8080/');
+                    } else if(input == "2"){
+                        terminal.print('$ docker run -p 8080:8080/tcp -i --name waylay waylay/demo');
+                        terminal.print('$ open http://$(boot2docker ip):8080/');
+                    } else if(input == "3"){
+                        terminal.print('$ docker run -p 8080:8080/tcp -i --name waylay waylay/demo');
+                        terminal.print('$ boot2docker ip');
+                        terminal.print('$ start http://[ip reported by above command]:8080/');
+                    } else {
+                        terminal.clear();
+                        terminal.print("OS selection not recognised please try again..");
+                        terminal.sleep(5000, function () {
+                            location.reload();
+                        });
+                    }
+                });
             });
         } else {
             terminal.print("E-mail doesn't seem right, please try again..");
