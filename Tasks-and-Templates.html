@@ -76,28 +76,30 @@
             <div class="col-sm-9"><h1 id="tasks-and-templates">Tasks and Templates</h1>
 <h2 id="template-configuration-settings">Template configuration settings</h2>
 <h3 id="actuator-configuration-panel">Actuator configuration panel</h3>
-<p>Each time one of the sensors in a task is invoked and outputs new data and/or state, it is evaluated whether any of the actuators should trigger. Note that the system behaves asynchronously, so data output is not synchronized between different sensors. For example, if you have 5 sensors that pull info from the Internet and there is a small delay between the arrival of data for each of these, logic will evaluate 5 times. This feature is great for scalability as it avoids that the complete system gets locked when e.g. one of the sensor is not responsive or suffers from large latencies. However, when the logic evaluates multiple times, it could also lead to actuators being triggered multiple times. In case this is not desired, there are ways around that as explained below. When you have multiple independent graphs in one task. The output of data and/or state in one graph will not trigger any actuator in another graph in the same task.</p>
+<p>Each time one of the sensors in a task is invoked and outputs new data and/or state, it is evaluated whether any of the actuators should trigger. Note that the system behaves asynchronously, so data output is not synchronized between different sensors. For example, if you have 5 sensors that pull info from the Internet and there is a small delay between the arrival of data for each of these, logic will evaluate 5 times. This feature is great for scalability as it avoids that the complete system gets locked when e.g. one of the sensor is not responsive or suffers from large latencies. However, when the logic evaluates multiple times, it could also lead to actuators being triggered multiple times. In case this is not desired, there are ways around that as explained below. When you have multiple independent graphs in one task, the output of data and/or state in one graph will not trigger any actuator in another graph in the same task.</p>
 <div class="figure">
-<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/actuatorTriggerPolicy.png" class="img-responsive"  alt="actuator settings" />
-<p class="caption">actuator settings</p>
+<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/actuatorTriggerPolicy.png" class="img-responsive"  />
+
 </div>
 <h4 id="state-trigger">State trigger</h4>
-<p>Whenever the logic of the task gets evaluated it is checked whether the sensor, function or gate to which the actuator is attached is in one of the selected states. If it is, the actuator gets triggered, independent of previous states of the sensor, function or gate. This is applicable to all actuators in a task, independent of which sensor has output new data and/or state. State change trigger</p>
+<p>Whenever the logic of the task gets evaluated it is checked whether the sensor, function or gate to which the actuator is attached is in one of the selected states. If it is, the actuator gets triggered, independent of previous states of the sensor, function or gate. This is applicable to all actuators in a task, independent of which sensor has output new data and/or state.</p>
+<h4 id="state-change-trigger">State change trigger</h4>
 <p>Whenever the logic of a task is evaluated, it is checked whether the sensor to which the actuator is attached has gone through a state change, e.g. from state A to state B. There is a special symbol <em>: </em> For a state change: * -&gt; A, the actuator will trigger if the state changes from any state different from A to A (so it will not trigger if the previous state was A). The actuator will also trigger if the previous state was not 100% known , e.g. before the first sensor observation or because the eviction time of the sensor was exceeded (see below for more details on eviction time). * For a state change: A-&gt; *, the actuator will trigger if the state changes from state A to any other state (so it will not trigger if the new state is A).</p>
 <h4 id="combining-state-trigger-and-state-change-trigger">Combining state trigger and state change trigger</h4>
 <p>State trigger and state change trigger can be combined. In that case, the logic will be evaluated and the actuator will trigger once (and only once) if any condition is met.</p>
-<h3 id="trigger-policy">Trigger policy</h3>
+<h4 id="trigger-policy">Trigger policy</h4>
 <p>The trigger policy allows you to control the frequency of execution of the actuators. * <strong>Every time</strong>: the actuator will trigger whenever a condition is met for it to be triggered, as explained above. * <strong>Only once</strong>: the actuator will trigger only once and never after, independent whether conditions are met or not. * <strong>Frequency</strong>: the actuator will trigger at most once within the specified time window.</p>
-<p> ### Sensor configuration panel</p>
+<h3 id="sensor-configuration-panel">Sensor configuration panel</h3>
 <p>Sometimes you want to control the sensor execution order and/or timing. One way you can achieve this (if you use periodic or cron task) is via sequence number attached to the sensors. If you need conditional sensor execution, you should use state trigger feature described below.</p>
 <div class="figure">
-<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/nodeTriggerSettings.png" class="img-responsive"  alt="node settings" />
-<p class="caption">node settings</p>
+<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/nodeTriggerSettings.png" class="img-responsive"  />
+
 </div>
-<h4 id="state-change-trigger">State change trigger</h4>
-<p>Assume a sensor_y that should be triggered upon a state change of sensor_x. This can be done by connecting sensor_x to sensor_y and specifying the desired state change in the right panel for sensor_y, e.g. state change from state A to state B. There is a special symbol <em>: </em> For a state change: * -&gt; A, the sensor_y will execute if the sensor_x state changes from any state different from A to A (so it will not execute if the previous state was A). The sensor_y will also execute if the previous state of sensor_x was not 10% known, e.g. because the eviction time of the sensor_x was exceeded. * For a state change: A-&gt; *, the sensor_y will execute if the sensor_x state changes from state A to any other state (so it will not execute if the new state is A). Resource</p>
+<h4 id="state-change-trigger-1">State change trigger</h4>
+<p>Assume a sensor_y that should be triggered upon a state change of sensor_x. This can be done by connecting sensor_x to sensor_y and specifying the desired state change in the right panel for sensor_y, e.g. state change from state A to state B. There is a special symbol <em>: </em> For a state change: * -&gt; A, the sensor_y will execute if the sensor_x state changes from any state different from A to A (so it will not execute if the previous state was A). The sensor_y will also execute if the previous state of sensor_x was not 10% known, e.g. because the eviction time of the sensor_x was exceeded. * For a state change: A-&gt; *, the sensor_y will execute if the sensor_x state changes from state A to any other state (so it will not execute if the new state is A).</p>
+<h4 id="resource">Resource</h4>
 <p>The resource is a unique identifier of a ‘thing’. When a ‘thing’ pushes streaming data to the Waylay platform, it provides its unique identifier, i.e. a resource name. Each resource can push multiple parameters to the Waylay broker. The Waylay framework will automatically distribute the resource parameters to the tasks and nodes with the corresponding resource name. E.g. with the ‘execute on data’ option described below, the sensors with the corresponding resource name will automatically get invoked when new streamed data with the same resource name becomes available. The resource name can be specified at the task level and at the node level. In case you have many sensors in your task that share the same resource name, you may want to specify it at the task level and inherit it at the node level via the $ symbol.</p>
-<h4 id="advanced-settings">Advanced settings:</h4>
+<h4 id="advanced-settings">Advanced settings</h4>
 <ul>
 <li><strong>Execute on data</strong>: The sensor will be invoked if new data is available. That data needs to be linked to a resource that is also attached to the sensor. For example, if data from resource ‘machine1’ is streamed to Waylay, and the sensor has as resourcename ‘machine1’, the sensor will be invoked as soon as new streaming data gets available. This feature allows the framework to react in real-time on real-time streaming data.</li>
 <li><strong>Execute on tick</strong>: The sensor or function get invoked on the task tick. This setting is disabled in case of a conditional execution of the sensor, since such sensors are meant to be executed only when a condition is met and not on the task tick.</li>
@@ -107,15 +109,16 @@
 </ul>
 <h2 id="task-settings">Task settings</h2>
 <div class="figure">
-<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/taskDeploy.png" class="img-responsive"  alt="task settings" />
-<p class="caption">task settings</p>
+<img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/taskDeploy.png" class="img-responsive"  />
+
 </div>
 <ul>
 <li><strong>Task name</strong>: Name of the task. Does not need to be unique, Waylay assigns a unique taskID to each task.</li>
 <li><strong>Task resource</strong>: is the resource name defined at the task level. Please see the section ‘Advanced Settings” in the Sensor section on how to inherit the task resource at the node level.</li>
 <li><strong>Start task</strong>: Will start the task immediately upon creation. This is the default behaviour.</li>
 <li><strong>Put in the bucket</strong>: Experimental feature. Will not start the task, but put it in a waiting mode. Task in the bucket wait for an external trigger before being started.</li>
-<li><strong>Task type</strong>: ** Periodic: The task tick is at a configurable periodicity.</li>
+<li><strong>Task type</strong>:</li>
+<li><strong>Periodic</strong>: The task tick is at a configurable periodicity.</li>
 <li><strong>Cron</strong>: allows to execute tasks according to a cron expression.</li>
 <li><strong>One-time</strong>: Task is only executed once.</li>
 <li><strong>Reactive</strong>: Reactive tasks do not have a task tick. Reactive tasks are typically used for tasks that require actions based on streaming data.</li>
