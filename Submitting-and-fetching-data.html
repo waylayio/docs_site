@@ -95,7 +95,7 @@
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;}&#39; \
-    http://localhost:9000/resources/testresource</code></pre>
+    https://data.waylay.io/resources/testresource</code></pre>
 <h3 id="authenticated">Authenticated</h3>
 <p>First you will need to fetch your API key from the profile page.</p>
 <h4 id="posting-data-to-storage-1">Posting data to storage</h4>
@@ -104,14 +104,14 @@
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;}&#39; \
-    http://localhost:9000/resources/testresource?domain=sandbox.waylay.io</code></pre>
+    https://data.waylay.io/resources/testresource?domain=sandbox.waylay.io</code></pre>
 <p>or</p>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
-    http://localhost:9000/resources/testresource</code></pre>
+    https://data.waylay.io/resources/testresource</code></pre>
 <h2 id="websockets"><a name="websockets"></a> Websockets</h2>
 <p>The websocket API is mainly meant for sending huge amounts of data, like connecting other brokers to the waylay data endpoint.</p>
 <p>The <a href="https://data.waylay.io/test">test application</a> lets you play with websocket support.</p>
@@ -153,18 +153,18 @@
 <p>You can always retrieve up to the last 100 data points for every resource over the REST calls. Coming back to the example where resource is the phone, waylay platform would store 100 data points, where each data point would hold information about underlying parameters (temperature, humidity etc.)</p>
 <h3 id="anonymous-1">Anonymous</h3>
 <h4 id="getting-latest-value-from-storage">Getting latest value from storage</h4>
-<pre><code>curl -i http://localhost:9000/resources/testresource/current</code></pre>
+<pre><code>curl -i https://data.waylay.io/resources/testresource/current</code></pre>
 <h4 id="getting-history-from-storage">Getting history from storage</h4>
-<pre><code>curl -i http://localhost:9000/resources/testresource/series</code></pre>
+<pre><code>curl -i https://data.waylay.io/resources/testresource/series</code></pre>
 <h3 id="authenticated-1">Authenticated</h3>
 <h4 id="getting-latest-value-from-storage-1">Getting latest value from storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
-    http://localhost:9000/resources/testresource/current?domain=sandbox.waylay.io</code></pre>
+    https://data.waylay.io/resources/testresource/current?domain=sandbox.waylay.io</code></pre>
 <h4 id="getting-history-from-storage-1">Getting history from storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
-    http://localhost:9000/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
+    https://data.waylay.io/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
 
 </div>
