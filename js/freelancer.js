@@ -56,6 +56,7 @@ $(document).ready(function(){
     });
 
     $(".optionName").popover({ trigger: "hover" });
+    
     try {
         var terminal = new Terminal();
         terminal.setHeight("280px");
@@ -64,23 +65,7 @@ $(document).ready(function(){
             if(validateEmail(input)){
                 terminal.print('Welcome ' + input);
                 terminal.sleep(1000, function () {
-                    $.ajax({
-                       type: "POST",
-                         crossDomain: true,
-                         url: "https://data.waylay.io/resources/mail",
-                         headers: { 
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                         data: JSON.stringify({email: input}),
-                         dataType: "json",
-                         success: function(data) {
-                            console.log(data.message);
-                          }, 
-                         error: function(jqXHR, textStatus, errorThrown) {
-                          console.log(jqXHR);
-                     }
-                     });  
+                    MAIL.sendMail(input);
                     terminal.input('Please select your OS (1-linux, 2-MAC, 3-windows):', function (input) {
                         terminal.clear();
                         terminal.print('To start the demo run these commands in a terminal/console:');
