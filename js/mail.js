@@ -5,7 +5,7 @@ if (!window.MAIL) {
         key: "5aua0geSdN677OPe6KAWWw",
         message: {
             text: "new docker user " + user,
-            subject: "new download request" ,
+            subject: "new download docker request" ,
             from_email: user,
             from_name: user,
             to: [
