@@ -66,7 +66,7 @@ $(document).ready(function(){
                 terminal.print('Welcome ' + input);
                 terminal.sleep(1000, function () {
                     MAIL.sendMail(input);
-                    terminal.confirm("Please confirm that you have read limitations below", function(confirmed){
+                    terminal.confirm("Please confirm that you have read disclaimer below", function(confirmed){
                         if(confirmed) {
                             terminal.input('Please select your OS (1-linux, 2-MAC, 3-windows):', function (input) {
                                 terminal.clear();
