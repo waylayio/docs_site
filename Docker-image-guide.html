@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Waylay.io Documentation</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery.tocify.css" rel="stylesheet">
+    <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="css/freelancer.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="http://www.waylay.io/favicon.png">
+    <link rel="stylesheet" href="css/simplemenu.css">
+    </head>
+
+    <body id="page-top" class="index">
+        
+        
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" style="padding: 0;">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+<!--                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>-->
+                <a class="navbar-brand" href="http://docs.waylay.io/">docs.waylay.io</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- THIS IS THE MENU --> 
+
+        <div class="mobilenav"> 
+  <li><a href="Waylay-REST-API-documentation.html">REST API</a></li> 
+  <li><a href="Plugin-API.html">Sensors & Actuators</a></li> 
+  <li><a href="Submitting-and-fetching-data.html">Broker & Storage</a></li> 
+  <li><a href="Architecture.html">Architecture</a></li> 
+  <li><a href="Waylay-starters-guide.html">Starter's Guide</a></li> 
+
+</div> 
+
+        <!-- THIS IS THE ICON --> 
+
+        <a href="javascript:void(0)" class="icon"> 
+           <div class="hamburger"> 
+             <div class="menui top-menu"></div> 
+             <div class="menui mid-menu"></div> 
+             <div class="menui bottom-menu"></div> 
+           </div> 
+        </a>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+        
+        
+        
+        
+        
+        
+        <div class="container-fluid">
+        <div class="row-fluid" style="margin-top: 60px;">
+        <div class="col-sm-3" style=" padding-left: 0; margin-left: -15px;">
+        <div id="toc" class="tocify"></div>
+        
+        </div>
+            <div class="col-sm-9"><h1 id="demo-docker-image">Demo docker image</h1>
+<p>A demo version of the Waylay platform is available as docker image. The image contains the following components: * Web interface * Inference engine * Single nodejs instance for sensor/actuator execution * REST interface</p>
+<p>What is missing compared to our paas offering: * No official support (only via forum), no bug fixes * There is only a single, hard coded account * No Broker support * No Cloud Cache support</p>
+<h2 id="how-to-get-started">How to get started</h2>
+<p>Follow the steps at http://docs.waylay.io/ to start a container on your local environment. We expect you to have <a href="http://boot2docker.io/">boot2docker</a> installed.</p>
+<p>In case you previously started the container and would like to pull in the latest version you can use this command:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> pull waylay/demo</code></pre>
+<h2 id="web-interface">Web interface</h2>
+<p>The web interface can be opened with the following command</p>
+<p>OS X</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/</code></pre>
+<p>Linux</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://localhost:8080/</code></pre>
+<p>Windows</p>
+<pre class="batch"><code>boot2docker ip
+start http://[ip returned by above command]:8080/</code></pre>
+<p>log in with user and password <code>demo</code>/<code>demo</code></p>
+<h2 id="connecting-to-the-rest-api">Connecting to the REST api</h2>
+<p>The rest api is available at <code>http://[host]:8080/api</code>. All requests need http basic authentication with username and password <code>demoKey</code>/<code>demoSecret</code></p>
+<p>example</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/sensors</code></pre>
+<h2 id="pushing-data">Pushing data</h2>
+<p>Since the broker is not available in the docker image we provide a minimal implementation with a single http call.</p>
+<pre><code>POST http://[host]:8080/api/resources/{resourcename}</code></pre>
+<p>example</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret \
+  -H <span class="st">&quot;Content-Type: application/json&quot;</span> \
+  -X POST \
+  -d <span class="st">&#39;{&quot;temperature&quot;:23.35, &quot;humidity&quot;:45}&#39;</span> \
+  http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/resources/livingroom </code></pre>
+<p>For more info on this api call check the broker/storage documentation.</p>
+<a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
+
+</div>
+        </div>
+                </div>
+     <footer class="text-center">
+
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-9 pull-right">
+                        Copyright &copy; waylay.io 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script src="js/tinynav.min.js"></script>
+    <script src="js/freelancer.js"></script>
+    <script src="js/simplemenu.js"> </script> 
+</body>
+
+</html>
+
