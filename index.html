@@ -16,6 +16,7 @@
 
     <!-- Custom CSS -->
     <link href="css/freelancer.css" rel="stylesheet">
+    <link href="css/tabbed.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -81,9 +82,11 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <a target="_blank" href="./Docker-image-guide.html"><img class="img-responsive btnImage" src="img/rocket.png" alt="Go to documentation"></a>
-                    
+                <div class="col-lg-5">
+                    <a target="_blank" href="./Docker-image-guide.html"><img class="img-responsive btnImage" src="img/rocket.png" style="
+    margin-top: 30px; alt="Go to documentation"></a>
+
+
  
 <a target="_blank" href="./Docker-image-guide.html" class="btn btn-primary btn-sm">Demo Docker Documentation</a>
 <p></p>
@@ -91,16 +94,27 @@
                         <span class="skills">Demo Docker Documentation</span>  
                     </div> -->
                 </div>
-                <div class="col-lg-6">
-                    <div id="terminal" style="text-align: left;">
-                    </div>
-                    <p style="text-align: left;font-size: 90%;"><sup>*</sup> No spam, we will only send you the product updates</p>
+                <div class="col-lg-7">
+                   
+                 
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Docker Terminal</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Features and Limitations</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">Disclaimer</a></li>
+                            
+                        </ul>
                 </div>
-            </div>
-            <div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Features and Limitations</div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1default">
+
+                    <div id="terminal" style="text-align: left;background-color: black;"></div>
+
+
+                        </div>
+                        <div class="tab-pane fade" id="tab2default">
                         <ul style="text-align: left;list-style-type: none;">
                             <li><i class="fa fa-fw fa-sitemap"></i> Web portal/designer</li>
                             <li><i class="fa fa-fw fa-magic"></i> Inference engine</li>
@@ -111,18 +125,29 @@
                             <li><i class="fa fa-fw fa-times"></i> No Broker support</li>
                             <li><i class="fa fa-fw fa-times"></i> No Cloud Cache support</li>
                         </ul>
-        </div>
-    </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab3default">
 
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Disclaimer</div>
-                <ul style="text-align: left;list-style-type: none;">
+            <ul style="text-align: left;list-style-type: none;">
                     <li style="text-align: justify; margin-right: 35px;">
     This demonstration version of the waylay software (the “Demo Software”) is a free, full version, with some functionalities disabled (see above). It is provided “AS IS” and is intended for evaluation purposes only. The Demo Software comes without any warranty. waylay assumes no liability for the use of this Demo Software. waylay reserves the right to remove the docker image from the docker hub at any time without advance warning. Except as explicitly stated otherwise above, the waylay <a href="http://www.waylay.io/tou/" >Terms of Use</a> shall apply to your use of the Demo Software.</li>
                 </ul>
+                        </div>
+                     
+                    </div>
+                </div>
             </div>
-        </div>
+ </div>
+
+
+<!--                  <div class="col-lg-6">
+                    <div id="terminal" style="text-align: left;"></div>
+                    <p style="text-align: left;font-size: 90%;"><sup>*</sup> No spam, we will only send you the product updates</p>
+                </div> -->
+
+
+            </div>
+           
     </header>
 	
     <!-- Documentation Section -->
