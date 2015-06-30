@@ -165,6 +165,29 @@
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     https://data.waylay.io/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
+<h2 id="metadata">Metadata</h2>
+<p>For each resource you have the option to store metadata like units, type of data, … Metadata is stored as a json object. This data can later be used for example to decide what kind of widget to show for a certain resource’s data.</p>
+<h3 id="anonymous-2">Anonymous</h3>
+<h4 id="getting-metadata-for-a-resource">Getting metadata for a resource</h4>
+<pre><code>curl -i https://data.waylay.io/metadata/testresource</code></pre>
+<h4 id="setting-metadata-for-a-resource">Setting metadata for a resource</h4>
+<pre><code>curl -i \
+    -H &quot;Content-Type: application/json&quot; \
+    -X PUT \
+    -d &#39;{&quot;unit&quot;:&quot;centigrade&quot;, &quot;type&quot;:&quot;double&quot;}&#39; \
+    https://data.waylay.io/metadata/testresource</code></pre>
+<h3 id="authenticated-2">Authenticated</h3>
+<h4 id="getting-metadata-for-a-resource-1">Getting metadata for a resource</h4>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    https://data.waylay.io/metadata/testresource?domain=sandbox.waylay.io</code></pre>
+<h4 id="setting-metadata-for-a-resource-1">Setting metadata for a resource</h4>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    -H &quot;Content-Type: application/json&quot; \
+    -X PUT \
+    -d &#39;{&quot;unit&quot;:&quot;centigrade&quot;, &quot;type&quot;:&quot;double&quot;}&#39; \
+    https://data.waylay.io/metadata/testresource?domain=sandbox.waylay.io</code></pre>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
 
 </div>

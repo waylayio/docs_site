@@ -110,10 +110,13 @@
 <li>unirest as unirest,</li>
 <li>twilio as twilio,</li>
 <li>mysql as mysql,</li>
+<li>mssql as mssql,</li>
 <li>mqtt as mqtt,</li>
 <li>twitter as twitter,</li>
 <li>console as console,</li>
+<li>jsonPath as jsonPath,</li>
 <li>markup-js as Mark,</li>
+<li>handlebarsjs as handlebarsjs,</li>
 <li>waylay util package as waylayUtil</li>
 </ul>
 <p>In case you need more libraries, let us now at support@waylay.io.</p>
@@ -338,6 +341,7 @@ value = {
 <p><code>var rawData =  waylayUtil.getRawData(options, &quot;nodeName&quot;);</code></p>
 <p>to retrieve parameter “parameterName” from rawData for node “nodeName”.</p>
 <p><code>var param =  waylayUtil.getRawData(options, &quot;nodeName&quot;, &quot;parameterName&quot;);</code></p>
+<p><strong>Important</strong> : unlike other calls in the util package, <strong>waylayUtil.getRawData throws the exception if the data is not available</strong>. Unlike (getStreamData, evaluateData, getCacheData) calls mentioned bellow that return undefined. The reason is that we assume that when you call getRawData you really expect this data always to be available to you. Otherwise, actuator, or other sensor that expect data from another sensor will not be functioning correctly. That also allows you to see the errors in a debugger window or in the Actuator logger.</p>
 <p>Note: since the latest raw data result of every sensor is provided to all nodes in the network, you may as well want to do retrieve the previous result of the the sensor execution by doing this:</p>
 <p><code>var rawData =  waylayUtil.getRawData(options, options.node.NAME);</code></p>
 <p>This is exactly how <code>waylayUtil.getCacheData()</code> call has been implemented. See below;</p>
@@ -408,6 +412,9 @@ if(options.requiredProperties.formula) {
 <p>Or to produce a string from an array:</p>
 <p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify]&gt;&quot;</code></p>
 <p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify, and]&gt;&quot;</code></p>
+<h3 id="function-to-template-inputs">function to template inputs</h3>
+<p><code>waylayutils.template(options, &quot;Hello {{node.rawID}}&quot;)</code></p>
+<p>In case you want to use actuators such as e-mail, you might wish to create an HTML based content. In that case you might want to use template call rather than evaluateData call. Note also that in order to provide rawData input, we use other delimiters {{}}. For more info, please check <a href="http://handlebarsjs.com/">handlebarsjs documentation</a></p>
 <h3 id="distance-function">distance function</h3>
 <p>You can use this function for nodes that have geo location in the raw data in format:</p>
 <ul>
