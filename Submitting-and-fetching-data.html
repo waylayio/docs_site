@@ -76,6 +76,8 @@
             <div class="col-sm-9"><h1 id="waylay-broker-and-storage">Waylay Broker and Storage</h1>
 <p>Waylay Broker url is: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
 <p>We also have a small <a href="https://data.waylay.io/test">test application</a> that lets you play with the different options.</p>
+<h2 id="authentication">Authentication</h2>
+<p>You will most of the time need to provide 2 things when connecting to the broker: * your domain, eg customer.waylay.io can be provided in the url or in the body of the request * credentials (apiKey, apiSecret), provided by http basic authentication or where not possible in the url (websockets)</p>
 <h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
 <p>The waylay data endpoint lets you store and distribute messages. This can be performed over different protocols: <a href="#http">http</a>, <a href="#websockets">websockets</a> or <a href="#mqtt">mqtt</a>.</p>
 <p>By default the data is publicly available. It can be read by anybody. This is mainly to ease testing.</p>
@@ -165,6 +167,9 @@
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     https://data.waylay.io/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
+<h3 id="streaming-using-websockets">Streaming using WebSockets</h3>
+<p>You can stream data for a specific resource by setting up a WebSocket to the following url</p>
+<pre><code>wss://data.waylay.io/resources/testresource/socket?domain=app.waylay.io&amp;apiKey=...&amp;apiSecret=...</code></pre>
 <h2 id="metadata">Metadata</h2>
 <p>For each resource you have the option to store metadata like units, type of data, … Metadata is stored as a json object. This data can later be used for example to decide what kind of widget to show for a certain resource’s data.</p>
 <h3 id="anonymous-2">Anonymous</h3>
