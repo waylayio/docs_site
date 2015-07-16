@@ -199,6 +199,38 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <h4 id="create-task-using-template-in-the-request">Create task using template in the request</h4>
 <p>You can also start the task where template is defined in the request.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test1&quot;, &quot;type&quot;: &quot;onetime&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;network&quot;: {&quot;posterior&quot;: [{&quot;nodes&quot;: [&quot;CONNECTION&quot;, &quot;Google&quot;, &quot;My Machine&quot;, &quot;MIT&quot;], &quot;function&quot;: [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1] } ], &quot;nodes&quot;: [{&quot;name&quot;: &quot;CONNECTION&quot;, &quot;states&quot;: [&quot;OK&quot;, &quot;NOK&quot;], &quot;properties&quot;: {&quot;position&quot;: [344, 367 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;explanation&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;Google&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [146, 207 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;MIT&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [365, 55 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;}, {&quot;priors&quot;: [0.5, 0.5 ], &quot;name&quot;: &quot;My Machine&quot;, &quot;states&quot;: [&quot;Alive&quot;, &quot;Not Alive&quot;], &quot;properties&quot;: {&quot;position&quot;: [545, 170 ], &quot;comment&quot;: &quot;No comment&quot;, &quot;cost&quot;: 1 }, &quot;type&quot;: &quot;discrete&quot;, &quot;mode&quot;: &quot;nature&quot;} ], &quot;name&quot;: &quot;test&quot;} }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
+<p>This is what the body of the request should look like for overriding properties:</p>
+<pre><code>{
+  &quot;name&quot; : &quot;testtask&quot;,
+  &quot;template&quot; : &quot;testnetwork&quot;,
+  &quot;frequency&quot; : 10,
+  &quot;type&quot; : &quot;periodic&quot;,
+  &quot;nodes&quot; : [ {
+    &quot;name&quot; : &quot;node1&quot;,
+    &quot;properties&quot; : {
+      &quot;sensor&quot; : {
+        &quot;requiredProperties&quot; : [ {
+          &quot;test&quot; : &quot;testValue&quot;
+        } ]
+      }
+    }
+  }, {
+    &quot;name&quot; : &quot;node2&quot;,
+    &quot;properties&quot; : {
+      &quot;actions&quot; : [ {
+        &quot;label&quot; : &quot;foo&quot;,
+        &quot;requiredProperties&quot; : [ {
+          &quot;test&quot; : &quot;testValue&quot;
+        } ]
+      }, {
+        &quot;label&quot; : &quot;bar&quot;,
+        &quot;requiredProperties&quot; : [ {
+          &quot;test&quot; : &quot;testValue2&quot;
+        } ]
+      } ]
+    }
+  } ]
+}</code></pre>
 <h3 id="delete-task">Delete task</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/tasks/1</code></pre>
 <h3 id="start-and-stop-tasks">Start and stop tasks</h3>
