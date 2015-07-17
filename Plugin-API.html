@@ -352,7 +352,11 @@ value = {
 <p><code>var rawData =  waylayUtil.getStreamData(options, &quot;latitude&quot;);</code> to retrieve parameter “latitude” from the stream data for the node that has resource matching the stream resource (which sends parameter “latitude”).</p>
 <h3 id="function-to-retrieve-resource-data">function to retrieve resource data</h3>
 <p><code>var rawData =  waylayUtil.getResource(options);</code></p>
-<p>When you associate the sensor with a given resource name, you can use this function in the sensor code to retrieve that name. Please keep in mind that some words are reserved: * $ (resource name will be inherited from the task resource name) * $taskId (resource name will be inherited from the task ID)</p>
+<p>When you associate the sensor with a given resource name, you can use this function in the sensor code to retrieve that name. Please keep in mind that some words are reserved:</p>
+<ul>
+<li>$ (resource name will be inherited from the task resource name)</li>
+<li>$taskId (resource name will be inherited from the task ID)</li>
+</ul>
 <h3 id="function-to-validate-e-mail">function to validate e-mail</h3>
 <p><code>var boolean =  waylayUtil.validateEmail(&quot;test@gmail.com&quot;);</code> returns true if the input entry is a valid email address.</p>
 <h3 id="function-to-retrieve-input-property">function to retrieve input property</h3>
@@ -407,16 +411,16 @@ if(options.requiredProperties.formula) {
 <p>If you want to filter on a parameter that is greater or lower than a particular value, you must use &amp;lt and &amp;gt notation, for instance get all temperatures with values greater than 23 degrees:</p>
 <p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.items3[?(@.temperature &amp;gt 23)].temperature&gt;)</code></p>
 <p>You can also retrieve an array:</p>
-<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.items.*&gt;&quot;)</code></p>
+<p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.items.*&gt;&quot;)</code></p>
 <p>There are also some small extensions to the library, mostly operations on arrays: To get a count of elements:</p>
-<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.items[count]&gt;&quot;)</code></p>
+<p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.items[count]&gt;&quot;)</code></p>
 <p>But you can also use some stats, in case that you select the array:</p>
 <p><code>&lt;node3.data[max]&gt; - &lt;node3.data[min]&gt;</code></p>
 <p>Or to produce a string from an array:</p>
-<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify]&gt;&quot;</code></p>
-<p><code>waylayutils.evaluateData(options, &quot;&lt;node3.text[stringify, and]&gt;&quot;</code></p>
+<p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.text[stringify]&gt;&quot;</code></p>
+<p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.text[stringify, and]&gt;&quot;</code></p>
 <h3 id="function-to-template-inputs">function to template inputs</h3>
-<p><code>waylayutils.template(options, &quot;Hello {{node.rawID}}&quot;)</code></p>
+<p><code>waylayUtil.template(options, &quot;Hello {{node.rawID}}&quot;)</code></p>
 <p>In case you want to use actuators such as e-mail, you might wish to create an HTML based content. In that case you might want to use template call rather than evaluateData call. Note also that in order to provide rawData input, we use other delimiters {{}}. For more info, please check <a href="http://handlebarsjs.com/">handlebarsjs documentation</a></p>
 <h3 id="distance-function">distance function</h3>
 <p>You can use this function for nodes that have geo location in the raw data in format:</p>
