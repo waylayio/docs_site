@@ -98,6 +98,12 @@
     -X POST \
     -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;}&#39; \
     https://data.waylay.io/resources/testresource</code></pre>
+<p>or</p>
+<pre><code>curl -i \
+    -H &quot;Content-Type: application/json&quot; \
+    -X POST \
+    -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;,&quot;resource&quot;:&quot;testresource&quot;}&#39; \
+    https://data.waylay.io/messages</code></pre>
 <h3 id="authenticated">Authenticated</h3>
 <p>First you will need to fetch your API key from the profile page.</p>
 <h4 id="posting-data-to-storage-1">Posting data to storage</h4>
@@ -114,6 +120,13 @@
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
     https://data.waylay.io/resources/testresource</code></pre>
+<p>or</p>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    -H &quot;Content-Type: application/json&quot; \
+    -X POST \
+    -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;resource&quot;:&quot;testresource&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
+    https://data.waylay.io/messages</code></pre>
 <h2 id="websockets"><a name="websockets"></a> Websockets</h2>
 <p>The websocket API is mainly meant for sending huge amounts of data, like connecting other brokers to the waylay data endpoint.</p>
 <p>The <a href="https://data.waylay.io/test">test application</a> lets you play with websocket support.</p>
