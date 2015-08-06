@@ -170,7 +170,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <li>type : periodic</li>
 <li>frequency: polling frequency in miliseconds (default 10 seconds)</li>
 <li>pollingFixedRate : fixed rate or fixed delay (default fixed false - meaning fixed delay)</li>
-<li>resetObservations: whether to clear observation before next invocation (default true)</li>
+<li>resetObservations: whether to clear observation before next invocation (default false)</li>
 <li>parallel: whether to run sensors in parallel or sequentially (default true, meaning parallel)</li>
 </ul>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{

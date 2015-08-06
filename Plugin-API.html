@@ -115,8 +115,8 @@
 <li>twitter as twitter,</li>
 <li>console as console,</li>
 <li>jsonPath as jsonPath,</li>
-<li>markup-js as Mark,</li>
 <li>handlebarsjs as handlebarsjs,</li>
+<li>coap as coap,</li>
 <li>waylay util package as waylayUtil</li>
 </ul>
 <p>In case you need more libraries, let us now at support@waylay.io.</p>
@@ -421,7 +421,16 @@ if(options.requiredProperties.formula) {
 <p><code>waylayUtil.evaluateData(options, &quot;&lt;node3.text[stringify, and]&gt;&quot;</code></p>
 <h3 id="function-to-template-inputs">function to template inputs</h3>
 <p><code>waylayUtil.template(options, &quot;Hello {{node.rawID}}&quot;)</code></p>
-<p>In case you want to use actuators such as e-mail, you might wish to create an HTML based content. In that case you might want to use template call rather than evaluateData call. Note also that in order to provide rawData input, we use other delimiters {{}}. For more info, please check <a href="http://handlebarsjs.com/">handlebarsjs documentation</a></p>
+<p>In case you want to use actuators such as e-mail, you might wish to create an HTML based content. In that case you might want to use template call rather than evaluateData call. Note also that in order to provide rawData input, we use other delimiters {{}}. For more info, please check <a href="http://handlebarsjs.com/">handlebarsjs documentation</a>. If you want to specify <em>resource</em> in template, use {{RESOURCE}}</p>
+<p>We also provide few handlebars helper functions, which are annotated by {{{}}}:</p>
+<ul>
+<li>add, so you can do this {{{add node1.value node2.value}}}</li>
+<li>subtract, so you can do this {{{subtract node1.value node2.value}}}</li>
+<li>multiply, so you can do this {{{multiply node1.value node2.value}}}</li>
+<li>divide, so you can do this {{{divide node1.value node2.value}}}</li>
+<li>date, or day N, where N is positive or negative number, so you can do {{{date}}} or {{{date -1}}} for yesterday</li>
+<li>time, local time {{{time}}}</li>
+</ul>
 <h3 id="distance-function">distance function</h3>
 <p>You can use this function for nodes that have geo location in the raw data in format:</p>
 <ul>
