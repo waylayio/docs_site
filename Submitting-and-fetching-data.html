@@ -151,17 +151,17 @@
 <h2 id="mqtt"><a name="mqtt"></a> MQTT</h2>
 <p>The MQTT API is mainly used by low-end devices that are not able to use the other protocols because of the lack of power or memory.</p>
 <blockquote>
-<p>Currently MQTT is not secured and only allows the storage of publicly accessible data. Forwarding to the waylay engine is thus also missing.</p>
+<p>Currently MQTT is not secured and only allows the storage of publicly accessible data. There currently is no way to use mydomain.waylay.io. And the global.waylay.io domain is not forwarded to the waylay engine so PUSH over MQTT is not possible.</p>
 </blockquote>
 <p>To connect to the waylay mqtt endpoint use this url: <code>tcp://data.waylay.io:1883</code></p>
 <p>There are 2 ways to send messages:</p>
-<p>topic <code>/global.waylay.io/testresource</code> with a message body</p>
+<p>topic <code>global.waylay.io/testresource</code> with a message body</p>
 <pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;engine_temp_c&quot;</span><span class="fu">:</span> <span class="fl">80.2</span><span class="fu">,</span>
   <span class="dt">&quot;doors_locked&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
   <span class="er">...</span>
 <span class="fu">}</span></code></pre>
-<p>topic <code>/global.waylay.io/testresource/engine_temp_c</code> with a message body</p>
+<p>topic <code>global.waylay.io/testresource/engine_temp_c</code> with a message body</p>
 <pre class="sourceCode json"><code class="sourceCode json"><span class="er">80.2</span></code></pre>
 <p>There is no way to provide feedback so use the http api to see if your messages are stored!</p>
 <h2 id="retrieving-data">Retrieving data</h2>
