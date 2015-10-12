@@ -351,13 +351,14 @@ value = {
 <p>For instance: you want to fetch geo location for a given address via the API service. Once the call is successful, in the result you can provide as the raw data “latitude” and “longitude”. Next time, these values will be automatically in the rawData of that node, so by simply calling <code>waylayUtil.getCacheData</code> on both parameters will give you this information, avoiding a need to call REST call again.</p>
 <h3 id="function-to-retrieve-stream-data">function to retrieve stream data</h3>
 <p><code>var rawData =  waylayUtil.getStreamData(options, &quot;latitude&quot;);</code> to retrieve parameter “latitude” from the stream data for the node that has resource matching the stream resource (which sends parameter “latitude”).</p>
-<h3 id="function-to-retrieve-resource-data">function to retrieve resource data</h3>
-<p><code>var rawData =  waylayUtil.getResource(options);</code></p>
+<h3 id="function-to-retrieve-the-resource-name">function to retrieve the resource name</h3>
+<p><code>var resourceName =  waylayUtil.getResource(options);</code></p>
 <p>When you associate the sensor with a given resource name, you can use this function in the sensor code to retrieve that name. Please keep in mind that some words are reserved:</p>
 <ul>
 <li>$ (resource name will be inherited from the task resource name)</li>
 <li>$taskId (resource name will be inherited from the task ID)</li>
 </ul>
+<p>This call will automatically translate $, $taskId into the runtime resource name.</p>
 <h3 id="function-to-validate-e-mail">function to validate e-mail</h3>
 <p><code>var boolean =  waylayUtil.validateEmail(&quot;test@gmail.com&quot;);</code> returns true if the input entry is a valid email address.</p>
 <h3 id="function-to-retrieve-input-property">function to retrieve input property</h3>
