@@ -6,8 +6,8 @@ if (!window.MAIL) {
         message: {
             text: "new docker user " + user,
             subject: "new download docker request" ,
-            from_email: user,
-            from_name: user,
+            'from_email': 'no-reply@waylay.io',
+            'from_name': 'Waylay website',
             to: [
                 {
                     email: "support@waylay.io",
