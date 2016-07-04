@@ -75,51 +75,56 @@
         </div>
             <div class="col-sm-9"><h1 id="waylay-broker-and-storage">Waylay Broker and Storage</h1>
 <p>Waylay Broker url is: <a href="https://data.waylay.io" class="uri">https://data.waylay.io</a></p>
-<p>We also have a small <a href="https://data.waylay.io/test">test application</a> that lets you play with the different options.</p>
+<p>We also have a small <a href="https://data.waylay.io/test?domain=yourdomain">test application</a> that lets you play with the different options.</p>
+<h2 id="resources">Resources</h2>
+<p>All data handled by the broker is linked to a <code>resource</code>. A resource is a generic identifier and can represent devices, persons, cars, customers, anything…</p>
+<h2 id="events-and-commands">Events and commands</h2>
+<p>For each <code>resource</code> we provide two channels: * <code>events</code> are messages emitted by the <code>resource</code>. eg temperature readings or alarms * <code>commands</code> are messages directed at the <code>resource</code>. eg turn on the light, send an email, apply new configuration</p>
 <h2 id="authentication">Authentication</h2>
 <p>You will most of the time need to provide 2 things when connecting to the broker: * your domain, eg customer.waylay.io can be provided in the url or in the body of the request * credentials (apiKey, apiSecret), provided by http basic authentication or where not possible in the url (websockets)</p>
+<p>For more sensitive environments we also have a device gateway where you can get per-device credentials. These credentials only allow sending or receiving data on the device’s channel.</p>
 <h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
 <p>The waylay data endpoint lets you store and distribute messages. This can be performed over different protocols: <a href="#http">http</a>, <a href="#websockets">websockets</a> or <a href="#mqtt">mqtt</a>.</p>
-<p>By default the data is publicly available. It can be read by anybody. This is mainly to ease testing.</p>
 <p>To keep your data private you use your waylay api key and secret + you provide the domain where you normally access the waylay system. This will also enable the forwarding of your data to your tasks or buckets.</p>
 <p>A submitted message is defined by 3 things</p>
 <ul>
-<li><code>domain</code> this identifies your waylay account, eg <code>sandbox.waylay.io</code> (not needed for public data)</li>
+<li><code>domain</code> this identifies your waylay account, eg <code>sandbox.waylay.io</code></li>
 <li><code>resource</code> this is the identifier of the thing the submitted data is coming from (phone, car, person, server, …)</li>
 <li><code>payload</code> the content of the message, this can be any key-value pair and as most of the time provided as a json object. eg: <code>{&quot;temp&quot;:21, &quot;humidity&quot;: 0.35}</code></li>
 </ul>
 <p>For instance, the resource can be the <code>phone</code> and the parameters something like <code>temperature, humidity, acceleration</code> etc.</p>
 <h2 id="http-rest-api"><a name="http"></a> HTTP REST API</h2>
 <p>The REST API is mainly intended for devices that have an HTTP stack available and don’t need to send huge amounts of data. It also allows you to fetch the current and last 100 items from the store.</p>
-<h3 id="anonymous">Anonymous</h3>
-<h4 id="posting-data-to-storage">Posting data to storage</h4>
-<pre><code>curl -i \
-    -H &quot;Content-Type: application/json&quot; \
-    -X POST \
-    -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;}&#39; \
-    https://data.waylay.io/resources/testresource</code></pre>
-<p>or</p>
-<pre><code>curl -i \
-    -H &quot;Content-Type: application/json&quot; \
-    -X POST \
-    -d &#39;{&quot;foo&quot;:123,&quot;bar&quot;:&quot;hello&quot;,&quot;resource&quot;:&quot;testresource&quot;}&#39; \
-    https://data.waylay.io/messages</code></pre>
-<h3 id="authenticated">Authenticated</h3>
 <p>First you will need to fetch your API key from the profile page.</p>
-<h4 id="posting-data-to-storage-1">Posting data to storage</h4>
+<h3 id="available-urls">Available urls</h3>
+<pre><code>GET           /resources/:resourceId/events              // last n / sse / ws publish
+GET           /resources/:resourceId/events/subscribe    // ws
+GET           /resources/:resourceId/events/publish      // ws
+POST          /resources/:resourceId/events
+
+GET           /resources/:resourceId/commands            // last n / sse / ws subscribe
+GET           /resources/:resourceId/commands/subscribe  // ws
+GET           /resources/:resourceId/commands/publish    // ws
+POST          /resources/:resourceId/commands</code></pre>
+<ul>
+<li>Websocket urls are marked with <code>ws</code></li>
+<li><em>Server-Sent Events</em> urls are marked with <code>sse</code></li>
+<li>The resources return the last n events or a stream in case of websocket or server sent events</li>
+</ul>
+<h4 id="posting-data-to-storage">Posting data to storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;}&#39; \
-    https://data.waylay.io/resources/testresource?domain=sandbox.waylay.io</code></pre>
+    https://data.waylay.io/resources/testresource/events?domain=sandbox.waylay.io</code></pre>
 <p>or</p>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     -H &quot;Content-Type: application/json&quot; \
     -X POST \
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
-    https://data.waylay.io/resources/testresource</code></pre>
+    https://data.waylay.io/resources/testresource/events</code></pre>
 <p>or</p>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
@@ -128,55 +133,63 @@
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;resource&quot;:&quot;testresource&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
     https://data.waylay.io/messages</code></pre>
 <h2 id="websockets"><a name="websockets"></a> Websockets</h2>
-<p>The websocket API is mainly meant for sending huge amounts of data, like connecting other brokers to the waylay data endpoint.</p>
-<p>The <a href="https://data.waylay.io/test">test application</a> lets you play with websocket support.</p>
+<p>The global websocket API is mainly meant for publish functionality, like connecting other brokers to the waylay data endpoint.</p>
+<p>The <a href="https://data.waylay.io/test?domain=yourdomain">test application</a> lets you play with websocket support.</p>
 <p>Endpoint to connect to:</p>
-<p><code>wss://data.waylay.io/socket</code></p>
-<p>or authenticated</p>
 <p><code>wss://data.waylay.io/socket?domain=sandbox.waylay.io</code> with HTTP BASIC authentication using your waylay API key and secret</p>
 <p>The endpoint allows you to submit messages in JSON format.</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;resource&quot;</span><span class="fu">:</span> <span class="st">&quot;car_1ABC123&quot;</span><span class="fu">,</span>
   <span class="dt">&quot;engine_temp_c&quot;</span><span class="fu">:</span> <span class="dv">80</span><span class="fu">,</span>
   <span class="dt">&quot;doors_locked&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
   <span class="er">...</span>
-<span class="fu">}</span></code></pre>
+<span class="fu">}</span></code></pre></div>
 <p>When submitting invalid data you will get a response back with an error message.</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;Json parse error&quot;</span><span class="fu">,</span>
   <span class="dt">&quot;details&quot;</span><span class="fu">:</span> <span class="ot">[</span>
     <span class="st">&quot;/resource &lt;- String value expected&quot;</span>
   <span class="ot">]</span>
-<span class="fu">}</span></code></pre>
+<span class="fu">}</span></code></pre></div>
 <h2 id="mqtt"><a name="mqtt"></a> MQTT</h2>
-<p>The MQTT API is mainly used by low-end devices that are not able to use the other protocols because of the lack of power or memory.</p>
+<p>The MQTT API is mainly used by “low-end” devices with connections in remote locations where a “small code footprint” is required or the network bandwidth is limited.</p>
+<p>You can connect to the Waylay MQTT endpoint either by using secure MQTT (using TLS):</p>
+<p><code>mqtts://data.waylay.io:8883</code></p>
+<p>or the insecure endpoint (not recommended)</p>
+<p><code>mqtt://data.waylay.io:1883</code></p>
+<h3 id="tls">TLS</h3>
+<p>When deciding what endpoint to use, take the TLS overhead into consideration.</p>
+<p>As a rule of thumb:</p>
 <blockquote>
-<p>Currently MQTT is not secured and only allows the storage of publicly accessible data. There currently is no way to use mydomain.waylay.io. And the global.waylay.io domain is not forwarded to the waylay engine so PUSH over MQTT is not possible.</p>
+<p><strong>Should I always use TLS with MQTT?</strong></p>
+<p><strong>Short answer:</strong> Yes, if you can.</p>
 </blockquote>
-<p>To connect to the waylay mqtt endpoint use this url: <code>tcp://data.waylay.io:1883</code></p>
-<p>There are 2 ways to send messages:</p>
-<p>topic <code>global.waylay.io/testresource</code> with a message body</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-  <span class="dt">&quot;engine_temp_c&quot;</span><span class="fu">:</span> <span class="fl">80.2</span><span class="fu">,</span>
-  <span class="dt">&quot;doors_locked&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
-  <span class="er">...</span>
-<span class="fu">}</span></code></pre>
-<p>topic <code>global.waylay.io/testresource/engine_temp_c</code> with a message body</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="er">80.2</span></code></pre>
-<p>There is no way to provide feedback so use the http api to see if your messages are stored!</p>
+<blockquote>
+<p><strong>Long answer:</strong> If you can afford the overhead in CPU and bandwidth, then a secure communication channel is invaluable.</p>
+</blockquote>
+<p><a href="http://www.hivemq.com/blog/mqtt-security-fundamentals-tls-ssl" class="uri">http://www.hivemq.com/blog/mqtt-security-fundamentals-tls-ssl</a></p>
+<h3 id="authentication-1">Authentication</h3>
+<p>To connect to the MQTT endpoint, you must have a set of client credentials that have been generated by the Waylay platform.</p>
+<p>We currently do not allow users to create these sets of credentials themselves — so if you like to use our MQTT endpoint please <a href="mailto:support@waylay.io">get in touch</a>.</p>
+<h3 id="authorization">Authorization</h3>
+<p>With your client credentials you are only allowed to subscribe to your own device’s <code>send</code> and <code>receive</code> channels. You will not be able to listen to, or broadcast on any other channel.</p>
+<p>The authorization happens transparently — if you do not have sufficient permissions to either publish or subscribe to a specific topic <strong>your connection will be terminated</strong>.</p>
+<p>Be mindful of this when you write your client software and be sure to handle any connection exceptions.</p>
+<h3 id="topics">Topics</h3>
+<p>Your device has access to two different topics, one to <em>receive</em> messages and one for <em>sending</em> messages.</p>
+<p>The Waylay MQTT topics have the following format:</p>
+<p><code>&lt;domain&gt;/resources/&lt;device-id&gt;/events</code> and <code>&lt;domain&gt;/resources/&lt;device-id&gt;/commands</code></p>
+<p>If you wanted your device to <strong>listen to incoming commands</strong>, you must <strong>subscribe to the commands topic</strong>.</p>
+<p><code>my-app.waylay.io/resources/18c1f19b-94c3-46e4-bedd-fd952ed7343a/commands</code></p>
+<p>Similary, if you wanted your device to <strong>send metrics or events</strong>, you must <strong>publish to the events topic</strong>.</p>
+<p><code>my-app.waylay.io/resources/18c1f19b-94c3-46e4-bedd-fd952ed7343a/events</code></p>
 <h2 id="retrieving-data">Retrieving data</h2>
 <p>You can always retrieve up to the last 100 data points for every resource over the REST calls. Coming back to the example where resource is the phone, waylay platform would store 100 data points, where each data point would hold information about underlying parameters (temperature, humidity etc.)</p>
-<h3 id="anonymous-1">Anonymous</h3>
 <h4 id="getting-latest-value-from-storage">Getting latest value from storage</h4>
-<pre><code>curl -i https://data.waylay.io/resources/testresource/current</code></pre>
-<h4 id="getting-history-from-storage">Getting history from storage</h4>
-<pre><code>curl -i https://data.waylay.io/resources/testresource/series</code></pre>
-<h3 id="authenticated-1">Authenticated</h3>
-<h4 id="getting-latest-value-from-storage-1">Getting latest value from storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     https://data.waylay.io/resources/testresource/current?domain=sandbox.waylay.io</code></pre>
-<h4 id="getting-history-from-storage-1">Getting history from storage</h4>
+<h4 id="getting-history-from-storage">Getting history from storage</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     https://data.waylay.io/resources/testresource/series?domain=sandbox.waylay.io</code></pre>
@@ -185,21 +198,11 @@
 <pre><code>wss://data.waylay.io/resources/testresource/socket?domain=app.waylay.io&amp;apiKey=...&amp;apiSecret=...</code></pre>
 <h2 id="metadata">Metadata</h2>
 <p>For each resource you have the option to store metadata like units, type of data, … Metadata is stored as a json object. This data can later be used for example to decide what kind of widget to show for a certain resource’s data.</p>
-<h3 id="anonymous-2">Anonymous</h3>
 <h4 id="getting-metadata-for-a-resource">Getting metadata for a resource</h4>
-<pre><code>curl -i https://data.waylay.io/metadata/testresource</code></pre>
-<h4 id="setting-metadata-for-a-resource">Setting metadata for a resource</h4>
-<pre><code>curl -i \
-    -H &quot;Content-Type: application/json&quot; \
-    -X PUT \
-    -d &#39;{&quot;unit&quot;:&quot;centigrade&quot;, &quot;type&quot;:&quot;double&quot;}&#39; \
-    https://data.waylay.io/metadata/testresource</code></pre>
-<h3 id="authenticated-2">Authenticated</h3>
-<h4 id="getting-metadata-for-a-resource-1">Getting metadata for a resource</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     https://data.waylay.io/metadata/testresource?domain=sandbox.waylay.io</code></pre>
-<h4 id="setting-metadata-for-a-resource-1">Setting metadata for a resource</h4>
+<h4 id="setting-metadata-for-a-resource">Setting metadata for a resource</h4>
 <pre><code>curl -i \
     --user apiKey:apiSecret \
     -H &quot;Content-Type: application/json&quot; \

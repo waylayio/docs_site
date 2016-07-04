@@ -91,13 +91,13 @@
 <h2 id="how-to-get-started">How to get started</h2>
 <p>Follow the steps at http://docs.waylay.io/ to start a container on your local environment. We expect you to have <a href="http://boot2docker.io/">boot2docker</a> installed.</p>
 <p>In case you previously started the container and would like to pull in the latest version you can use this command:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> pull waylay/demo</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> pull waylay/demo</code></pre></div>
 <h2 id="web-interface">Web interface</h2>
 <p>The web interface can be opened with the following command</p>
 <p>OS X</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/</code></pre></div>
 <p>Linux</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://localhost:8080/</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">open</span> http://localhost:8080/</code></pre></div>
 <p>Windows</p>
 <pre class="batch"><code>boot2docker ip
 start http://[ip returned by above command]:8080/</code></pre>
@@ -107,16 +107,16 @@ start http://[ip returned by above command]:8080/</code></pre>
 <h2 id="connecting-to-the-rest-api">Connecting to the REST api</h2>
 <p>The rest api is available at <code>http://[host]:8080/api</code>. All requests need http basic authentication with username and password <code>demoKey</code>/<code>demoSecret</code></p>
 <p>example</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/sensors</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/sensors</code></pre></div>
 <h2 id="pushing-data">Pushing data</h2>
 <p>Since the broker is not available in the docker image we provide a minimal implementation with a single http call.</p>
 <pre><code>POST http://[host]:8080/api/resources/{resourcename}</code></pre>
 <p>example</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret \
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> --user demoKey:demoSecret \
   -H <span class="st">&quot;Content-Type: application/json&quot;</span> \
   -X POST \
   -d <span class="st">&#39;{&quot;temperature&quot;:23.35, &quot;humidity&quot;:45}&#39;</span> \
-  http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/resources/livingroom </code></pre>
+  http://<span class="ot">$(</span><span class="kw">boot2docker</span> ip<span class="ot">)</span>:8080/api/resources/livingroom </code></pre></div>
 <p>For more info on this api call check the broker/storage documentation.</p>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
 
