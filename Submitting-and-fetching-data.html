@@ -79,9 +79,17 @@
 <h2 id="resources">Resources</h2>
 <p>All data handled by the broker is linked to a <code>resource</code>. A resource is a generic identifier and can represent devices, persons, cars, customers, anything…</p>
 <h2 id="events-and-commands">Events and commands</h2>
-<p>For each <code>resource</code> we provide two channels: * <code>events</code> are messages emitted by the <code>resource</code>. eg temperature readings or alarms * <code>commands</code> are messages directed at the <code>resource</code>. eg turn on the light, send an email, apply new configuration</p>
+<p>For each <code>resource</code> we provide two channels:</p>
+<ul>
+<li><code>events</code> are messages emitted by the <code>resource</code>. eg temperature readings or alarms</li>
+<li><code>commands</code> are messages directed at the <code>resource</code>. eg turn on the light, send an email, apply new configuration</li>
+</ul>
 <h2 id="authentication">Authentication</h2>
-<p>You will most of the time need to provide 2 things when connecting to the broker: * your domain, eg customer.waylay.io can be provided in the url or in the body of the request * credentials (apiKey, apiSecret), provided by http basic authentication or where not possible in the url (websockets)</p>
+<p>You will most of the time need to provide 2 things when connecting to the broker:</p>
+<ul>
+<li>your domain, eg customer.waylay.io can be provided in the url or in the body of the request</li>
+<li>credentials (apiKey, apiSecret), provided by http basic authentication or where not possible in the url (websockets)</li>
+</ul>
 <p>For more sensitive environments we also have a device gateway where you can get per-device credentials. These credentials only allow sending or receiving data on the device’s channel.</p>
 <h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
 <p>The waylay data endpoint lets you store and distribute messages. This can be performed over different protocols: <a href="#http">http</a>, <a href="#websockets">websockets</a> or <a href="#mqtt">mqtt</a>.</p>
