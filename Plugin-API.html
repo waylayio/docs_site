@@ -99,8 +99,10 @@
 <span class="op">}</span><span class="cf">else</span><span class="op">{</span>
   <span class="at">send</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Missing property testProperty1&quot;</span>))<span class="op">;</span>
 <span class="op">}</span></code></pre></div>
-<p>As you can see, this is just a simple javascript, nothing fancy. The only thing you need to know at this point is that these scripts will be executed by a node.js server, somewhere in the cloud. Every script is executed in the sandbox environment. Number of packages are pre-installed. You can simply access them from the script, no need to declare them. You have access to these (and only these) NPM packages:</p>
+<p>As you can see, this is just simple javascript, nothing fancy. The only thing you need to know at this point is that these scripts will be executed by a Node.js server, somewhere in the cloud. More precisely Node.js 4.x LTS. For details on supported ES6 api you can visit <a href="http://node.green/">node.green</a>.</p>
+<p>Every script is executed in the sandbox environment with a number of packages pre-installed. You can simply access them from the script, no need to require them. You have access to these (and only these) NPM packages:</p>
 <ul>
+<li>async as async</li>
 <li>Q as Q</li>
 <li>cheerio as cheerio,</li>
 <li>request as request,</li>
