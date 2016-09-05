@@ -146,19 +146,19 @@ POST          /resources/:resourceId/commands</code></pre>
 <p>Endpoint to connect to:</p>
 <p><code>wss://data.waylay.io/socket?domain=sandbox.waylay.io</code> with HTTP BASIC authentication using your waylay API key and secret</p>
 <p>The endpoint allows you to submit messages in JSON format.</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;resource&quot;</span><span class="fu">:</span> <span class="st">&quot;car_1ABC123&quot;</span><span class="fu">,</span>
   <span class="dt">&quot;engine_temp_c&quot;</span><span class="fu">:</span> <span class="dv">80</span><span class="fu">,</span>
   <span class="dt">&quot;doors_locked&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span>
   <span class="er">...</span>
-<span class="fu">}</span></code></pre>
+<span class="fu">}</span></code></pre></div>
 <p>When submitting invalid data you will get a response back with an error message.</p>
-<pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;Json parse error&quot;</span><span class="fu">,</span>
   <span class="dt">&quot;details&quot;</span><span class="fu">:</span> <span class="ot">[</span>
     <span class="st">&quot;/resource &lt;- String value expected&quot;</span>
   <span class="ot">]</span>
-<span class="fu">}</span></code></pre>
+<span class="fu">}</span></code></pre></div>
 <h2 id="mqtt"><a name="mqtt"></a> MQTT</h2>
 <p>The MQTT API is mainly used by “low-end” devices with connections in remote locations where a “small code footprint” is required or the network bandwidth is limited.</p>
 <p>You can connect to the Waylay MQTT endpoint either by using secure MQTT (using TLS):</p>

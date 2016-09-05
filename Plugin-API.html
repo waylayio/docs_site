@@ -87,18 +87,18 @@
 <p class="caption">Sensor view</p>
 </div>
 <p>If you start by clicking “Create Sensor”, you can see the following script created for you:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// sensors should never throw exceptions but instead send an error back</span>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// sensors should never throw exceptions but instead send an error back</span>
 
-<span class="kw">if</span>(<span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">testProperty1</span>) {
-  <span class="kw">var</span> randomValue = <span class="ot">Math</span>.<span class="fu">random</span>();
-  value = {
-    <span class="dt">observedState</span>: randomValue &gt; <span class="fl">0.5</span> ? <span class="st">&quot;hello&quot;</span> : <span class="st">&quot;world&quot;</span>,
-    <span class="dt">rawData</span>: {  <span class="dt">message</span>: <span class="st">&quot;message&quot;</span>, <span class="dt">x</span>: <span class="fl">2.34</span>, <span class="dt">random</span>: randomValue, <span class="dt">property</span>: <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">testProperty1</span>}
-  };
-  <span class="fu">send</span>(<span class="kw">null</span>, value);
-}<span class="kw">else</span>{
-  <span class="fu">send</span>(<span class="kw">new</span> <span class="fu">Error</span>(<span class="st">&quot;Missing property testProperty1&quot;</span>));
-}</code></pre>
+<span class="cf">if</span>(<span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">testProperty1</span>) <span class="op">{</span>
+  <span class="kw">var</span> randomValue <span class="op">=</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span>
+  value <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">observedState</span><span class="op">:</span> randomValue <span class="op">&gt;</span> <span class="fl">0.5</span> <span class="op">?</span> <span class="st">&quot;hello&quot;</span> : <span class="st">&quot;world&quot;</span><span class="op">,</span>
+    <span class="dt">rawData</span><span class="op">:</span> <span class="op">{</span>  <span class="dt">message</span><span class="op">:</span> <span class="st">&quot;message&quot;</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="fl">2.34</span><span class="op">,</span> <span class="dt">random</span><span class="op">:</span> randomValue<span class="op">,</span> <span class="dt">property</span><span class="op">:</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">testProperty1</span><span class="op">}</span>
+  <span class="op">};</span>
+  <span class="at">send</span>(<span class="kw">null</span><span class="op">,</span> value)<span class="op">;</span>
+<span class="op">}</span><span class="cf">else</span><span class="op">{</span>
+  <span class="at">send</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Missing property testProperty1&quot;</span>))<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
 <p>As you can see, this is just simple javascript, nothing fancy. The only thing you need to know at this point is that these scripts will be executed by a Node.js server, somewhere in the cloud. More precisely Node.js 4.x LTS. For details on supported ES6 api you can visit <a href="http://node.green/">node.green</a>.</p>
 <p>Every script is executed in the sandbox environment with a number of packages pre-installed. You can simply access them from the script, no need to require them. You have access to these (and only these) NPM packages:</p>
 <ul>
@@ -135,25 +135,25 @@
 <li>rawData (JSON with key:value pairs) Note that if you want to send a valid response back, the fist argument <em>must</em> be a <em>null</em>, otherwise, the framework will treat a first argument as the error. In case you wonder why, well, let us just say that we try to be compatible to <a href="http://en.wikipedia.org/wiki/JSON-RPC">JSON-RPC spec</a></li>
 </ul>
 <p>For instance, let’s look at the following code:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> randomValue = <span class="ot">Math</span>.<span class="fu">random</span>(); 
-<span class="kw">var</span> state;
-<span class="kw">if</span>(randomValue &gt; <span class="fl">0.85</span>)
-  state = <span class="st">&quot;ONE&quot;</span>;
-<span class="kw">else</span> <span class="kw">if</span>(randomValue &gt; <span class="fl">0.7</span>)
-  state = <span class="st">&quot;TWO&quot;</span>;
-<span class="kw">else</span> <span class="kw">if</span>(randomValue &gt; <span class="fl">0.55</span>)
-  state = <span class="st">&quot;THREE&quot;</span>;
-<span class="kw">else</span> <span class="kw">if</span>(randomValue &gt; <span class="fl">0.4</span>)
-  state = <span class="st">&quot;FOUR&quot;</span>;
-<span class="kw">else</span> <span class="kw">if</span>(randomValue &gt; <span class="fl">0.25</span>)
-  state = <span class="st">&quot;FIVE&quot;</span>;
-<span class="kw">else</span> 
-  state = <span class="st">&quot;SIX&quot;</span>;
-value = {  
-    <span class="dt">observedState</span>:  state, 
-    <span class="dt">rawData </span>: {  <span class="dt">random</span>: randomValue}  
-}; 
-<span class="fu">send</span>(<span class="kw">null</span>,value);</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> randomValue <span class="op">=</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span> 
+<span class="kw">var</span> state<span class="op">;</span>
+<span class="cf">if</span>(randomValue <span class="op">&gt;</span> <span class="fl">0.85</span>)
+  state <span class="op">=</span> <span class="st">&quot;ONE&quot;</span><span class="op">;</span>
+<span class="cf">else</span> <span class="cf">if</span>(randomValue <span class="op">&gt;</span> <span class="fl">0.7</span>)
+  state <span class="op">=</span> <span class="st">&quot;TWO&quot;</span><span class="op">;</span>
+<span class="cf">else</span> <span class="cf">if</span>(randomValue <span class="op">&gt;</span> <span class="fl">0.55</span>)
+  state <span class="op">=</span> <span class="st">&quot;THREE&quot;</span><span class="op">;</span>
+<span class="cf">else</span> <span class="cf">if</span>(randomValue <span class="op">&gt;</span> <span class="fl">0.4</span>)
+  state <span class="op">=</span> <span class="st">&quot;FOUR&quot;</span><span class="op">;</span>
+<span class="cf">else</span> <span class="cf">if</span>(randomValue <span class="op">&gt;</span> <span class="fl">0.25</span>)
+  state <span class="op">=</span> <span class="st">&quot;FIVE&quot;</span><span class="op">;</span>
+<span class="cf">else</span> 
+  state <span class="op">=</span> <span class="st">&quot;SIX&quot;</span><span class="op">;</span>
+value <span class="op">=</span> <span class="op">{</span>  
+    <span class="dt">observedState</span><span class="op">:</span>  state<span class="op">,</span> 
+    <span class="dt">rawData </span><span class="op">:</span> <span class="op">{</span>  <span class="dt">random</span><span class="op">:</span> randomValue<span class="op">}</span>  
+<span class="op">};</span> 
+<span class="at">send</span>(<span class="kw">null</span><span class="op">,</span>value)<span class="op">;</span></code></pre></div>
 <p>Note that you <strong>always must return the value from the script</strong>. In this example, this sensor will roll the dice, return one of the six states, and also return a random value. Random value can later been access via the RAW Data context (see below). This sensor is also handy if you want to get familiar with boolean gates or if you want to test formula computation using a Function node.</p>
 <p>Below you see an example of a result of a sensor invocation returned by the waylay webapp: <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/sensorResult.png" class="img-responsive"  /></p>
 <p>If you want to send an error with errorMessage, just call <code>send(errorMessage)</code>.</p>
@@ -184,7 +184,7 @@ value = {
 </ul>
 <p>These metadata of the sensors and actuators are also exposed over the REST interface.</p>
 <p>For instance, this is a REST response of one sensor:</p>
-<pre class="sourceCode json"><code class="sourceCode json">    <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;StockPrice&quot;</span><span class="fu">,</span>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json">    <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;StockPrice&quot;</span><span class="fu">,</span>
         <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Stock exchange sensor, stock price value&quot;</span><span class="fu">,</span>
         <span class="dt">&quot;author&quot;</span><span class="fu">:</span> <span class="st">&quot;Veselin&quot;</span><span class="fu">,</span>
         <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.1&quot;</span><span class="fu">,</span>
@@ -253,7 +253,7 @@ value = {
                 <span class="dt">&quot;isObject&quot;</span><span class="fu">:</span> <span class="kw">true</span>
             <span class="fu">}</span>
         <span class="ot">]</span>
-    <span class="fu">}</span></code></pre>
+    <span class="fu">}</span></code></pre></div>
 <h2 id="context">Context</h2>
 <p>Every plug (both actuator and sensor) can access the context. Why is that needed? Let’s imagine that you want to create a Mail actuator. You will need some information to create an email (subject, content, from, to etc…), and you will need API keys(if you use Mandrill for instance) or SMTP server settings. Plug should be able to tell this to the framework, and that is partially done via the metadata properties as described above. Basically there are four ways plugs can access additionally information at runtime:</p>
 <ul>
@@ -264,7 +264,7 @@ value = {
 </ul>
 <h3 id="properties">Properties</h3>
 <p>These properties are normally provided to the script at configuration time. Typical examples of properties are URLs, API keys or connection settings. For instance, in the code you retrieve them like this:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> url = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">url</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> url <span class="op">=</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">url</span></code></pre></div>
 <p>You are also required to provide this info in the metadata of the plug (right hand side of the editor), i.e. these Required Properties are not automatically parsed from the JavaScript.</p>
 <h3 id="global-settings">Global settings</h3>
 <p>You can also declare global settings which are available to sensors and actuators. These settings are visible in the profile page. This way you can for instance declare API keys that rarely change. When you define sensor or actuator, you can access these settings this way (where you need to replace the KEY with the exact key you have declared before):</p>
@@ -277,10 +277,10 @@ value = {
 <p>The raw data is provided in the form <code>options.rawData[node_name]</code> For instance, if you want to get a temperature of the node Home, you would need to get it like this:</p>
 <pre><code>options.rawData.Home.temperature</code></pre>
 <p>Now you can combine first two things together, so ask at configuration time a node name and then ask for temperature, by declaring that you need a node name in the Required Properties of the webscript:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> temperature, nodeName = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">node</span>;
-<span class="kw">if</span>(nodeName &amp;&amp; <span class="ot">options</span>.<span class="fu">rawData</span>[nodeName]){
-  temperature = <span class="ot">options</span>.<span class="fu">rawData</span>[nodeName].<span class="fu">temperature</span>;
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> temperature<span class="op">,</span> nodeName <span class="op">=</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">node</span><span class="op">;</span>
+<span class="cf">if</span>(nodeName <span class="op">&amp;&amp;</span> <span class="va">options</span>.<span class="at">rawData</span>[nodeName])<span class="op">{</span>
+  temperature <span class="op">=</span> <span class="va">options</span>.<span class="at">rawData</span>[nodeName].<span class="at">temperature</span><span class="op">;</span>
+<span class="op">}</span></code></pre></div>
 <p>Next to raw data that comes directly out of the sensor call, there are two more additional sources of information that you can retrieve. See below:</p>
 <h4 id="node-related-raw-data">Node related raw data</h4>
 <p>You can also access the current state and the last execution time of the sensor:</p>
@@ -291,20 +291,20 @@ value = {
 <p>This is useful in case you want for instance to do a sequence computation on the states of the nodes, for more info, see later section on this.</p>
 <h4 id="actuator-related-raw-data">Actuator related raw data</h4>
 <p>Similar to raw data context, an actuator also can push some (limited) results back to the context. This is <em>not ideal</em>, but in case you need this, let me directly show you the code of one possible actuator implementation, that is only sending JSON object:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">send</span>(<span class="kw">null</span>, {<span class="dt">message</span>: <span class="st">&quot;hello world&quot;</span>});</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">send</span>(<span class="kw">null</span><span class="op">,</span> <span class="op">{</span><span class="dt">message</span><span class="op">:</span> <span class="st">&quot;hello world&quot;</span><span class="op">}</span>)<span class="op">;</span></code></pre></div>
 <p>Notice that I was sending back value with a message. Normally, actuators are “fire and forget” by calling only <em>send()</em> , but this one is sending back a value - attaching the result in the context to the node to which this actuator belongs!</p>
 <p>Later, you might want to do restore with this backup file:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> nodeName = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">node</span>;
-<span class="kw">if</span>(!<span class="ot">options</span>.<span class="fu">actuatorData</span> || !<span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName]){
-    <span class="ot">console</span>.<span class="fu">info</span>(<span class="st">&quot;nothing to do&quot;</span>);
-    <span class="fu">send</span>();
-}
-<span class="kw">else</span>{
-    <span class="kw">var</span> value = <span class="ot">options</span>.<span class="fu">actuatorData</span>[nodeName].<span class="fu">message</span>; 
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> nodeName <span class="op">=</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">node</span><span class="op">;</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="va">options</span>.<span class="at">actuatorData</span> <span class="op">||</span> <span class="op">!</span><span class="va">options</span>.<span class="at">actuatorData</span>[nodeName])<span class="op">{</span>
+    <span class="va">console</span>.<span class="at">info</span>(<span class="st">&quot;nothing to do&quot;</span>)<span class="op">;</span>
+    <span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span>
+<span class="cf">else</span><span class="op">{</span>
+    <span class="kw">var</span> value <span class="op">=</span> <span class="va">options</span>.<span class="at">actuatorData</span>[nodeName].<span class="at">message</span><span class="op">;</span> 
     <span class="co">/*you get back &quot;hello world&quot; </span>
 <span class="co">    .... your code goes here */</span>
-    <span class="fu">send</span>();
-}</code></pre>
+    <span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
 <p>Note: we will learn later how do the same with one liner, using <strong>waylay utility package</strong>.</p>
 <h3 id="task-data">Task Data</h3>
 <p>In the task context, you can retrieve the following task-related data:</p>
@@ -314,24 +314,24 @@ value = {
 <li>node name (node name of the sensor to which this call is attached at the moment of execution)</li>
 </ul>
 <p>In your plug code, you access these settings this way:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">options</span>.<span class="ot">task</span>.<span class="fu">RESOURCE</span>
-<span class="ot">options</span>.<span class="ot">task</span>.<span class="fu">TASK_ID</span>
-<span class="ot">options</span>.<span class="ot">task</span>.<span class="fu">NODE_NAME</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">options</span>.<span class="va">task</span>.<span class="at">RESOURCE</span>
+<span class="va">options</span>.<span class="va">task</span>.<span class="at">TASK_ID</span>
+<span class="va">options</span>.<span class="va">task</span>.<span class="at">NODE_NAME</span></code></pre></div>
 <p>For instance, if you want to create an actuator that would control the running task (please see REST documentation for more info), this is how you can do it:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> taskID = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">taskId</span> || <span class="ot">options</span>.<span class="ot">task</span>.<span class="fu">TASK_ID</span>;
-<span class="kw">var</span> command = <span class="ot">options</span>.<span class="ot">requiredProperties</span>.<span class="fu">command</span>;
-<span class="kw">var</span> username =  <span class="ot">options</span>.<span class="ot">globalSettings</span>.<span class="fu">API_KEY</span>;
-<span class="kw">var</span> password = <span class="ot">options</span>.<span class="ot">globalSettings</span>.<span class="fu">API_PASS</span>;
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> taskID <span class="op">=</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">taskId</span> <span class="op">||</span> <span class="va">options</span>.<span class="va">task</span>.<span class="at">TASK_ID</span><span class="op">;</span>
+<span class="kw">var</span> command <span class="op">=</span> <span class="va">options</span>.<span class="va">requiredProperties</span>.<span class="at">command</span><span class="op">;</span>
+<span class="kw">var</span> username <span class="op">=</span>  <span class="va">options</span>.<span class="va">globalSettings</span>.<span class="at">API_KEY</span><span class="op">;</span>
+<span class="kw">var</span> password <span class="op">=</span> <span class="va">options</span>.<span class="va">globalSettings</span>.<span class="at">API_PASS</span><span class="op">;</span>
 
-<span class="ot">request</span>.<span class="fu">post</span>(
-    <span class="st">&#39;https://&#39;</span>+ username + <span class="st">&#39;:&#39;</span> + password +<span class="st">&#39;@app.waylay.io/api/tasks/&#39;</span>+taskID+<span class="st">&#39;/command/&#39;</span>+command,
-    <span class="kw">function</span> (error, response, body) {
-        <span class="kw">if</span> (!error &amp;&amp; <span class="ot">response</span>.<span class="fu">statusCode</span> == <span class="dv">200</span>) {
-            <span class="fu">send</span>();
-        } <span class="kw">else</span>
-            <span class="fu">send</span>(<span class="kw">new</span> <span class="fu">Error</span>(<span class="st">&quot;Error executing the action&quot;</span>));
-    }
-);</code></pre>
+<span class="va">request</span>.<span class="at">post</span>(
+    <span class="st">&#39;https://&#39;</span><span class="op">+</span> username <span class="op">+</span> <span class="st">&#39;:&#39;</span> <span class="op">+</span> password <span class="op">+</span><span class="st">&#39;@app.waylay.io/api/tasks/&#39;</span><span class="op">+</span>taskID<span class="op">+</span><span class="st">&#39;/command/&#39;</span><span class="op">+</span>command<span class="op">,</span>
+    <span class="kw">function</span> (error<span class="op">,</span> response<span class="op">,</span> body) <span class="op">{</span>
+        <span class="cf">if</span> (<span class="op">!</span>error <span class="op">&amp;&amp;</span> <span class="va">response</span>.<span class="at">statusCode</span> <span class="op">==</span> <span class="dv">200</span>) <span class="op">{</span>
+            <span class="at">send</span>()<span class="op">;</span>
+        <span class="op">}</span> <span class="cf">else</span>
+            <span class="at">send</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Error executing the action&quot;</span>))<span class="op">;</span>
+    <span class="op">}</span>
+)<span class="op">;</span></code></pre></div>
 <p>Note that this way you can call any REST waylay call. The script above will either start or stop a task (command input), while the task ID can either come from the input param, or if not provided, it will act on the current task. This way, for instance, you can stop the task when a particular condition is met.</p>
 <h3 id="node-data">Node Data</h3>
 <p>In the node context, you can retrieve the following node-related data:</p>
@@ -340,8 +340,8 @@ value = {
 <li>node name (node name of the sensor to which this call is attached at the moment of execution)</li>
 </ul>
 <p>In your plug code, you access these settings this way:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">options</span>.<span class="ot">node</span>.<span class="fu">NAME</span>
-<span class="ot">options</span>.<span class="ot">node</span>.<span class="fu">RESOURCE</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">options</span>.<span class="va">node</span>.<span class="at">NAME</span>
+<span class="va">options</span>.<span class="va">node</span>.<span class="at">RESOURCE</span></code></pre></div>
 <h2 id="utility-functions">Utility functions</h2>
 <p>The name of the package is <strong>waylayUtil</strong>. This package provides 4 types of utility functions:</p>
 <h3 id="function-to-retrieve-raw-data">function to retrieve raw data</h3>
@@ -443,7 +443,8 @@ if(options.requiredProperties.formula) {
 <h3 id="distance-function">distance function</h3>
 <p>You can use this function for nodes that have geo location in the raw data in format:</p>
 <ul>
-<li>longitude<br /></li>
+<li>longitude<br />
+</li>
 <li>latitude.</li>
 </ul>
 <p>The easiest way to check this is by running a sensor and verifying rawData output after the execution.</p>
