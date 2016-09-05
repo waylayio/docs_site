@@ -102,8 +102,7 @@
 <p>As you can see, this is just simple javascript, nothing fancy. The only thing you need to know at this point is that these scripts will be executed by a Node.js server, somewhere in the cloud. More precisely Node.js 4.x LTS. For details on supported ES6 api you can visit <a href="http://node.green/">node.green</a>.</p>
 <p>Every script is executed in the sandbox environment with a number of packages pre-installed. You can simply access them from the script, no need to require them. You have access to these (and only these) NPM packages:</p>
 <ul>
-<li>async as async</li>
-<li>Q as Q</li>
+<li>Q as Q,</li>
 <li>cheerio as cheerio,</li>
 <li>request as request,</li>
 <li>XMLHttpRequest as xhr,</li>
@@ -123,6 +122,9 @@
 <li>jsforce (salesforce) as jsforce,</li>
 <li>nodeHive as nodeHive,</li>
 <li>odoo (openERP) as odoo,</li>
+<li>async as async (from sandbox 0.8.8),</li>
+<li>ftp as FTPClient (from sandbox 0.8.10),</li>
+<li>concat-stream as concat (from sandbox 0.8.10),</li>
 <li>waylay util package as waylayUtil</li>
 </ul>
 <p>In case you need more libraries, let us now at support@waylay.io.</p>
