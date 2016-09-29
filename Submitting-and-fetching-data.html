@@ -93,6 +93,7 @@
 <p>For more sensitive environments we also have a device gateway where you can get per-device credentials. These credentials only allow sending or receiving data on the device’s channel.</p>
 <h2 id="posting-messages-towards-broker">Posting messages towards Broker</h2>
 <p>The waylay data endpoint lets you store and distribute messages. This can be performed over different protocols: <a href="#http">http</a>, <a href="#websockets">websockets</a> or <a href="#mqtt">mqtt</a>.</p>
+<p>As soon as data is send to the Broker, data is stored in two different databases, <strong>time series database and document database</strong>. In the document storage, data is stored without any pre-processing, with original JSON object as it was received. When JSON object (or array of JSON objects) comes to the Broker, Broker also tries to save data in the time series database. In order to achieve that, broker will inspect incoming JSON object and store every metric that is found in the JSON object.</p>
 <p>To keep your data private you use your waylay api key and secret + you provide the domain where you normally access the waylay system. This will also enable the forwarding of your data to your tasks or buckets.</p>
 <p>A submitted message is defined by 3 things</p>
 <ul>
@@ -101,6 +102,7 @@
 <li><code>payload</code> the content of the message, this can be any key-value pair and as most of the time provided as a json object. eg: <code>{&quot;temp&quot;:21, &quot;humidity&quot;: 0.35}</code></li>
 </ul>
 <p>For instance, the resource can be the <code>phone</code> and the parameters something like <code>temperature, humidity, acceleration</code> etc.</p>
+<p><em>Important Note</em> : Data will be stored with the timestamp when the object arrived at the Broker. Should you wish to insert data with other timestamp, you must in the JSON object provide a timestamp with a value that is in epoch in milliseconds. For instance: <code>{&quot;temp&quot;:21, &quot;humidity&quot;: 0.35, &quot;timestamp&quot; : 1475139600000}</code></p>
 <h2 id="http-rest-api"><a name="http"></a> HTTP REST API</h2>
 <p>The REST API is mainly intended for devices that have an HTTP stack available and don’t need to send huge amounts of data. It also allows you to fetch the current and last 100 items from the store.</p>
 <p>First you will need to fetch your API key from the profile page.</p>
@@ -192,6 +194,22 @@ POST          /resources/:resourceId/commands</code></pre>
 <p>Similary, if you wanted your device to <strong>send metrics or events</strong>, you must <strong>publish to the events topic</strong>.</p>
 <p><code>my-app.waylay.io/resources/18c1f19b-94c3-46e4-bedd-fd952ed7343a/events</code></p>
 <h2 id="retrieving-data">Retrieving data</h2>
+<h3 id="time-series-data">Time series data</h3>
+<h4 id="getting-raw-time-series-data">Getting raw time series data</h4>
+<p>You can specify <em>from</em> (epoch time in milliseconds) and <em>to</em> (it can be omitted, then it will take a current time), example:</p>
+<pre><code>curl -i \
+    --user apiKey:apiSecret \
+    https://data.waylay.io/resources/testresource/series/temperature? \
+    domain=sandbox.waylay.io&amp;from=1472947200000&amp;until=1474588800000</code></pre>
+<h4 id="aggregates">Aggregates</h4>
+<p>You can get data on which already grouping and/or aggregation is computed: * mean * medium * min * max * sum</p>
+<p>Grouped by * none (just skip in the query) * auto * second * minute * hour * day * week</p>
+<p>Example:</p>
+<pre><code>curl -i \
+     --user apiKey:apiSecret \
+     https://data.waylay.io/resources/testresource/series/temperature? \
+     domain=sandbox.waylay.io&amp;&amp;from=1472947200000&amp;until=1474588800000&amp;grouping=hour&amp;aggregate=mean</code></pre>
+<h3 id="document-data">Document data</h3>
 <p>You can always retrieve up to the last 100 data points for every resource over the REST calls. Coming back to the example where resource is the phone, waylay platform would store 100 data points, where each data point would hold information about underlying parameters (temperature, humidity etc.)</p>
 <h4 id="getting-latest-value-from-storage">Getting latest value from storage</h4>
 <pre><code>curl -i \
