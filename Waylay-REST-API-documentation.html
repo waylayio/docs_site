@@ -330,8 +330,76 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <h4 id="execute-actuator">Execute actuator</h4>
 <p>You can test any actuator using REST. Of course, you will need to provide actuator specific parameters in the call, like in this example where we provide e-mail address and message to mail actuator:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{properties: {&quot;address&quot; : &quot;veselin@waylay.io&quot;, &quot;subject&quot;:&quot;test&quot;, &quot;message&quot;: &quot;hello world&quot;}}&#39; https://sandbox.waylay.io/api/actions/Mail/versions/1.0.1</code></pre>
-<h2 id="how-to-work-with-real-time-data">How to work with real-time data</h2>
-<p>The waylay application allows you to push raw data and states to the running tasks.</p>
+<h2 id="provisioning-api">Provisioning API</h2>
+<p>Provisioning API allows you to associate metadata with resource. Resources are either discovered by Waylay (as soon as data is pushed towards Waylay Broker) or you can as well create them using REST call. Next to the resource CRUD related calls, waylay also allows you to create ResourceType entities, and let you link resource to a type using metadata (please see example below). As soon as a resource is linked to a resource type, all metadata values of that type are linked to that resource. Resource can still overwrite any specific attribute in its metadata model. Let’s see how this work in practise:</p>
+<h3 id="resource-based-api-calls">Resource based API calls</h3>
+<h4 id="create-resource">Create resource</h4>
+<p>In this example, we create a resource <em>mydevice_id</em> and add two additional attributes: <em>tenant</em> and <em>label</em>:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
+    -d &#39;{&quot;id&quot;:&quot;mydevice_id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;label&quot;: &quot;helloWorld&quot;}&#39; \
+    https://sandbox.waylay.io/api/resources</code></pre>
+<h5 id="reserved-keywords-for-metadata">Reserved keywords for metadata:</h5>
+<ul>
+<li>resourceTypeId: optional[String]</li>
+<li>name: optional[String]</li>
+<li>provider: optional[String], LoRA, Sigfox..</li>
+<li>providerId: optional[String],</li>
+<li>tenant: optional[String], // customer tenant name</li>
+<li>tags: optional[List[String]], (sequence of strings) // example [“Proximus”, “myTag”]</li>
+<li>location: optional [Location type],</li>
+<li>firmware: optional[String], // 1.2_1234</li>
+<li>lastMessageTimestamp: optional[Integer], (epoch time of the last contact)</li>
+<li>metrics: optional[list[ResourceMetric]]</li>
+</ul>
+<p>Example of creating a resource and immediately linking it to the resource type:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
+    -d &#39;{&quot;id&quot;:&quot;myDevice_id&quot;, &quot;resourceTypeId&quot;:&quot;resourceType_Id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;name&quot;: &quot;helloWorld&quot;}&#39; \
+    https://sandbox.waylay.io/api/resources</code></pre>
+<p>(ResourceMetric) are supported both on the resource and resource type, your JSON object can include:</p>
+<ul>
+<li>name: String, // Temperature</li>
+<li>valueType: String, // integer, double, boolean, string, enum ,</li>
+<li>metricType: String, // count / gauge / counter / timestamp (for events) _ default gauge</li>
+<li>unit: optional[String], // SI units or non-SI units like Fahrenheit…</li>
+<li>maximum: optional[Double], // 0</li>
+<li>minimum: optional[Double] // 60</li>
+</ul>
+<p>Example of creating a resource with a metric:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
+-d &#39;{&quot;id&quot;:&quot;mydevice_id3&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;label&quot;:&quot;helloWorld&quot;, &quot;metrics&quot; : [{&quot;name&quot; :&quot;Temperature&quot;, &quot;unit&quot;:&quot;C&quot;, &quot;valueType&quot;: &quot;double&quot;, &quot;metricType&quot;: &quot;counter&quot; }]}&#39; \
+https://sandbox.waylay.io/api/resources</code></pre>
+<p>Example of creating a resource with location:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
+-d &#39;{&quot;id&quot;:&quot;mydevice_id4&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;label&quot;:&quot;helloWorld&quot;, &quot;location&quot; : {&quot;lat&quot; : 51, &quot;lon&quot;:  3.71 }}&#39; \
+https://sandbox.waylay.io/api/resources</code></pre>
+<h4 id="update-resource">Update resource</h4>
+<p>In order to update a resource, you need to put your resource Id in the path as in the example below:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X PUT \
+    -d &#39;{&quot;resourceTypeId&quot;:&quot;resourceType_Id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;name&quot;: &quot;helloWorld&quot;}&#39; \
+    https://sandbox.waylay.io/api/resources/myDevice_id</code></pre>
+<h4 id="delete-resource">Delete resource</h4>
+<p>In order to delete a resource, you need to put your resource Id in the path as in the example below:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X DELETE \
+    https://sandbox.waylay.io/api/resources/mydevice_id</code></pre>
+<h4 id="create-resource-type">Create resource type</h4>
+<p>In this example, we create a resource type and at the same time, we define metric types:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
+  -d &#39;{&quot;id&quot;:&quot;resourceType_Id&quot;, &quot;customeField&quot;:&quot;value&quot;, &quot;metrics&quot; : [{&quot;name&quot; :&quot;Temperature&quot;, &quot;unit&quot;:&quot;C&quot;, &quot;valueType&quot;: &quot;double&quot;, &quot;metricType&quot;: &quot;counter&quot; }]}&#39; \
+   https://sandbox.waylay.io/api/resourcetypes</code></pre>
+<p>For the resource type, the following keywords are reserved:</p>
+<ul>
+<li>id: String, // D12345 or UUID</li>
+<li>name: Option[String]</li>
+<li>provider: optional[String]</li>
+<li>providerId: optional[String]</li>
+<li>tenant: optional[String]</li>
+<li>metrics: optional[List[ResourceMetric]]</li>
+</ul>
+<p>Similarly, in order to delete a resource type:</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X DELETE \
+   https://sandbox.waylay.io/api/resourcetypes/resourceType_Id</code></pre>
+<h2 id="how-to-work-with-real-time-stream-data">How to work with real-time (STREAM) data</h2>
+<p>The waylay application allows you to push raw data and states to the running tasks. Normally this is done via WaylayBroker which allows you to terminate many different protocols (MQTT, WebSockets and REST), but if you wish, you can as well do it directly, calling STREAM related API call on the engine itself.</p>
 <h3 id="push-real-time-raw-data">Push real-time raw data</h3>
 <p>If you need to process real time data in your sensors (like location, temperature etc.), you have two options:</p>
 <ul>
