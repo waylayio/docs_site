@@ -731,3 +731,23 @@ select.tinynav option:hover {
     -webkit-opacity: 1;
     -moz-opacity: 1;
 }
+
+table {
+  border-collapse: collapse;
+  width:100% !important;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  max-width:200px;
+}
+
+table tr:nth-child(odd) {
+  background-color: #dfe7f2;
+  color: #000;
+}
