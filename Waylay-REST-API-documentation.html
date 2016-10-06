@@ -339,31 +339,177 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
     -d &#39;{&quot;id&quot;:&quot;mydevice_id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;label&quot;: &quot;helloWorld&quot;}&#39; \
     https://sandbox.waylay.io/api/resources</code></pre>
 <h5 id="reserved-keywords-for-metadata">Reserved keywords for metadata:</h5>
-<ul>
-<li>resourceTypeId: optional[String]</li>
-<li>name: optional[String]</li>
-<li>provider: optional[String], LoRA, Sigfox..</li>
-<li>providerId: optional[String],</li>
-<li>tenant: optional[String], // customer tenant name</li>
-<li>tags: optional[List[String]], (sequence of strings) // example [“Proximus”, “myTag”]</li>
-<li>location: optional [Location type],</li>
-<li>firmware: optional[String], // 1.2_1234</li>
-<li>lastMessageTimestamp: optional[Integer], (epoch time of the last contact)</li>
-<li>metrics: optional[list[ResourceMetric]]</li>
-</ul>
+<table style="width:17%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Type</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">resourceTypeId</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="odd">
+<td align="left">provider</td>
+<td align="left">optional[String]</td>
+<td align="left">LoRA, Sigfox..</td>
+</tr>
+<tr class="even">
+<td align="left">providerId</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="odd">
+<td align="left">tenant</td>
+<td align="left">optional[String]</td>
+<td align="left">customer tenant name</td>
+</tr>
+<tr class="even">
+<td align="left">tags</td>
+<td align="left">optional[List[String]]</td>
+<td align="left">(sequence of strings) // example [“Proximus”, “myTag”]</td>
+</tr>
+<tr class="odd">
+<td align="left">location</td>
+<td align="left">optional [Location type]</td>
+</tr>
+<tr class="even">
+<td align="left">firmware</td>
+<td align="left">optional[String]</td>
+<td align="left">1.2_1234</td>
+</tr>
+<tr class="odd">
+<td align="left">lastMessageTimestamp</td>
+<td align="left">optional[Integer]</td>
+<td align="left">(epoch time of the last contact)</td>
+</tr>
+<tr class="even">
+<td align="left">metrics</td>
+<td align="left">optional[list[ResourceMetric]]</td>
+</tr>
+</tbody>
+</table>
 <p>Example of creating a resource and immediately linking it to the resource type:</p>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
     -d &#39;{&quot;id&quot;:&quot;myDevice_id&quot;, &quot;resourceTypeId&quot;:&quot;resourceType_Id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;name&quot;: &quot;helloWorld&quot;}&#39; \
     https://sandbox.waylay.io/api/resources</code></pre>
-<p>(ResourceMetric) are supported both on the resource and resource type, your JSON object can include:</p>
-<ul>
-<li>name: String, // Temperature</li>
-<li>valueType: String, // integer, double, boolean, string, enum ,</li>
-<li>metricType: String, // count / gauge / counter / timestamp (for events) <em>default gauge</em></li>
-<li>unit: optional[String], // SI units or non-SI units like Fahrenheit…</li>
-<li>maximum: optional[Double], // 0</li>
-<li>minimum: optional[Double] // 60</li>
-</ul>
+<h5 id="reserved-keywords-for-location-type">Reserved keywords for Location type:</h5>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">lat</td>
+<td align="left">Double</td>
+</tr>
+<tr class="even">
+<td align="left">lon</td>
+<td align="left">Double</td>
+</tr>
+</tbody>
+</table>
+<h5 id="reserved-keywords-for-resourcemetric">Reserved keywords for ResourceMetric:</h5>
+<table style="width:17%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Type</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">name</td>
+<td align="left">String</td>
+<td align="left">// Temperature</td>
+</tr>
+<tr class="even">
+<td align="left">valueType</td>
+<td align="left">String</td>
+<td align="left">// integer, double, boolean, string, enum</td>
+</tr>
+<tr class="odd">
+<td align="left">valueChoices</td>
+<td align="left">optional[list[String]]</td>
+<td align="left">[“OK”, “NOK”]</td>
+</tr>
+<tr class="even">
+<td align="left">metricType</td>
+<td align="left">String</td>
+<td align="left">// count / gauge / counter / timestamp (for events) <em>default gauge</em></td>
+</tr>
+<tr class="odd">
+<td align="left">unit</td>
+<td align="left">optional[String]</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">maximum</td>
+<td align="left">optional[Double]</td>
+<td align="left">// 0</td>
+</tr>
+<tr class="odd">
+<td align="left">minimum</td>
+<td align="left">optional[Double]</td>
+<td align="left">// 60</td>
+</tr>
+</tbody>
+</table>
+<h5 id="reserved-keywords-for-metric-type">Reserved keywords for Metric type:</h5>
+<table style="width:11%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">rate</td>
+<td align="left">a number per second (implies that unit ends on ‘/s’)</td>
+</tr>
+<tr class="even">
+<td align="left">count</td>
+<td align="left">a number per a given interval (such as a statsd flushInterval)</td>
+</tr>
+<tr class="odd">
+<td align="left">gauge</td>
+<td align="left">values at each point in time</td>
+</tr>
+<tr class="even">
+<td align="left">counter</td>
+<td align="left">keeps increasing over time (but might wrap/reset at some point) i.e. a gauge with the added notion of “i usually want to derive this to see the rate”</td>
+</tr>
+<tr class="odd">
+<td align="left">timestamp</td>
+<td align="left">value represents a unix timestamp. so basically a gauge or counter but we know we can also render the “age” at each point.</td>
+</tr>
+</tbody>
+</table>
 <p>More about metric types you can find here <a href="http://metrics20.org/spec/">metric20org</a></p>
 <p>Example of creating a resource with a metric:</p>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
@@ -391,15 +537,43 @@ https://sandbox.waylay.io/api/resources</code></pre>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X POST \
   -d &#39;{&quot;id&quot;:&quot;resourceType_Id&quot;, &quot;customeField&quot;:&quot;value&quot;, &quot;metrics&quot; : [{&quot;name&quot; :&quot;Temperature&quot;, &quot;unit&quot;:&quot;C&quot;, &quot;valueType&quot;: &quot;double&quot;, &quot;metricType&quot;: &quot;counter&quot; }]}&#39; \
    https://sandbox.waylay.io/api/resourcetypes</code></pre>
-<p>For the resource type, the following keywords are reserved:</p>
-<ul>
-<li>id: String, // D12345 or UUID</li>
-<li>name: Option[String]</li>
-<li>provider: optional[String]</li>
-<li>providerId: optional[String]</li>
-<li>tenant: optional[String]</li>
-<li>metrics: optional[List[ResourceMetric]]</li>
-</ul>
+<h5 id="reserved-keywords-for-resource-type">Reserved keywords for resource type:</h5>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Type</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">String</td>
+<td align="left">// D12345 or UUID</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="left">Option[String]</td>
+</tr>
+<tr class="odd">
+<td align="left">provider</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="even">
+<td align="left">providerId</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="odd">
+<td align="left">tenant</td>
+<td align="left">optional[String]</td>
+</tr>
+<tr class="even">
+<td align="left">metrics</td>
+<td align="left">optional[List[ResourceMetric]]</td>
+</tr>
+</tbody>
+</table>
 <h4 id="delete-resource-type">Delete resource type</h4>
 <p>Similarly, in order to delete a resource type:</p>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X DELETE \
