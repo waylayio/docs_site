@@ -84,21 +84,26 @@
 <p>Note: you can test the same from the UI (see picture above), but since in the rest of the document we will be using curl command, the best is that you at this point in time do the same from the command line.</p>
 <hr />
 <h2 id="task-related-calls">TASK related calls</h2>
-<h3 id="get-information-about-one-task">Get information about one task</h3>
+<h3 id="get-information-about-a-single-task">Get information about a single task</h3>
 <p>Response will include template definition and task’s type and settings.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/{taskID}</code></pre>
-<h3 id="query-tasks">Query tasks</h3>
+<h3 id="task-querying">Task querying</h3>
 <p>You can also query more tasks and once using the following command:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks</code></pre>
 <p>This call gives first 10 tasks (default behaviour), and if you need to filter your tasks, you can use a query language as defined below.</p>
-<h4 id="query-interface">Query interface</h4>
+<h4 id="task-querying-filtering">Task querying filtering</h4>
 <p>Query parameters are:</p>
 <ul>
+<li>filter (fuzzy search on multiple properties)</li>
 <li>name</li>
 <li>resource</li>
-<li>startIndex</li>
-<li>stopIndex</li>
-<li>hits (default 10, max. 100)</li>
+<li>type (scheduled, periodic, …)</li>
+<li>status (running, stopped, failed)</li>
+<li>ids (comma separated string)</li>
+<li>id (can be added multiple times)</li>
+<li>tags (comma separated string)</li>
+<li>tag (can be added multiple times)</li>
+<li>plugin (<code>mySensor</code> or <code>mySensor:1.0.3</code>)</li>
 </ul>
 <p><em>All query parameters are combined with logical AND operator</em>. That means that if you combine more than one parameter together you will only receive tasks that match all conditions.</p>
 <h5 id="query-by-name">Query by name</h5>
@@ -106,12 +111,15 @@
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?name=&quot;taskName*&quot; </code></pre>
 <p>If you query task by resource, input must match the resource name exactly. You can still receive more tasks in case they all have the same resource name.</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?resource=&quot;resource1&quot; </code></pre>
-<h5 id="query-by-task-index">Query by task index</h5>
+<h5 id="task-query-paging">Task query paging</h5>
+<p>Related parameters:</p>
+<ul>
+<li>startIndex</li>
+<li>hits (default 10, max. 100)</li>
+</ul>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1</code></pre>
-<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1&amp;stopIndex=5</code></pre>
-<h5 id="using-the-hits">Using the hits</h5>
-<p>Default number of hits is 10, and you can change this using <em>hits</em> parameter. For instance, this call will retrieve maximum 50 tasks, starting search from the task index 1.</p>
-<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=1&amp;hits=50</code></pre>
+<p>Default number of returned results is 10, and you can change this using <em>hits</em> parameter. For instance, this call will retrieve maximum 50 tasks, starting search from the task index 50. (second page of 50-per-page results)</p>
+<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks?startIndex=50&amp;hits=50</code></pre>
 <h4 id="get-the-total-count">Get the total count</h4>
 <p>In order to retrieve the total task count, check the header of the response (X-Count). In this example, we receive back 27 tasks:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -I https://sandbox.waylay.io/api/tasks
@@ -141,9 +149,9 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT
 Access-Control-Allow-Headers: Content-Type, Authorization
 Access-Control-Expose-Headers: X-Count
 Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
-<h3 id="create-the-task">Create the task</h3>
+<h3 id="creating-a-task">Creating a task</h3>
 <p>There are mainly 2 ways to create a task, either by specifying the rule in the request, or by specifying the template with which the task needs to be instantiated.</p>
-<h4 id="create-the-task-with-rule-defined-in-the-request">Create the task with rule defined in the request</h4>
+<h4 id="create-a-task-with-rule-defined-in-the-request">Create a task with rule defined in the request</h4>
 <p>You can create a task without a need to create a template first. In order to create a task you will need to specify the following in the request:</p>
 <ul>
 <li>sensors, list of sensors with required properties</li>
@@ -239,7 +247,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
     &quot;pollingInterval&quot;: 900
   }
 }&#39; https://app.waylay.io/api/tasks&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h4 id="create-the-task-using-template-name">Create the task using template name</h4>
+<h4 id="creating-a-task-from-a-template">Creating a task from a template</h4>
 <p>In order to start a task from the template, you need to provide the following inputs:</p>
 <ul>
 <li>name: task name</li>
@@ -290,24 +298,58 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;resource&quot;: &quot;hello&quot;,
   &quot;type&quot;: &quot;onetime&quot;
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h4 id="create-the-task-with-sensor-properties-in-the-request">Create the task with sensor properties in the request</h4>
+<h4 id="creating-a-task-with-sensor-properties-in-the-request">Creating a task with sensor properties in the request</h4>
 <p>You can also override sensor settings of the template before starting the task. In this example, we change addresses of the Ping sensors:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test4&quot;, &quot;template&quot;: &quot;internet.json&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;start&quot;: false, &quot;type&quot;: &quot;scheduled&quot;, &quot;cron&quot;: &quot;0/30 * * * * ?&quot;, &quot;nodes&quot;: [{&quot;name&quot;: &quot;Ping_1&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_1&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_2&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_2&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;sandbox.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_3&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_3&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.google.com&quot;} ] } } } ] }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h3 id="delete-the-task">Delete the task</h3>
+<h4 id="deleting-a-task">Deleting a task</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/tasks/1</code></pre>
-<h3 id="start-and-stop-the-task">Start and stop the task</h3>
+<h4 id="starting-and-stoping-a-task">Starting and stoping a task</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST https://sandbox.waylay.io/api/tasks/1/command/stop</code></pre>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST https://sandbox.waylay.io/api/tasks/1/command/start</code></pre>
-<h2 id="node-related-calls">Node related calls</h2>
-<h3 id="get-current-statesposteriors-and-raw-data-for-the-node">Get current states(posteriors) and raw data for the node</h3>
+<h3 id="task-node-related-calls">Task Node related calls</h3>
+<h4 id="get-current-statesposteriors-and-raw-data-for-the-node">Get current states(posteriors) and raw data for the node</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
-<h3 id="get-supported-states-for-the-node">Get supported states for the node</h3>
+<h4 id="get-supported-states-for-the-node">Get supported states for the node</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1/states</code></pre>
-<h3 id="set-the-state-for-the-node">Set the state for the node</h3>
+<h4 id="set-the-state-for-the-node">Set the state for the node</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST  -d &#39;state=Alive&#39; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
-<h3 id="execute-sensor-attached-to-the-node">Execute sensor attached to the node</h3>
+<h4 id="execute-sensor-attached-to-the-node">Execute sensor attached to the node</h4>
 <p>At any time you can execute a sensor attached to the node. Please be aware that the state change will be inferred in that task right after the sensor execution. For instance, in this call below, we will execute Ping sensor on the task 759:</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X POST  -d &#39;operation=start&#39; https://sandbox.waylay.io/api/tasks/759/nodes/Ping_1</code></pre>
+<h3 id="batch-operations-on-tasks">Batch operations on tasks</h3>
+<p>All the batch operations work with the same filters as querying for tasks, except the <code>filter</code> parameter which is not allowed because it’s not exact.</p>
+<h4 id="deleting-multiple-tasks">Deleting multiple tasks</h4>
+<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/tasks?ids=1,3,9</code></pre>
+<h4 id="modifying-existing-tasks">Modifying existing tasks</h4>
+<p>These calls will modify existing tasks in-place. Below an example of what such a request looks like:</p>
+<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X PATCH https://sandbox.waylay.io/api/tasks?ids=1,3,9 -H &quot;Content-Type:application/json&quot; -d &#39;{&quot;operation&quot;: &quot;xxx&quot;, ...}&#39;</code></pre>
+<h5 id="commands">Commands</h5>
+<p>This allows to start or stop a bunch of tasks</p>
+<p>The body should look like this</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;operation&quot;</span><span class="fu">:</span> <span class="st">&quot;command&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;stop&quot;</span>
+<span class="fu">}</span></code></pre></div>
+<h5 id="plugin-updates">Plugin updates</h5>
+<p>This will apply plugin version updates and re-instantiate the tasks.</p>
+<p>The body should look like this</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;operation&quot;</span><span class="fu">:</span> <span class="st">&quot;updatePlugins&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;updates&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;myActuator&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;fromVersion&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.1&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;toVersion&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.3&quot;</span>
+    <span class="fu">}</span><span class="ot">,</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;mySensor&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;fromVersion&quot;</span><span class="fu">:</span> <span class="st">&quot;1.1.0&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;toVersion&quot;</span><span class="fu">:</span> <span class="st">&quot;1.3.2&quot;</span>
+    <span class="fu">}</span>
+  <span class="ot">]</span>
+<span class="fu">}</span></code></pre></div>
+<p>Note: <em>You are responsible to make sure this new plugin version stays compatible with the old provided properties</em></p>
+<p>Note: <em>This is only allowed for tasks that have no linked template. For updating tasks that have been instantiated from a template you have to update the template and restart the tasks</em></p>
 <h2 id="templates">Templates</h2>
 <h3 id="list-all-templates">List all templates</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/templates</code></pre>

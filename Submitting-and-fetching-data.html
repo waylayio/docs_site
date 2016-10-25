@@ -143,9 +143,16 @@ POST          /resources/:resourceId/commands</code></pre>
     -d &#39;{&quot;foo&quot;:123, &quot;bar&quot;:&quot;hello&quot;, &quot;resource&quot;:&quot;testresource&quot;, &quot;domain&quot;:&quot;sandbox.waylay.io&quot;}&#39; \
     https://data.waylay.io/messages</code></pre>
 <h2 id="websockets"><a name="websockets"></a> Websockets</h2>
-<p>The global websocket API is mainly meant for publish functionality, like connecting other brokers to the waylay data endpoint.</p>
+<h3 id="per-resource">Per resource</h3>
+<p>You can also set up web sockets for a specific resource</p>
+<p>Endpoints to connect to using secure web sockets:</p>
+<pre><code>wss://data.waylay.io/resources/:resourceId/commands/subscribe (listening to commands)
+wss://data.waylay.io/resources/:resourceId/commands/publish (publishing comamnds to an other device)
+wss://data.waylay.io/resources/:resourceId/events/subscribe (listening to events from a device)
+wss://data.waylay.io/resources/:resourceId/events/publish (publishing events)</code></pre>
 <p>The <a href="https://data.waylay.io/test?domain=yourdomain">test application</a> lets you play with websocket support.</p>
-<p>Endpoint to connect to:</p>
+<h3 id="global">Global</h3>
+<p>The global websocket API is mainly meant for publish functionality, like connecting other brokers to the waylay data endpoint.</p>
 <p><code>wss://data.waylay.io/socket?domain=sandbox.waylay.io</code> with HTTP BASIC authentication using your waylay API key and secret</p>
 <p>The endpoint allows you to submit messages in JSON format.</p>
 <div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
@@ -162,7 +169,8 @@ POST          /resources/:resourceId/commands</code></pre>
   <span class="ot">]</span>
 <span class="fu">}</span></code></pre></div>
 <h2 id="mqtt"><a name="mqtt"></a> MQTT</h2>
-<p>More about MQTT you can find on the following link: <a href="http://waylayio.github.io/announcement/2016/07/01/announcing-mqtt-on-waylay.html">MQTT blog</a></p>
+<p>Our MQTT endpoints are meant to be used by low-power devices. Devices need to be registered on the device hub before they can send/receive messages over MQTT.</p>
+<p>More info is available in this blog post: <a href="http://waylayio.github.io/announcement/2016/07/01/announcing-mqtt-on-waylay.html">MQTT blog</a></p>
 <h2 id="retrieving-data">Retrieving data</h2>
 <h3 id="time-series-data">Time series data</h3>
 <h4 id="getting-raw-time-series-data">Getting raw time series data</h4>
