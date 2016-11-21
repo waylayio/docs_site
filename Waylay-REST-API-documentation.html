@@ -350,6 +350,12 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <span class="fu">}</span></code></pre></div>
 <p>Note: <em>You are responsible to make sure this new plugin version stays compatible with the old provided properties</em></p>
 <p>Note: <em>This is only allowed for tasks that have no linked template. For updating tasks that have been instantiated from a template you have to update the template and restart the tasks</em></p>
+<h5 id="reloading-tasks">Reloading tasks</h5>
+<p>This is mainly for applying template updates to existing tasks</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;operation&quot;</span><span class="fu">:</span> <span class="st">&quot;command&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;reload&quot;</span>
+<span class="fu">}</span></code></pre></div>
 <h2 id="templates">Templates</h2>
 <h3 id="list-all-templates">List all templates</h3>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; https://sandbox.waylay.io/api/templates</code></pre>
