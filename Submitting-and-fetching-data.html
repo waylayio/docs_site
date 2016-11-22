@@ -216,19 +216,6 @@ wss://data.waylay.io/resources/:resourceId/events/publish (publishing events)</c
 <h3 id="streaming-using-websockets">Streaming using WebSockets</h3>
 <p>You can stream data for a specific resource by setting up a WebSocket to the following url</p>
 <pre><code>wss://data.waylay.io/resources/testresource/socket?domain=app.waylay.io&amp;apiKey=...&amp;apiSecret=...</code></pre>
-<h2 id="metadata">Metadata</h2>
-<p>For each resource you have the option to store metadata like units, type of data, … Metadata is stored as a json object. This data can later be used for example to decide what kind of widget to show for a certain resource’s data.</p>
-<h4 id="getting-metadata-for-a-resource">Getting metadata for a resource</h4>
-<pre><code>curl -i \
-    --user apiKey:apiSecret \
-    https://data.waylay.io/metadata/testresource?domain=sandbox.waylay.io</code></pre>
-<h4 id="setting-metadata-for-a-resource">Setting metadata for a resource</h4>
-<pre><code>curl -i \
-    --user apiKey:apiSecret \
-    -H &quot;Content-Type: application/json&quot; \
-    -X PUT \
-    -d &#39;{&quot;unit&quot;:&quot;centigrade&quot;, &quot;type&quot;:&quot;double&quot;}&#39; \
-    https://data.waylay.io/metadata/testresource?domain=sandbox.waylay.io</code></pre>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
 
 </div>
