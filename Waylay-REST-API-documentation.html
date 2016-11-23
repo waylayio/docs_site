@@ -301,13 +301,13 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <h4 id="creating-a-task-with-sensor-properties-in-the-request">Creating a task with sensor properties in the request</h4>
 <p>You can also override node/sensor/actuator settings of the template before starting the task. These are the fields you can override:</p>
 <ul>
-<li>cost (number)</li>
-<li>resource (string)</li>
-<li>evictionTime (millis)</li>
-<li>pollingPeriod (millis)</li>
-<li>pollingFixedRate (boolean)</li>
-<li>sensor.requiredProperties.*</li>
-<li>actions.[*].requiredProperties.*</li>
+<li>nodes.[*].properties.cost (number)</li>
+<li>nodes.[*].properties.resource (string)</li>
+<li>nodes.[*].properties.evictionTime (millis)</li>
+<li>nodes.[*].properties.pollingPeriod (millis)</li>
+<li>nodes.[*].properties.pollingFixedRate (boolean)</li>
+<li>nodes.[*].properties.sensor.requiredProperties.*</li>
+<li>nodes.[*].properties.actions.[*].requiredProperties.*</li>
 </ul>
 <p>In this example, we change addresses of the <code>Ping</code> sensors and the resource of node <code>Ping_2</code> :</p>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{
