@@ -299,8 +299,50 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;type&quot;: &quot;onetime&quot;
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
 <h4 id="creating-a-task-with-sensor-properties-in-the-request">Creating a task with sensor properties in the request</h4>
-<p>You can also override sensor settings of the template before starting the task. In this example, we change addresses of the Ping sensors:</p>
-<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{&quot;name&quot;: &quot;test4&quot;, &quot;template&quot;: &quot;internet.json&quot;, &quot;resource&quot;: &quot;hello&quot;, &quot;start&quot;: false, &quot;type&quot;: &quot;scheduled&quot;, &quot;cron&quot;: &quot;0/30 * * * * ?&quot;, &quot;nodes&quot;: [{&quot;name&quot;: &quot;Ping_1&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_1&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_2&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_2&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;sandbox.waylay.io&quot;} ] } } }, {&quot;name&quot;: &quot;Ping_3&quot;, &quot;properties&quot;: {&quot;sensor&quot;: {&quot;name&quot;: &quot;Ping&quot;, &quot;version&quot;: &quot;1.0.1&quot;, &quot;label&quot;: &quot;Ping_3&quot;, &quot;requiredProperties&quot;: [{&quot;address&quot;: &quot;www.google.com&quot;} ] } } } ] }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
+<p>You can also override node/sensor/actuator settings of the template before starting the task. These are the fields you can override:</p>
+<ul>
+<li>cost (number)</li>
+<li>resource (string)</li>
+<li>evictionTime (millis)</li>
+<li>pollingPeriod (millis)</li>
+<li>pollingFixedRate (boolean)</li>
+<li>sensor.requiredProperties.*</li>
+<li>actions.[*].requiredProperties.*</li>
+</ul>
+<p>In this example, we change addresses of the <code>Ping</code> sensors and the resource of node <code>Ping_2</code> :</p>
+<pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{
+&quot;name&quot;: &quot;test4&quot;, 
+&quot;template&quot;: &quot;internet.json&quot;, 
+&quot;resource&quot;: &quot;hello&quot;, 
+&quot;start&quot;: false, 
+&quot;type&quot;: &quot;scheduled&quot;, 
+&quot;cron&quot;: &quot;0/30 * * * * ?&quot;, 
+&quot;nodes&quot;: [{
+  &quot;name&quot;: &quot;Ping_1&quot;, 
+  &quot;properties&quot;: {
+    &quot;sensor&quot;: {
+      &quot;name&quot;: &quot;Ping&quot;, 
+      &quot;version&quot;: &quot;1.0.1&quot;, 
+      &quot;label&quot;: &quot;Ping_1&quot;, 
+      &quot;requiredProperties&quot;: [
+        {&quot;address&quot;: &quot;www.waylay.io&quot;} 
+      ] 
+    } 
+  } 
+}, {
+  &quot;name&quot;: &quot;Ping_2&quot;, 
+  &quot;properties&quot;: {
+    &quot;resource&quot;: &quot;newresource&quot;
+    &quot;sensor&quot;: {
+      &quot;name&quot;: &quot;Ping&quot;, 
+      &quot;version&quot;: &quot;1.0.1&quot;, 
+      &quot;label&quot;: &quot;Ping_2&quot;, 
+      &quot;requiredProperties&quot;: [
+        {&quot;address&quot;: &quot;sandbox.waylay.io&quot;}
+      ] 
+    } 
+  } 
+}]}&#39; https://sandbox.waylay.io/api/tasks</code></pre>
 <h4 id="deleting-a-task">Deleting a task</h4>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -X DELETE https://sandbox.waylay.io/api/tasks/1</code></pre>
 <h4 id="starting-and-stoping-a-task">Starting and stoping a task</h4>
