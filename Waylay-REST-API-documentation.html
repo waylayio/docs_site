@@ -298,7 +298,7 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
   &quot;resource&quot;: &quot;hello&quot;,
   &quot;type&quot;: &quot;onetime&quot;
 }&#39; https://sandbox.waylay.io/api/tasks</code></pre>
-<h4 id="creating-a-task-with-sensor-properties-in-the-request">Creating a task with sensor properties in the request</h4>
+<h4 id="creating-a-task-with-sensor-properties-in-the-request"><a name="task_with_props"></a> Creating a task with sensor properties in the request</h4>
 <p>You can also override node/sensor/actuator settings of the template before starting the task. These are the fields you can override:</p>
 <ul>
 <li>nodes.[*].properties.cost (sequence number)</li>
@@ -397,6 +397,34 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;operation&quot;</span><span class="fu">:</span> <span class="st">&quot;command&quot;</span><span class="fu">,</span>
   <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;reload&quot;</span>
+<span class="fu">}</span></code></pre></div>
+<h5 id="modifying-task-properties">Modifying task properties</h5>
+<p>This allows you to modify sensor / actuator properties while keeping the task Id.</p>
+<p>The format used to modify properties is the same as when you create a <a href="#task_with_props">task from a template</a>. Updates will be merged with any previously provided properties.</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;operation&quot;</span> <span class="fu">:</span> <span class="st">&quot;updateProperties&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;nodes&quot;</span> <span class="fu">:</span> <span class="ot">[</span> <span class="fu">{</span>
+    <span class="dt">&quot;name&quot;</span> <span class="fu">:</span> <span class="st">&quot;node1&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;properties&quot;</span> <span class="fu">:</span> <span class="fu">{</span>
+      <span class="dt">&quot;sensor&quot;</span> <span class="fu">:</span> <span class="fu">{</span>
+        <span class="dt">&quot;requiredProperties&quot;</span> <span class="fu">:</span> <span class="ot">[</span> <span class="fu">{</span>
+          <span class="dt">&quot;prop1&quot;</span> <span class="fu">:</span> <span class="st">&quot;updatedValue&quot;</span>
+        <span class="fu">}</span><span class="ot">,</span> <span class="fu">{</span>
+          <span class="dt">&quot;prop1&quot;</span> <span class="fu">:</span> <span class="st">&quot;updatedValue&quot;</span>
+        <span class="fu">}</span> <span class="ot">]</span>
+      <span class="fu">}</span>
+    <span class="fu">}</span>
+  <span class="fu">}</span><span class="ot">,</span> <span class="fu">{</span>
+    <span class="dt">&quot;name&quot;</span> <span class="fu">:</span> <span class="st">&quot;node2&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;properties&quot;</span> <span class="fu">:</span> <span class="fu">{</span>
+      <span class="dt">&quot;actions&quot;</span> <span class="fu">:</span> <span class="ot">[</span> <span class="fu">{</span>
+        <span class="dt">&quot;label&quot;</span> <span class="fu">:</span> <span class="st">&quot;actuator1&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;requiredProperties&quot;</span> <span class="fu">:</span> <span class="ot">[</span> <span class="fu">{</span>
+          <span class="dt">&quot;prop1&quot;</span> <span class="fu">:</span> <span class="st">&quot;updatedValue&quot;</span>
+        <span class="fu">}</span> <span class="ot">]</span>
+      <span class="fu">}</span> <span class="ot">]</span>
+    <span class="fu">}</span>
+  <span class="fu">}</span> <span class="ot">]</span>
 <span class="fu">}</span></code></pre></div>
 <h2 id="templates">Templates</h2>
 <h3 id="list-all-templates">List all templates</h3>

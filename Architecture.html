@@ -78,6 +78,8 @@
 <ul>
 <li>Cloud Broker (MQTT, WebSockets and REST)</li>
 <li>Cloud Persisted Cache</li>
+<li>Time series Database</li>
+<li>Resource Metadata Database</li>
 <li>Inference Engine with advanced stream based correlation and formula processing</li>
 <li>REST server</li>
 <li>CEP functional nodes</li>
@@ -89,10 +91,14 @@
 <img src="https://raw.githubusercontent.com/waylayio/documentation/master/images/architecture.png" class="img-responsive"  alt="architecture" />
 <p class="caption">architecture</p>
 </div>
-<h2 id="broker-and-cloud-persisted-cache">Broker and Cloud Persisted Cache</h2>
-<p>Broker lets you store and distribute messages. This can be performed over different protocols: HTTP, WebSockets or MQTT. By default the data is publicly available. It can be read by anybody. This is mainly to ease the testing. To keep your data private, you need to use waylay API key and secret. This will also enable both cloud storage and forwarding of your data towards waylay Inference Engine.</p>
+<h2 id="broker">Broker</h2>
+<p>Broker lets you store and distribute messages. This can be performed over different protocols: HTTP, WebSockets or MQTT. By default the data is publicly available. It can be read by anybody. This is mainly to ease the testing. To keep your data private, you need to use waylay API key and secret. This will also enable both cloud storage and forwarding of your data towards waylay Inference Engine. As soon as data is send to the Broker, data is stored in two different databases, time series database and document database (Cloud Persisted Cache). In Cloud Persisted Cache, data is stored without any pre-processing, with original JSON object as it was received. When JSON object (or array of JSON objects) comes to the Broker, Broker also tries to save data in the time series database. In order to achieve that, broker will inspect incoming JSON object and store every metric that is found in the JSON object.</p>
 <h3 id="cloud-persisted-cache-rest-interface">Cloud Persisted Cache REST interface</h3>
-<p>You can always retrieve up to the last 100 data points for every resource over the REST calls. Each data point associated with resource holds information about underlying parameters (temperature, humidity etc.).</p>
+<p>You can always retrieve up to the last 100 messages for every resource over the REST calls.</p>
+<h3 id="time-series-database-rest-interface">Time Series Database REST interface</h3>
+<p>Waylay automatically stores metric data in the time series database. Via REST interface you can retrieve raw data or aggregated data (per interval with aggregation metrics e.g. avg, mean, max, stdev etc).</p>
+<h3 id="resource-metadata-with-rest-interface">Resource Metadata with REST interface</h3>
+<p>Provisioning API allows you to associate metadata with resource. Resources are either discovered by Waylay (as soon as data is pushed towards Waylay Broker) or you can as well create them using REST call. Next to the resource CRUD related calls, waylay also allows you to create ResourceType entities, and let you link resource to a type using metadata. As soon as a resource is linked to a resource type, all metadata values of that type are linked to that resource. Resource can still overwrite any specific attribute in its metadata model.</p>
 <h2 id="sdk-and-templates-sensors-actuators-rules">SDK and Templates (sensors, actuators, rules)</h2>
 <p>In waylay, sensors, actuators and rules are nothing more than small snippets of JSON files. They can be re-used between different templates. Out of the box, in PaaS offering, waylay supports only node.js based actuators and sensors (very similar approach to AWS lambda architecture). For OEM deployments, we as well provide java SDK.</p>
 <h4 id="open-source">Open source</h4>
@@ -103,6 +109,7 @@
 <li>testing and creation of sensors, actuators and templates</li>
 <li>execution of actuators and sensors</li>
 <li>instantiation of tasks from templates</li>
+<li>sensors/actuators/tasks and templates versioning and migration</li>
 <li>real time updates of the rule engine outcomes together with realtime data (using HTML5 Server-Sent Events)</li>
 </ul>
 <a href="#" class="scrollup"><a href="http://docs.waylay.io/"></a></a>
