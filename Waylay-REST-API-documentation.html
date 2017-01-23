@@ -652,6 +652,12 @@ https://sandbox.waylay.io/api/resources</code></pre>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X PUT \
     -d &#39;{&quot;resourceTypeId&quot;:&quot;resourceType_Id&quot;, &quot;tenant&quot;:&quot;tenant1&quot;, &quot;name&quot;: &quot;helloWorld&quot;}&#39; \
     https://sandbox.waylay.io/api/resources/myDevice_id</code></pre>
+<h4 id="partial-update-resource">Partial update resource</h4>
+<p>Partial updates allow you to add/modify individual fields on a resource.</p>
+<pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X PATCH \
+    -d &#39;{&quot;resourceTypeId&quot;:&quot;resourceType_Id&quot;}&#39; \
+    https://sandbox.waylay.io/api/resources/myDevice_id</code></pre>
+<p><em>note: This call also allows you to do upserts, if the resource for the provided id does not exist it will be created</em></p>
 <h4 id="delete-resource">Delete resource</h4>
 <p>In order to delete a resource, you need to put your resource Id in the path as in the example below:</p>
 <pre><code>curl -i --user apiKey:apiSecret -H &quot;Content-Type: application/json&quot; -X DELETE \
