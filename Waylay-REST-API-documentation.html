@@ -720,6 +720,34 @@ https://sandbox.waylay.io/api/resources</code></pre>
 <h4 id="retrieve-resource-type">Retrieve resource type</h4>
 <p>In order to get a resource type, you need to put your resource type Id in the path as in the example below:</p>
 <pre><code>curl -i --user apiKey:apiSecret https://sandbox.waylay.io/api/resourcestypes/resourceType_Id</code></pre>
+<h4 id="automatically-create-tasks-by-associating-a-template-with-a-resource-type">Automatically create tasks by associating a template with a resource type</h4>
+<p>The waylay task engine can automatically provision tasks for each new resource. This is configured in the metadata of the resource type. All you need to add is a field <code>templates</code> that contains what templates should be used and what task configuration should be applied to these managed tasks.</p>
+<p>Resource type definition:</p>
+<pre><code>{
+    &quot;id&quot;: &quot;4b80d00a-89f0-41a0-b6e5-d4423caca844&quot;,
+     ...
+     &quot;templates&quot;: [
+        {
+            &quot;templateName&quot;: &quot;templatex&quot;,
+            &quot;type&quot;: &quot;periodic&quot;,
+            &quot;frequency&quot;: 60000 // every minute
+        },
+        {
+            &quot;templateName&quot;: &quot;templatey&quot;,
+            &quot;type&quot;: &quot;scheduled&quot;,
+            &quot;cron&quot;: &quot;0 0 12 * * ?&quot; // Fire at 12pm (noon) every day       
+        }
+     ]  
+}</code></pre>
+<p>If for example an existing resource’s type is set to the above type type then 2 tasks will be created.</p>
+<p>In general these managed tasks are created/removed for these actions:</p>
+<ul>
+<li>Resource created</li>
+<li>Resource removed</li>
+<li>Resource’s resourceType field updated</li>
+<li>ResourceType’s templates field is updated</li>
+<li>ResourceType is removed</li>
+</ul>
 <h2 id="how-to-work-with-real-time-stream-data">How to work with real-time (STREAM) data</h2>
 <p>The waylay application allows you to push raw data and states to the running tasks. Normally this is done via WaylayBroker which allows you to terminate many different protocols (MQTT, WebSockets and REST), but if you wish, you can as well do it directly, calling STREAM related API call on the engine itself.</p>
 <h3 id="push-real-time-raw-data">Push real-time raw data</h3>
