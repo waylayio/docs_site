@@ -665,6 +665,19 @@ https://sandbox.waylay.io/api/resources</code></pre>
 <h4 id="retrieve-resource">Retrieve resource</h4>
 <p>In order to get a resource, you need to put your resource Id in the path as in the example below:</p>
 <pre><code>curl -i --user apiKey:apiSecret https://sandbox.waylay.io/api/resources/mydevice_id</code></pre>
+<h4 id="query-resources">Query resources</h4>
+<p>Resources can be queried by doing a GET request, if needed you can filter on these fields using the query string:</p>
+<ul>
+<li>filter (partial match on multiple fields)</li>
+<li>tag (can be added multiple times)</li>
+<li>id (can be added multiple times)</li>
+<li>provider</li>
+<li>customer</li>
+<li>resourceTypeId</li>
+<li>lat, lon and distance (like 200km, 100m, …)</li>
+</ul>
+<p>Paging is handled by <code>skip</code> and <code>limit</code> parameters</p>
+<pre><code>curl -i --user apiKey:apiSecret https://sandbox.waylay.io/api/resources?filter=car</code></pre>
 <h3 id="resource-type-based-api-calls">Resource type based API calls</h3>
 <h4 id="create-resource-type">Create resource type</h4>
 <p>In this example, we create a resource type and at the same time, we define metric types:</p>
