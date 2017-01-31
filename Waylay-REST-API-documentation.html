@@ -260,6 +260,8 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <ul>
 <li>type : scheduled</li>
 <li>cron: cron expression as defined in <a href="http://www.quartz-scheduler.org/documentation/quartz-1.x/tutorials/crontrigger">Cron format</a></li>
+<li>resetObservations: whether to clear observation before next invocation (default true)</li>
+<li>parallel: whether to run sensors in parallel or sequentially (default true, meaning parallel)</li>
 </ul>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{
   &quot;name&quot;: &quot;test1&quot;,
@@ -273,9 +275,9 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains</code></pre>
 <p>Periodic specific input settings:</p>
 <ul>
 <li>type : periodic</li>
-<li>frequency: polling frequency in milliseconds (default 10 seconds)</li>
-<li>pollingFixedRate : fixed rate or fixed delay (default fixed false - meaning fixed delay)</li>
-<li>resetObservations: whether to clear observation before next invocation (default false)</li>
+<li>frequency: polling frequency in milliseconds (default 10 seconds, min 100ms)</li>
+<li>pollingFixedRate : fixed rate or fixed delay (default fixed true - meaning fixed rate)</li>
+<li>resetObservations: whether to clear observation before next invocation (default true)</li>
 <li>parallel: whether to run sensors in parallel or sequentially (default true, meaning parallel)</li>
 </ul>
 <pre><code>curl --user &lt;KEY&gt;:&lt;SECRET&gt; -H &quot;Content-Type:application/json&quot; -X POST -d &#39;{
